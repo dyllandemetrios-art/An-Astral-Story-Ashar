@@ -1,3 +1,4 @@
+using Ashar.Core;
 using Ashar.Environment;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -114,6 +115,7 @@ namespace Ashar.Player
             _cooldownLeft = _shipData.DashCooldown;
             _isDashing = true;
             SetTrail(true);
+            GameEvents.RaisePlayerDashed();
         }
 
         /// <summary>Moves the ship along the dash direction for this frame, and ends the dash when its time is up.</summary>

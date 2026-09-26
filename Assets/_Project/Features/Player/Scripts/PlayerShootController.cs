@@ -1,4 +1,5 @@
 using Ashar.Combat;
+using Ashar.Core;
 using Ashar.Environment;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -86,6 +87,7 @@ namespace Ashar.Player
             ProjectileController bullet = Instantiate(_bulletPrefab, _muzzle.position, Quaternion.identity, _projectileParent);
             Rect lifeBounds = PlayAreaController.Inflate(_playArea.ScreenBounds, _despawnMargin);
             bullet.Initialize(Vector2.up, _shipData.BulletSpeed, _shipData.BulletDamage, lifeBounds);
+            GameEvents.RaisePlayerFired();
         }
 
         /// <summary>

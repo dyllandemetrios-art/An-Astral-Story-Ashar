@@ -18,10 +18,28 @@ namespace Ashar.Core
         /// <summary>Raised when the player ship takes a hit that counts (not while invulnerable).</summary>
         public static event Action OnPlayerHit;
 
+        /// <summary>Raised each time the player ship fires a bullet.</summary>
+        public static event Action OnPlayerFired;
+
+        /// <summary>Raised when the player ship starts a dash.</summary>
+        public static event Action OnPlayerDashed;
+
         /// <summary>Announces that the player ship has been hit.</summary>
         public static void RaisePlayerHit()
         {
             OnPlayerHit?.Invoke();
+        }
+
+        /// <summary>Announces that the player ship has fired a bullet.</summary>
+        public static void RaisePlayerFired()
+        {
+            OnPlayerFired?.Invoke();
+        }
+
+        /// <summary>Announces that the player ship has started a dash.</summary>
+        public static void RaisePlayerDashed()
+        {
+            OnPlayerDashed?.Invoke();
         }
     }
 }
