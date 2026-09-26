@@ -1,6 +1,7 @@
 # Cahier des charges — An Astral Story : Ashar (démo)
 
 Version 1.1 — 24 septembre 2026 — livrable **P0-11** (spécification technique + CLAUDE.md du dépôt)
+v1.5 : Game Concept v2.4 — commandes révisées (§7.2) : tir J, bouclier K, impulsion L, dash M, Espace retiré ; bouclier à trancher avant E5-05.
 v1.1 : décisions de la section 2 validées ; voix off hybride ajoutée (Concept v2.2).
 v1.4 : Game Concept v2.3 — difficulté unique (§7.9), dialogues en pause narrative avec pilote automatique (§7.7), FR/EN obligatoire (§7.13).
 v1.3 : conventions de code et de projet alignées sur les dépôts de Dyllan (Stuffy_Infinite_Runner, Snake_2D) : organisation par fonctionnalité (§5.1), commentaires anglais, prefabs, procédure de blocage (§9).
@@ -273,16 +274,21 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 
 ### 7.2 Commandes **[Proposition, à valider au playtest E1-08]**
 
+**[Mise à jour v1.5, Game Concept v2.4]** : le mapping ci-dessous remplace entièrement l'ancien. **Espace est retiré de tous les usages**, y compris pour avancer un dialogue.
+
 | Action | Clavier | Manette |
 | --- | --- | --- |
 | Déplacement | ZQSD, ou flèches | Stick gauche, croix |
-| Tir (maintenu) | Espace | A / Croix, ou gâchette droite |
-| Dash | Maj gauche | B / Rond, ou bouton d'épaule gauche |
-| Impulsion de piratage | E | X / Carré, ou bouton d'épaule droit |
+| Tir (maintenu) | J | A |
+| Bouclier éphémère | K | X |
+| Impulsion de piratage | L | LT (gâchette gauche) |
+| Dash | M | RT (gâchette droite) |
 | Pause | Échap | Start |
-| Avancer un dialogue (hors action uniquement) | Espace ou Entrée | A |
+| Avancer un dialogue (hors action) | J (touche de tir) | A |
 
-Note technique : l'Input System lie les touches par **position physique**. Les liaisons `<Keyboard>/w`, `a`, `s`, `d` donnent ZQSD sur un clavier AZERTY et WASD sur un QWERTY, sans code supplémentaire.
+**Point ouvert, bloquant pour E5-05** : la touche K fait du bouclier éphémère une action déclenchée par le joueur, alors que le §7.10 le décrit comme un effet automatique de power-up (« absorbe 1 impact, 10 s au maximum »). À trancher avant E5-05 : la durée est-elle toujours de 10 s une fois activé ? y a-t-il un cooldown ? que se passe-t-il si le joueur appuie sur K sans charge de bouclier disponible ? **Aucun code sur le bouclier tant que ce point n'est pas tranché** ; la touche K et le bouton X ne sont pas liés à une action pour l'instant.
+
+Note technique : l'Input System sait lier une touche de deux façons. Le déplacement utilise la **position physique** : `<Keyboard>/w`, `a`, `s`, `d` donnent ZQSD sur un clavier AZERTY et WASD sur un QWERTY, sans code supplémentaire. Les actions J, K, L et M utilisent au contraire la **lettre imprimée sur la touche** (`<Keyboard>/#(m)`), car le M d'un clavier AZERTY n'est pas à la même place physique que celui d'un QWERTY.
 
 ### 7.3 Ennemis **[Bestiaire v2, vitesses converties au §4]**
 
@@ -352,7 +358,7 @@ Rendu : bulle pleine largeur en bas d'écran, façon Pokémon : nom de l'interlo
 **Un dialogue est une pause narrative** (état de jeu `Dialogue`) : le jeu n'est pas mis en pause, **les actions ennemies sont mises en attente** et **le vaisseau et la carte passent en pilote automatique**.
 1. **Début** : l'événement `Dialogue` de la timeline arrive après une séquence de jeu (normalement placé juste après un `WaitForClear`, donc sur un écran vide). La timeline des vagues est suspendue : aucun nouvel ennemi. Filet de sécurité si l'écran n'est pas vide : les ennemis encore présents cessent de tirer et quittent l'écran par le haut, les projectiles ennemis s'estompent en 0,3 s, sans points.
 2. **Pilote automatique** : le joueur perd le contrôle du vaisseau (déplacement, tir, dash, impulsion ignorés). Le vaisseau rejoint en douceur une position de croisière (`autopilotPosition`, par défaut au centre, au-dessus de la bulle) en `autopilotBlendTime` (0,6 s), puis oscille légèrement pour rester vivant. **Le décor continue de défiler et la musique continue en boucle.** Le vaisseau ne peut pas être touché.
-3. **Lecture** : le bouton de tir (Espace / A) fait avancer : première pression, la ligne s'affiche en entier ; deuxième pression, ligne suivante. Pause (Échap / Start) reste disponible.
+3. **Lecture** : le bouton de tir (J / A) fait avancer : première pression, la ligne s'affiche en entier ; deuxième pression, ligne suivante. Pause (Échap / Start) reste disponible.
 4. **Fin** : la pression sur la dernière ligne ferme la fenêtre de dialogue. Le joueur reprend immédiatement les commandes, depuis la position de croisière ; le tir est ignoré pendant `resumeGraceTime` (0,3 s) pour qu'un appui prolongé ne tire pas aussitôt ; la timeline des vagues reprend.
 
 **Règle technique non négociable : ne jamais utiliser `Time.timeScale = 0` pour un dialogue.** C'est ce qui figeait tout dans Snake_2D. Le dialogue suspend uniquement la timeline des vagues, l'IA et les tirs ennemis, et bascule le vaisseau en pilote automatique (via `GameEvents.OnGameStateChanged`). `Time.timeScale = 0` est réservé au menu pause.
