@@ -279,12 +279,14 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 | Action | Clavier | Manette |
 | --- | --- | --- |
 | Déplacement | ZQSD, ou flèches | Stick gauche, croix |
-| Tir (maintenu) | J | A |
-| Bouclier éphémère | K | X |
-| Impulsion de piratage | L | LT (gâchette gauche) |
-| Dash | M | RT (gâchette droite) |
+| Tir (maintenu) | J, ou W | A |
+| Bouclier éphémère | K, ou X (non lié : point ouvert ci-dessous) | X |
+| Impulsion de piratage | L, ou C | LT (gâchette gauche) |
+| Dash | M, ou V | RT (gâchette droite) |
 | Pause | Échap | Start |
-| Avancer un dialogue (hors action) | J (touche de tir) | A |
+| Avancer un dialogue (hors action) | J ou W (touches de tir) | A |
+
+Sur un clavier AZERTY, W, X, C et V (rangée du bas, main gauche) font la même chose que J, K, L et M. Elles sont liées par **position physique** (`<Keyboard>/z`, `x`, `c`, `v`) : elles ne se gênent donc pas avec le déplacement, ni sur AZERTY ni sur QWERTY (où ce sont Z, X, C et V).
 
 **Point ouvert, bloquant pour E5-05** : la touche K fait du bouclier éphémère une action déclenchée par le joueur, alors que le §7.10 le décrit comme un effet automatique de power-up (« absorbe 1 impact, 10 s au maximum »). À trancher avant E5-05 : la durée est-elle toujours de 10 s une fois activé ? y a-t-il un cooldown ? que se passe-t-il si le joueur appuie sur K sans charge de bouclier disponible ? **Aucun code sur le bouclier tant que ce point n'est pas tranché** ; la touche K et le bouton X ne sont pas liés à une action pour l'instant.
 
