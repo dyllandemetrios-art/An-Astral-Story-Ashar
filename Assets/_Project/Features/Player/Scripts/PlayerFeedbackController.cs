@@ -28,7 +28,7 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Renderer of the ship image. It must use the SpriteFlash shader for the flash to show.")]
         private SpriteRenderer _visual;
 
-        [SerializeField, Tooltip("Plays the sounds. Its volume sets the overall level of the ship sounds.")]
+        [SerializeField, Tooltip("Optional. Plays the sounds; its volume sets their overall level. Without it the ship is silent and everything else still works.")]
         private AudioSource _audioSource;
 
         [Header("Sounds")]
@@ -56,9 +56,9 @@ namespace Ashar.Player
         /// <summary>Checks the references, remembers the rest position and prepares the shader values.</summary>
         private void Awake()
         {
-            if (_feedbackData == null || _visual == null || _audioSource == null)
+            if (_feedbackData == null || _visual == null)
             {
-                Debug.LogError($"{nameof(PlayerFeedbackController)} on '{name}' is missing its feedback data, visual or audio source. Feedback disabled.", this);
+                Debug.LogError($"{nameof(PlayerFeedbackController)} on '{name}' is missing its feedback data or visual. Feedback disabled.", this);
                 enabled = false;
                 return;
             }
@@ -173,10 +173,10 @@ namespace Ashar.Player
             _shakeTimer = 0f; // Pick a first random position at once.
         }
 
-        /// <summary>Plays a clip once, if there is one. A missing clip is never an error: the game works without sound.</summary>
+        /// <summary>Plays a clip once, if there is a clip and an audio source. Missing sound is never an error: the game works without it.</summary>
         private void Play(AudioClip clip)
         {
-            if (clip != null)
+            if (clip != null && _audioSource != null)
             {
                 _audioSource.PlayOneShot(clip);
             }

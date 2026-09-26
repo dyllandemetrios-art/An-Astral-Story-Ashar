@@ -8,7 +8,7 @@ namespace Ashar.Player
     /// Detects the hits on the player ship and announces them.
     /// RESPONSIBILITIES: keep the hitbox at the size given by PlayerShipData, show or hide the silver hitbox dot,
     /// and turn an enemy bullet touching the hitbox into a GameEvents.OnPlayerHit event.
-    /// HOW IT WORKS: the hitbox is a small trigger circle on its own child object, on the PlayerHitbox layer. The
+    /// HOW IT WORKS: the hitbox is a trigger capsule on its own child object, on the PlayerHitbox layer. The
     /// collision matrix lets it meet only enemy bullets and enemies. The ship root has a kinematic Rigidbody2D,
     /// which Unity needs to deliver trigger contacts, and a PlayerTriggerRelay on the hitbox tells this script when
     /// something enters it (the graze zone has its own relay, so the two are never mixed up). A bullet that touches the hitbox is
@@ -19,12 +19,12 @@ namespace Ashar.Player
     public class PlayerHealthController : MonoBehaviour
     {
         [Header("Data")]
-        [SerializeField, Tooltip("Tuning values of the ship: hitbox radius and whether its dot is shown.")]
+        [SerializeField, Tooltip("Tuning values of the ship: hitbox size and whether its dot is shown.")]
         private PlayerShipData _shipData;
 
         [Header("References")]
-        [SerializeField, Tooltip("Trigger circle of the hitbox, on the PlayerHitbox layer (a child of the ship).")]
-        private CircleCollider2D _hitbox;
+        [SerializeField, Tooltip("Trigger capsule of the hitbox, on the PlayerHitbox layer (a child of the ship).")]
+        private CapsuleCollider2D _hitbox;
 
         [SerializeField, Tooltip("Relay on the hitbox object: tells this script when something enters the hitbox.")]
         private PlayerTriggerRelay _hitboxRelay;
@@ -70,9 +70,10 @@ namespace Ashar.Player
         /// <summary>Applies the hitbox size and the dot visibility from the ship data, so they can be tuned live.</summary>
         private void Update()
         {
-            if (!Mathf.Approximately(_hitbox.radius, _shipData.HitboxRadius))
+            Vector2 size = ComputeHitboxSize(_shipData.HitboxRadius, _shipData.HitboxHeight);
+            if (_hitbox.size != size)
             {
-                _hitbox.radius = _shipData.HitboxRadius;
+                _hitbox.size = size;
             }
 
             if (_hitboxDot != null && _hitboxDot.activeSelf != _shipData.ShowHitbox)
@@ -108,6 +109,16 @@ namespace Ashar.Player
             // The bullet is spent: destroy its whole object (the collider may sit on a child).
             GameObject bulletObject = other.attachedRigidbody != null ? other.attachedRigidbody.gameObject : other.gameObject;
             Destroy(bulletObject);
+        }
+
+        /// <summary>
+        /// Returns the size of the hitbox capsule: twice the radius wide, and as tall as asked but never shorter than
+        /// it is wide (a capsule cannot be shorter than its own rounded ends). Static and free of Unity state so it can be unit-tested.
+        /// </summary>
+        public static Vector2 ComputeHitboxSize(float radius, float height)
+        {
+            float width = 2f * radius;
+            return new Vector2(width, Mathf.Max(height, width));
         }
 
         /// <summary>

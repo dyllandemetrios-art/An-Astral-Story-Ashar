@@ -8,7 +8,7 @@ namespace Ashar.Player
     /// Rewards near misses: an enemy bullet that comes close to the ship without touching the hitbox is a graze.
     /// RESPONSIBILITIES: keep the graze zone at the size given by PlayerShipData, and turn a bullet entering it into a
     /// GameEvents.OnPlayerGrazed event carrying the points earned.
-    /// HOW IT WORKS: the graze zone is a trigger circle (radius 0.6 u) on its own child object, on the PlayerGraze
+    /// HOW IT WORKS: the graze zone is a trigger capsule (the hitbox capsule grown by 0.6 u all round) on its own child object, on the PlayerGraze
     /// layer, which the collision matrix lets meet only enemy bullets. When a bullet enters, it is counted if it
     /// has not been counted before, the ship is not dashing, and it is not already touching the hitbox. The bullet is
     /// then marked, so it can never be counted twice.
@@ -22,14 +22,14 @@ namespace Ashar.Player
         private PlayerShipData _shipData;
 
         [Header("References")]
-        [SerializeField, Tooltip("Trigger circle of the graze zone, on the PlayerGraze layer (a child of the ship).")]
-        private CircleCollider2D _grazeZone;
+        [SerializeField, Tooltip("Trigger capsule of the graze zone, on the PlayerGraze layer (a child of the ship).")]
+        private CapsuleCollider2D _grazeZone;
 
         [SerializeField, Tooltip("Relay on the graze zone object: tells this script when something enters the zone.")]
         private PlayerTriggerRelay _grazeRelay;
 
-        [SerializeField, Tooltip("Trigger circle of the hitbox. A bullet already touching it is an impact, not a graze.")]
-        private CircleCollider2D _hitbox;
+        [SerializeField, Tooltip("Trigger collider of the hitbox. A bullet already touching it is an impact, not a graze.")]
+        private Collider2D _hitbox;
 
         [SerializeField, Tooltip("Optional. No graze is counted while the ship is dashing.")]
         private PlayerDashController _dash;
@@ -69,12 +69,13 @@ namespace Ashar.Player
             }
         }
 
-        /// <summary>Applies the graze radius from the ship data, so it can be tuned live.</summary>
+        /// <summary>Applies the graze zone size from the ship data, so it can be tuned live.</summary>
         private void Update()
         {
-            if (!Mathf.Approximately(_grazeZone.radius, _shipData.GrazeRadius))
+            Vector2 size = ComputeGrazeSize(_shipData.GrazeRadius, _shipData.HitboxRadius, _shipData.HitboxHeight);
+            if (_grazeZone.size != size)
             {
-                _grazeZone.radius = _shipData.GrazeRadius;
+                _grazeZone.size = size;
             }
         }
 
@@ -103,6 +104,18 @@ namespace Ashar.Player
             _grazeCount++;
             _grazePoints += _shipData.GrazeScore;
             GameEvents.RaisePlayerGrazed(_shipData.GrazeScore);
+        }
+
+        /// <summary>
+        /// Returns the size of the graze capsule: the hitbox capsule grown by the graze margin on every side. The margin
+        /// is the graze radius minus the hitbox radius, so the zone is 2 x grazeRadius wide. Static and free of Unity state
+        /// so it can be unit-tested.
+        /// </summary>
+        public static Vector2 ComputeGrazeSize(float grazeRadius, float hitboxRadius, float hitboxHeight)
+        {
+            Vector2 hitbox = PlayerHealthController.ComputeHitboxSize(hitboxRadius, hitboxHeight);
+            float margin = Mathf.Max(0f, grazeRadius - hitboxRadius);
+            return new Vector2(hitbox.x + 2f * margin, hitbox.y + 2f * margin);
         }
 
         /// <summary>

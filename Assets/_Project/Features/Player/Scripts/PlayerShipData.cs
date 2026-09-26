@@ -40,14 +40,17 @@ namespace Ashar.Player
         private float _dashCooldown = 1.5f;
 
         [Header("Hitbox")]
-        [SerializeField, Min(0.01f), Tooltip("Radius of the hitbox: the only part of the ship that can be hit, in world units (spec §4: 0.11, about 5 reference pixels).")]
+        [SerializeField, Min(0.01f), Tooltip("Half the width of the hitbox capsule, in world units: the only part of the ship that can be hit (spec §4 started at 0.11, about 5 reference pixels).")]
         private float _hitboxRadius = 0.11f;
+
+        [SerializeField, Min(0.02f), Tooltip("Total height of the hitbox capsule, rounded ends included, in world units. The ship is a long shape, so the capsule covers the nose and the engine. Never smaller than the width.")]
+        private float _hitboxHeight = 1.1f;
 
         [SerializeField, Tooltip("Show the silver dot that marks the hitbox. Meant to become an option of the game (accessibility).")]
         private bool _showHitbox = true;
 
         [Header("Graze")]
-        [SerializeField, Min(0.01f), Tooltip("Radius of the graze zone around the ship, in world units (spec §7.1: 0.6). A bullet entering it without touching the hitbox is a near miss that earns points.")]
+        [SerializeField, Min(0.01f), Tooltip("Half the width of the graze zone, in world units (spec §7.1: 0.6). The zone is the hitbox capsule grown by this much all round; a bullet entering it without touching the hitbox is a near miss that earns points.")]
         private float _grazeRadius = 0.6f;
 
         [SerializeField, Min(0), Tooltip("Score points earned by one graze (spec §7.1: 20). Each bullet counts only once.")]
@@ -56,14 +59,17 @@ namespace Ashar.Player
         /// <summary>Ship speed in world units per second.</summary>
         public float MoveSpeed => _moveSpeed;
 
-        /// <summary>Radius of the graze zone, in world units.</summary>
+        /// <summary>Half the width of the graze zone, in world units.</summary>
         public float GrazeRadius => _grazeRadius;
 
         /// <summary>Score points earned by one graze.</summary>
         public int GrazeScore => _grazeScore;
 
-        /// <summary>Radius of the hitbox, in world units.</summary>
+        /// <summary>Half the width of the hitbox capsule, in world units.</summary>
         public float HitboxRadius => _hitboxRadius;
+
+        /// <summary>Total height of the hitbox capsule, in world units.</summary>
+        public float HitboxHeight => _hitboxHeight;
 
         /// <summary>True when the silver hitbox dot is shown.</summary>
         public bool ShowHitbox => _showHitbox;
