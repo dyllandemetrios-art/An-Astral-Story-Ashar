@@ -25,6 +25,9 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Move action (Vector2) of the AsharControls input asset.")]
         private InputActionReference _moveAction;
 
+        [SerializeField, Tooltip("Optional. While this dash controller is dashing, normal movement pauses so only one script moves the ship.")]
+        private PlayerDashController _dash;
+
         [Header("Debug")]
         [SerializeField, Tooltip("Read-only: velocity applied during the last frame, in world units per second.")]
         private Vector2 _currentVelocity;
@@ -53,6 +56,12 @@ namespace Ashar.Player
         /// <summary>Reads the input and moves the ship, once per frame.</summary>
         private void Update()
         {
+            if (_dash != null && _dash.IsDashing)
+            {
+                _currentVelocity = Vector2.zero; // The dash is moving the ship this frame.
+                return;
+            }
+
             Vector2 input = _moveAction.action.ReadValue<Vector2>();
             Vector2 position = transform.position;
             Vector2 next = ComputeNextPosition(position, input, _shipData.MoveSpeed, Time.deltaTime, _playArea.Bounds);

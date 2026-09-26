@@ -16,3 +16,7 @@ MonoBehaviour:
   _fireRate: 10
   _bulletDamage: 10
   _bulletSpeed: 22.5
+  _dashDistance: 2.8
+  _dashDuration: 0.18
+  _dashInvulnTime: 0.28
+  _dashCooldown: 1.5

@@ -26,8 +26,33 @@ namespace Ashar.Player
         [SerializeField, Min(0.1f), Tooltip("Bullet speed in world units per second (spec §4: 22.5).")]
         private float _bulletSpeed = 22.5f;
 
+        [Header("Dash")]
+        [SerializeField, Min(0f), Tooltip("Distance covered by one dash, in world units (spec §4: 2.8).")]
+        private float _dashDistance = 2.8f;
+
+        [SerializeField, Min(0.01f), Tooltip("Time taken to cover the dash distance, in seconds.")]
+        private float _dashDuration = 0.18f;
+
+        [SerializeField, Min(0f), Tooltip("Time during which the ship cannot be hit, counted from the start of the dash, in seconds. Longer than the dash itself, so the ship stays protected a moment after it.")]
+        private float _dashInvulnTime = 0.28f;
+
+        [SerializeField, Min(0f), Tooltip("Time between the start of one dash and the moment the next one is allowed, in seconds.")]
+        private float _dashCooldown = 1.5f;
+
         /// <summary>Ship speed in world units per second.</summary>
         public float MoveSpeed => _moveSpeed;
+
+        /// <summary>Distance covered by one dash, in world units.</summary>
+        public float DashDistance => _dashDistance;
+
+        /// <summary>Time taken to cover the dash distance, in seconds.</summary>
+        public float DashDuration => _dashDuration;
+
+        /// <summary>Invulnerability time from the start of the dash, in seconds.</summary>
+        public float DashInvulnTime => _dashInvulnTime;
+
+        /// <summary>Time from the start of a dash until the next one is allowed, in seconds.</summary>
+        public float DashCooldown => _dashCooldown;
 
         /// <summary>Shots per second while the Fire button is held.</summary>
         public float FireRate => _fireRate;
