@@ -28,12 +28,23 @@ ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (
 8. **Lisibilité** : projectiles joueur argent-blanc, ennemis rouge orangé, boss LEASH magenta et jaune ; jamais plus de 3 couleurs de projectiles par phase de boss.
 9. **Un dialogue est une pause narrative, jamais un gel du jeu.** Pendant un dialogue : actions ennemies en attente, vagues suspendues, décor qui défile, musique qui continue, vaisseau en **pilote automatique** (le joueur ne le contrôle plus) ; le bouton de tir fait avancer, et fermer la fenêtre de dialogue rend la main. **N'utilise jamais `Time.timeScale = 0` pour un dialogue** (réservé au menu pause). Aucun dialogue pendant l'action. Une voix off absente ne doit jamais provoquer d'erreur. Détails : cahier des charges §7.7.
 10. **Ne modifie pas `docs/`**, sauf `docs/notes/` et le fichier de spec en cours (section « Compte rendu »).
-11. **N'édite jamais à la main** les fichiers `.unity`, `.prefab` ou `.asset`. Passe par l'éditeur (Unity CLI ou serveur MCP Unity s'ils sont configurés) ou par un script d'éditeur de mise en place idempotent (menu `Ashar/Setup/<ID>`), que Dyllan lance en un clic.
+11. **N'édite jamais à la main** les fichiers `.unity`, `.prefab` ou `.asset`. Passe par l'éditeur ouvert via le **Unity CLI** (voie active, voir « Outillage ») ou, à défaut, par un script d'éditeur de mise en place idempotent (menu `Ashar/Setup/<ID>`), que Dyllan lance en un clic.
 12. **Assets achetés : jamais sur GitHub.** Tout `Assets/ThirdParty/` est ignoré par Git (packs d'origine **et** leurs retouches : les licences interdisent de redistribuer même une version modifiée). Tu ne modifies jamais un fichier d'origine ; une version retouchée va dans `Assets/ThirdParty/_Modified/<Pack>/`. Seuls les sprites, sons et polices **entièrement faits maison** vont dans `Assets/_Project/`. N'utilise jamais `git add -f` ni `git add .` sans vérifier `git status`.
 
 ## Stack
 
-Unity 6 (6000.x), URP avec 2D Renderer, Pixel Perfect Camera URP (`UnityEngine.Rendering.Universal`, **ne pas installer** `com.unity.2d.pixel-perfect`), Input System, TextMeshPro, Ink (ink-unity-integration, inkle), Unity Test Framework. Aucun autre package sans accord.
+Unity 6.6 (6000.6.2f1), URP avec 2D Renderer, Pixel Perfect Camera URP (`UnityEngine.Rendering.Universal`, **ne pas installer** `com.unity.2d.pixel-perfect`), Input System (seul actif), TextMeshPro, Ink (ink-unity-integration, inkle, à installer en S3), Unity Test Framework. Build Windows x86_64, Mono.
+
+Outillage d'éditeur installé : `com.unity.pipeline` (pont du Unity CLI, désactivé dans les builds) et `com.unity.ai.assistant`. Retirés en P0-12 : Visual Scripting, Collab Proxy, IET Framework, AI Inference (Sentis). Aucun autre package sans accord.
+
+## Outillage : Unity CLI (voie active depuis P0-12)
+
+L'éditeur de Dyllan reste ouvert sur le projet ; tu le pilotes depuis le terminal.
+- `unity status` : vérifie qu'un éditeur est connecté (`state: ready`) avant toute action sur une scène ou un asset.
+- `unity command <nom>` : `move_asset`, `create_scene`, `open_scene`, `save_scene`, `create_prefab`, `recompile` / `recompile_status`, `console` / `console_status`, `run_tests --mode EditMode`, `build` / `build_status`, `package_add` / `package_remove`… (`unity command` sans argument liste tout).
+- `unity command eval_file --file <script.cs>` exécute du C# dans l'éditeur. Pas de directive `using` : écris les noms complets (`UnityEditor.AssetDatabase…`). Les scripts temporaires vont dans le scratchpad, jamais dans `Assets/`.
+- Les commandes qui modifient le projet (paquets, réglages) exigent `--confirm true`. Après un changement de paquet ou une recompilation, l'éditeur recharge son domaine : une erreur « Network error » est normale, attends que `unity status` revienne à `ready`.
+- Build de test : `Build/Windows/AsharDemo.exe` (dossier ignoré par Git).
 
 ## Structure du projet Unity
 
@@ -45,9 +56,9 @@ Assets/
     Core/         Scripts/ Data/ Prefabs/        (GameSession, GameEvents, Layers, SceneFlow)
     Features/
       <Feature>/  Scripts/ Prefabs/ Data/ Art/ Animations/ Audio/   (seulement les sous-dossiers utiles)
-    Scenes/       Boot, MainMenu, Mission, TestBed
-    Settings/     URP, Input Actions, Quality, Mixer
-    Editor/       scripts de mise en place (menu Ashar/Setup/<ID>)
+    Scenes/       Boot, MainMenu, Mission, TestBed (TestBed exclue du build)
+    Settings/     URP/ (UniversalRP, Renderer2D), Input/ (AsharControls.inputactions), Mixer
+    Editor/       PixelArtImportPostprocessor, scripts de mise en place (menu Ashar/Setup/<ID>)
     Tests/        EditMode/
   ThirdParty/     packs achetés + _Modified/  → IGNORÉ PAR GIT
 ```
@@ -56,6 +67,7 @@ Règles :
 - Aucun fichier à la racine de `Assets/` ni de `_Project/`. Aucun dossier vide versionné. Aucun dossier « Misc », « Temp », « New Folder ».
 - Un script vit dans la fonctionnalité qui le possède. S'il sert à plusieurs fonctionnalités, il va dans `Core/` ou dans `Features/Combat/` (dégâts, projectiles).
 - Noms de dossiers et de fichiers en PascalCase anglais, sans espace.
+- Assembly definitions : `Ashar.Runtime` (racine de `_Project/`), `Ashar.Editor` (`Editor/`), `Ashar.Tests.EditMode` (`Tests/EditMode/`). Le namespace `Ashar.Editor` masque la classe `UnityEditor.Editor` : dans un inspecteur personnalisé, écris `UnityEditor.Editor` en entier.
 
 ## Conventions C# (anglais, pédagogique)
 
@@ -114,9 +126,10 @@ namespace Ashar.Player
 - **Variantes** : une unité qui dérive d'une autre est une *Prefab Variant* (ex. `Interceptor` variante de `PatrolFighter`). Les parties d'un boss sont des prefabs imbriqués.
 - **Hiérarchie des scènes** : des GameObjects vides servent de sections, dans cet ordre : `--- SYSTEMS ---`, `--- CAMERA ---`, `--- ENVIRONMENT ---`, `--- GAMEPLAY ---`, `--- UI ---`. Les objets créés en jeu sont rangés sous `Runtime/Enemies`, `Runtime/Projectiles`, `Runtime/FX`.
 - **Nommage dans l'éditeur** : GameObjects, prefabs et assets en PascalCase anglais (`PlayerShip`, `EnemyData_GuardDrone`, `WaveData_M1_Tunnels`).
-- **Import des sprites** : réglages pixel art du cahier des charges §3 (Point, sans compression, PPU 48, pivot en pixels), appliqués par un `AssetPostprocessor` pour ne jamais dépendre d'un réglage manuel oublié.
+- **Import des sprites** : réglages pixel art du cahier des charges §3 (Sprite, Point, sans compression, sans mip maps, PPU 48), appliqués par `Editor/PixelArtImportPostprocessor` à toute texture de `_Project/` et `ThirdParty/`, **au premier import seulement** (pour ne jamais écraser un réglage manuel de Dyllan). Le pivot se règle par sprite.
+- **Caméra de chaque scène** (sous `--- CAMERA ---`) : orthographique, taille 5,625 (11,25 u de haut, §4), fond noir, HDR et MSAA désactivés.
 - Aucune référence manquante (`Missing`) dans une scène ou un prefab livré.
-- **Tant que les packs d'assets ne sont pas importés**, l'absence d'asset n'est jamais un blocage : utilise des placeholders simples (formes de base Unity, carrés et cercles colorés selon la palette, sons de test générés) rangés dans `Features/<Feature>/Art/Placeholder/`. Grâce à l'enfant `Visual`, remplacer un placeholder par le vrai sprite ne demande aucun changement de code. Signale chaque placeholder dans le compte rendu.
+- **Tant que les packs d'assets ne sont pas importés**, l'absence d'asset n'est jamais un blocage : utilise des placeholders simples (formes de base Unity, carrés et cercles colorés selon la palette — joueur bleu, tirs du joueur argent-blanc, ennemis rouge orangé —, sons de test générés) rangés dans `Features/<Feature>/Art/Placeholder/`, sous l'enfant `Visual` du prefab. Grâce à cet enfant, remplacer un placeholder par le vrai sprite ne demande aucun changement de code. Liste chaque placeholder dans le compte rendu, pour que Dyllan sache quoi remplacer. N'importe aucun package lié à un pack et ne référence aucun fichier de `Assets/ThirdParty/` tant que Dyllan n'a rien importé. Si un critère d'acceptation dépend explicitement du vrai pack, arrête-toi et signale-le (voir « Blocage »).
 
 ## Blocage : quand tu ne peux pas faire ce qui est demandé
 
