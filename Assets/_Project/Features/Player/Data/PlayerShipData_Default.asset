@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: PlayerShipData_Default
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerShipData
   _moveSpeed: 9
+  _fireRate: 10
+  _bulletDamage: 10
+  _bulletSpeed: 22.5
