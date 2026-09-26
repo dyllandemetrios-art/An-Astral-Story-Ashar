@@ -120,3 +120,6 @@ InitTestScene*.unity*
 # Backed up separately, never pushed to the public repository.
 /[Aa]ssets/ThirdParty/
 /[Aa]ssets/ThirdParty.meta
+
+# Output of the performance bench when run from the Editor (kept results are copied to docs/playtests)
+/PerfResults/

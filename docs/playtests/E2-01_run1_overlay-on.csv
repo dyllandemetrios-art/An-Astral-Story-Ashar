@@ -1,0 +1,10 @@
+# Unity 6000.6.2f1, BUILD, 1920x1080, 160 Hz, vSync 0
+# CPU AMD Ryzen 7 7800X3D 8-Core Processor  (16 threads), GPU NVIDIA GeForce RTX 5070, RAM 31882 MB
+# memory counter: managed heap growth (fallback)
+mode,target,frames,seconds,avgMs,avgFps,onePercentLowFps,worstMs,percentOver25ms,allocBytesPerFrame,gcPasses,avgAlive,holds60fps
+InstantiateDestroy,500,34965,20.0,0.57,1748,653,14.6,0.00,2341,84,500,yes
+Pooled,500,35267,20.0,0.57,1763,687,3.3,0.00,2120,68,500,yes
+InstantiateDestroy,1000,24270,20.0,0.82,1213,387,4.5,0.00,2567,55,1000,yes
+Pooled,1000,24708,20.0,0.81,1235,394,4.0,0.00,2329,50,1000,yes
+InstantiateDestroy,2000,13288,20.0,1.51,664,149,7.8,0.00,3338,37,2000,yes
+Pooled,2000,13306,20.0,1.50,665,150,7.9,0.00,3290,34,2000,yes
