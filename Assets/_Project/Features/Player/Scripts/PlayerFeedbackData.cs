@@ -30,6 +30,16 @@ namespace Ashar.Player
         [SerializeField, Range(0f, 1f), Tooltip("How strongly the ship is tinted at the start of the tint (0 = not at all, 1 = fully the tint colour).")]
         private float _tintStrength = 0.6f;
 
+        [Header("Graze flash")]
+        [SerializeField, Min(0f), Tooltip("How long the small flash lasts when a bullet grazes the ship, in seconds.")]
+        private float _grazeFlashDuration = 0.08f;
+
+        [SerializeField, Tooltip("Colour of the graze flash.")]
+        private Color _grazeFlashColor = Color.white;
+
+        [SerializeField, Range(0f, 1f), Tooltip("How strongly the ship is pushed to the graze colour at the start (0 = not at all, 1 = fully). Kept low: a graze is a reward, not a hit.")]
+        private float _grazeFlashStrength = 0.35f;
+
         [Header("Shake")]
         [SerializeField, Min(0f), Tooltip("How long the ship image shakes, in seconds.")]
         private float _shakeDuration = 0.3f;
@@ -54,6 +64,15 @@ namespace Ashar.Player
 
         /// <summary>Strength of the tint at its start, from 0 to 1.</summary>
         public float TintStrength => _tintStrength;
+
+        /// <summary>How long the small graze flash lasts, in seconds.</summary>
+        public float GrazeFlashDuration => _grazeFlashDuration;
+
+        /// <summary>Colour of the graze flash.</summary>
+        public Color GrazeFlashColor => _grazeFlashColor;
+
+        /// <summary>Strength of the graze flash at its start, from 0 to 1.</summary>
+        public float GrazeFlashStrength => _grazeFlashStrength;
 
         /// <summary>How long the ship image shakes, in seconds.</summary>
         public float ShakeDuration => _shakeDuration;

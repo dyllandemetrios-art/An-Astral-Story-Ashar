@@ -45,6 +45,9 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Read-only: seconds since the last hit, or a negative value when no feedback is running.")]
         private float _hitElapsed = -1f;
 
+        [SerializeField, Tooltip("Read-only: seconds since the last graze, or a negative value when no graze flash is running.")]
+        private float _grazeElapsed = -1f;
+
         private MaterialPropertyBlock _block;   // Per-renderer shader values, so the shared material is left alone.
         private Vector3 _visualStartPosition;   // Local position of the Visual at rest, restored after the shake.
         private Vector2 _shakeRandom;           // Current random direction of the shake, in [-1, 1] on both axes.
@@ -71,6 +74,7 @@ namespace Ashar.Player
             GameEvents.OnPlayerFired += HandleFired;
             GameEvents.OnPlayerDashed += HandleDashed;
             GameEvents.OnPlayerHit += HandleHit;
+            GameEvents.OnPlayerGrazed += HandleGrazed;
         }
 
         /// <summary>Stops listening, and puts the image back at rest, so a disabled ship is never left flashing.</summary>
@@ -79,6 +83,7 @@ namespace Ashar.Player
             GameEvents.OnPlayerFired -= HandleFired;
             GameEvents.OnPlayerDashed -= HandleDashed;
             GameEvents.OnPlayerHit -= HandleHit;
+            GameEvents.OnPlayerGrazed -= HandleGrazed;
 
             if (_visual != null)
             {
@@ -89,6 +94,8 @@ namespace Ashar.Player
         /// <summary>Runs the flash, tint and shake while a hit feedback is playing.</summary>
         private void Update()
         {
+            UpdateGrazeFlash();
+
             if (_hitElapsed < 0f)
             {
                 return;
@@ -128,6 +135,36 @@ namespace Ashar.Player
             Play(_dashClip);
         }
 
+        /// <summary>Starts the small graze flash. It is visual only: no sound, so a reward never gets tiresome.</summary>
+        private void HandleGrazed(int points)
+        {
+            _grazeElapsed = 0f;
+        }
+
+        /// <summary>Runs the small graze flash, unless a hit is being shown (the hit feedback takes over).</summary>
+        private void UpdateGrazeFlash()
+        {
+            if (_grazeElapsed < 0f)
+            {
+                return;
+            }
+
+            _grazeElapsed += Time.deltaTime;
+            if (_hitElapsed >= 0f)
+            {
+                return; // The hit flash drives the shader for now; the graze flash is dropped.
+            }
+
+            if (_grazeElapsed >= _feedbackData.GrazeFlashDuration)
+            {
+                _grazeElapsed = -1f;
+                ApplyFlash(Color.white, 0f);
+                return;
+            }
+
+            ApplyFlash(_feedbackData.GrazeFlashColor, ComputeGrazeFlash(_grazeElapsed, _feedbackData.GrazeFlashDuration, _feedbackData.GrazeFlashStrength));
+        }
+
         /// <summary>Plays the hit sound and starts the flash, tint and shake.</summary>
         private void HandleHit()
         {
@@ -160,6 +197,20 @@ namespace Ashar.Player
             _block.SetColor(FlashColorId, color);
             _block.SetFloat(FlashAmountId, amount);
             _visual.SetPropertyBlock(_block);
+        }
+
+        /// <summary>
+        /// Returns how far the sprite is pushed to the graze colour at a given time after a graze: the full strength at
+        /// the start, fading linearly to 0. Static and free of Unity state so it can be unit-tested.
+        /// </summary>
+        public static float ComputeGrazeFlash(float elapsed, float duration, float strength)
+        {
+            if (duration <= 0f || elapsed >= duration)
+            {
+                return 0f;
+            }
+
+            return strength * (1f - elapsed / duration);
         }
 
         /// <summary>

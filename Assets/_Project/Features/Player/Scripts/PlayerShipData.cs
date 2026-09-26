@@ -46,8 +46,21 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Show the silver dot that marks the hitbox. Meant to become an option of the game (accessibility).")]
         private bool _showHitbox = true;
 
+        [Header("Graze")]
+        [SerializeField, Min(0.01f), Tooltip("Radius of the graze zone around the ship, in world units (spec §7.1: 0.6). A bullet entering it without touching the hitbox is a near miss that earns points.")]
+        private float _grazeRadius = 0.6f;
+
+        [SerializeField, Min(0), Tooltip("Score points earned by one graze (spec §7.1: 20). Each bullet counts only once.")]
+        private int _grazeScore = 20;
+
         /// <summary>Ship speed in world units per second.</summary>
         public float MoveSpeed => _moveSpeed;
+
+        /// <summary>Radius of the graze zone, in world units.</summary>
+        public float GrazeRadius => _grazeRadius;
+
+        /// <summary>Score points earned by one graze.</summary>
+        public int GrazeScore => _grazeScore;
 
         /// <summary>Radius of the hitbox, in world units.</summary>
         public float HitboxRadius => _hitboxRadius;

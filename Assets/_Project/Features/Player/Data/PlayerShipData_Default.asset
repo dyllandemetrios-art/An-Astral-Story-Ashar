@@ -22,3 +22,5 @@ MonoBehaviour:
   _dashCooldown: 1.5
   _hitboxRadius: 0.11
   _showHitbox: 1
+  _grazeRadius: 0.6
+  _grazeScore: 20

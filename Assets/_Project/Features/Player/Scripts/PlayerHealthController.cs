@@ -10,7 +10,8 @@ namespace Ashar.Player
     /// and turn an enemy bullet touching the hitbox into a GameEvents.OnPlayerHit event.
     /// HOW IT WORKS: the hitbox is a small trigger circle on its own child object, on the PlayerHitbox layer. The
     /// collision matrix lets it meet only enemy bullets and enemies. The ship root has a kinematic Rigidbody2D,
-    /// which is what makes Unity deliver the trigger message to this script. A bullet that touches the hitbox is
+    /// which Unity needs to deliver trigger contacts, and a PlayerTriggerRelay on the hitbox tells this script when
+    /// something enters it (the graze zone has its own relay, so the two are never mixed up). A bullet that touches the hitbox is
     /// destroyed and the event is raised, unless the ship is invulnerable (dash): then the bullet flies on.
     /// WHY: only the tiny hitbox counts, not the whole sprite, so a bullet may graze the wing without hitting (the
     /// genre's convention, which makes dense bullet patterns fair). Lives and respawn come with later stories.
@@ -25,6 +26,9 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Trigger circle of the hitbox, on the PlayerHitbox layer (a child of the ship).")]
         private CircleCollider2D _hitbox;
 
+        [SerializeField, Tooltip("Relay on the hitbox object: tells this script when something enters the hitbox.")]
+        private PlayerTriggerRelay _hitboxRelay;
+
         [SerializeField, Tooltip("Silver dot that marks the hitbox. Shown or hidden according to the ship data.")]
         private GameObject _hitboxDot;
 
@@ -38,10 +42,28 @@ namespace Ashar.Player
         /// <summary>Checks that the required references are set, and disables the component if one is missing.</summary>
         private void Awake()
         {
-            if (_shipData == null || _hitbox == null)
+            if (_shipData == null || _hitbox == null || _hitboxRelay == null)
             {
-                Debug.LogError($"{nameof(PlayerHealthController)} on '{name}' is missing its ship data or hitbox. Hit detection disabled.", this);
+                Debug.LogError($"{nameof(PlayerHealthController)} on '{name}' is missing its ship data, hitbox or hitbox relay. Hit detection disabled.", this);
                 enabled = false;
+            }
+        }
+
+        /// <summary>Starts listening to the hitbox contacts.</summary>
+        private void OnEnable()
+        {
+            if (_hitboxRelay != null)
+            {
+                _hitboxRelay.Entered += HandleHitboxEntered;
+            }
+        }
+
+        /// <summary>Stops listening to the hitbox contacts.</summary>
+        private void OnDisable()
+        {
+            if (_hitboxRelay != null)
+            {
+                _hitboxRelay.Entered -= HandleHitboxEntered;
             }
         }
 
@@ -59,8 +81,8 @@ namespace Ashar.Player
             }
         }
 
-        /// <summary>Called by Unity when a trigger of this ship (the hitbox) meets another collider.</summary>
-        private void OnTriggerEnter2D(Collider2D other)
+        /// <summary>Called when another collider enters the hitbox.</summary>
+        private void HandleHitboxEntered(Collider2D other)
         {
             if (other.gameObject.layer != Layers.EnemyBullet)
             {
@@ -75,6 +97,13 @@ namespace Ashar.Player
 
             _hitCount++;
             GameEvents.RaisePlayerHit();
+
+            // A bullet that hits is an impact, never also a graze, even if the graze zone sees it in the same frame.
+            ProjectileController projectile = other.GetComponentInParent<ProjectileController>();
+            if (projectile != null)
+            {
+                projectile.MarkGrazed();
+            }
 
             // The bullet is spent: destroy its whole object (the collider may sit on a child).
             GameObject bulletObject = other.attachedRigidbody != null ? other.attachedRigidbody.gameObject : other.gameObject;

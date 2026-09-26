@@ -17,6 +17,9 @@ MonoBehaviour:
   _tintDuration: 0.35
   _tintColor: {r: 1, g: 0.25, b: 0.25, a: 1}
   _tintStrength: 0.6
+  _grazeFlashDuration: 0.08
+  _grazeFlashColor: {r: 1, g: 1, b: 1, a: 1}
+  _grazeFlashStrength: 0.35
   _shakeDuration: 0.3
   _shakeAmplitude: 0.12
   _shakeInterval: 0.04

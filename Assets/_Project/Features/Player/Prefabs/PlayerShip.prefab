@@ -92,6 +92,87 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1968044003506698899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8306242851225932830}
+  - component: {fileID: 140840899486474882}
+  - component: {fileID: 1817601520357039662}
+  m_Layer: 9
+  m_Name: GrazeZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8306242851225932830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968044003506698899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4394713817967307884}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &140840899486474882
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968044003506698899}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.6
+--- !u!114 &1817601520357039662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968044003506698899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3fd6ad9b1565184aa0a5b1ea97737fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerTriggerRelay
 --- !u!1 &2800007990980766357
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +281,7 @@ GameObject:
   - component: {fileID: 2021032983122286540}
   - component: {fileID: 2014353751512518466}
   - component: {fileID: 5168070720775072745}
+  - component: {fileID: 4909109372825651635}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -224,6 +306,7 @@ Transform:
   - {fileID: 6554881046869838552}
   - {fileID: 131812198211087519}
   - {fileID: 3000841791069992762}
+  - {fileID: 8306242851225932830}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8629334214438046894
@@ -325,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerHealthController
   _shipData: {fileID: 11400000, guid: da1d39ddd1bf9974fbbbb8f6196c4626, type: 2}
   _hitbox: {fileID: 4916509886971640428}
+  _hitboxRelay: {fileID: 1125332908260301090}
   _hitboxDot: {fileID: 219492365711694360}
   _dash: {fileID: 1412678168849207220}
   _hitCount: 0
@@ -444,6 +528,26 @@ MonoBehaviour:
   _dashClip: {fileID: 8300000, guid: c588c4e4a47f3c4499e3e3b57cf6728e, type: 3}
   _hitClip: {fileID: 0}
   _hitElapsed: -1
+  _grazeElapsed: -1
+--- !u!114 &4909109372825651635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195100340313331399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6d34272137f2748b74e4b2ecc808eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerGrazeController
+  _shipData: {fileID: 11400000, guid: da1d39ddd1bf9974fbbbb8f6196c4626, type: 2}
+  _grazeZone: {fileID: 140840899486474882}
+  _grazeRelay: {fileID: 1817601520357039662}
+  _hitbox: {fileID: 4916509886971640428}
+  _dash: {fileID: 1412678168849207220}
+  _grazeCount: 0
+  _grazePoints: 0
 --- !u!1 &6462150189907474345
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3000841791069992762}
   - component: {fileID: 4916509886971640428}
+  - component: {fileID: 1125332908260301090}
   m_Layer: 8
   m_Name: Hitbox
   m_TagString: Untagged
@@ -544,6 +649,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.11
+--- !u!114 &1125332908260301090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7544484526456727445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3fd6ad9b1565184aa0a5b1ea97737fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerTriggerRelay
 --- !u!1 &7807611368247512328
 GameObject:
   m_ObjectHideFlags: 0

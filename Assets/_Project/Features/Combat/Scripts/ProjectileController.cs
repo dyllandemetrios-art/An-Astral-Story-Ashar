@@ -21,9 +21,19 @@ namespace Ashar.Combat
         private float _speed;                    // World units per second.
         private Rect _lifeBounds;                // The projectile is destroyed when it leaves this rectangle.
         private bool _initialized;               // False until Initialize() has been called.
+        private bool _hasBeenGrazed;             // True once counted as a graze or a hit: a projectile never counts twice.
 
         /// <summary>Damage this projectile deals on impact.</summary>
         public float Damage => _damage;
+
+        /// <summary>True once this projectile has been counted as a graze or a hit.</summary>
+        public bool HasBeenGrazed => _hasBeenGrazed;
+
+        /// <summary>Marks the projectile as counted, so it can never be counted a second time.</summary>
+        public void MarkGrazed()
+        {
+            _hasBeenGrazed = true;
+        }
 
         /// <summary>Sets how the projectile flies. Must be called once, right after the projectile is created.</summary>
         public void Initialize(Vector2 direction, float speed, float damage, Rect lifeBounds)
