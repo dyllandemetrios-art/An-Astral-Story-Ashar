@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e78570502434c645b449fead77bd8f8, type: 3}
+  m_Name: EnemyData_Sentinel
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Enemies.EnemyData
+  _id: sentinel
+  _displayNameKey: enemy.sentinel.name
+  _prefab: {fileID: 6630513294460791230, guid: 6400057389a29574ba6cf2628583cb25, type: 3}
+  _maxHp: 300
+  _score: 300
+  _movement: 4
+  _speed: 2.25
+  _amplitude: 1.5
+  _frequency: 0

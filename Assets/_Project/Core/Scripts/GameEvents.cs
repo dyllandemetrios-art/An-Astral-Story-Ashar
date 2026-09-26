@@ -27,6 +27,9 @@ namespace Ashar.Core
         /// <summary>Raised when an enemy bullet grazes the player ship. The value is the score points earned.</summary>
         public static event Action<int> OnPlayerGrazed;
 
+        /// <summary>Raised when the player destroys an enemy. The value is the score points it is worth.</summary>
+        public static event Action<int> OnEnemyKilled;
+
         /// <summary>Announces that the player ship has been hit.</summary>
         public static void RaisePlayerHit()
         {
@@ -37,6 +40,12 @@ namespace Ashar.Core
         public static void RaisePlayerGrazed(int points)
         {
             OnPlayerGrazed?.Invoke(points);
+        }
+
+        /// <summary>Announces that an enemy has been destroyed, with the score points it is worth.</summary>
+        public static void RaiseEnemyKilled(int points)
+        {
+            OnEnemyKilled?.Invoke(points);
         }
 
         /// <summary>Announces that the player ship has fired a bullet.</summary>

@@ -85,9 +85,10 @@ namespace Ashar.Player
         /// <summary>Called when another collider enters the hitbox.</summary>
         private void HandleHitboxEntered(Collider2D other)
         {
-            if (other.gameObject.layer != Layers.EnemyBullet)
+            int layer = other.gameObject.layer;
+            if (layer != Layers.EnemyBullet && layer != Layers.Enemy)
             {
-                return; // Enemy bodies and power-ups have their own stories.
+                return; // Power-ups have their own story.
             }
 
             bool invulnerable = _dash != null && _dash.IsInvulnerable;
@@ -106,9 +107,13 @@ namespace Ashar.Player
                 projectile.MarkGrazed();
             }
 
-            // The bullet is spent: destroy its whole object (the collider may sit on a child).
-            GameObject bulletObject = other.attachedRigidbody != null ? other.attachedRigidbody.gameObject : other.gameObject;
-            Destroy(bulletObject);
+            // A bullet is spent by the hit: destroy its whole object (the collider may sit on a child). An enemy that
+            // rams the ship is not destroyed by it: it is the player who takes the hit.
+            if (layer == Layers.EnemyBullet)
+            {
+                GameObject bulletObject = other.attachedRigidbody != null ? other.attachedRigidbody.gameObject : other.gameObject;
+                Destroy(bulletObject);
+            }
         }
 
         /// <summary>
