@@ -1,33 +1,80 @@
 # An Astral Story : Ashar
 
-Shoot'em up narratif 2D, développé en solo sous **Unity 6 (URP, C#)**.
+Shoot'em up narratif 2D à scroll vertical, en pixel art, développé en solo sous **Unity 6 (URP, C#)**.
 
-Spin-off du roman *Anandavira*, situé dans son préquel *Les Exilés d'Ashar*. Le joueur incarne **Kaal'varis Dorn**, ancien militaire pléiadien condamné à l'exil et détenu sur la station orbitale **Phobos IX**. Avec les exilés qu'il a rassemblés, il s'empare d'un vaisseau terrien et s'évade à travers l'orbite martienne — chaque mission dévoilant, via dialogues radio et entrées de codex, une part d'une intrigue plus vaste de manipulation de l'humanité.
+![Statut](https://img.shields.io/badge/statut-en%20d%C3%A9veloppement-orange)
+![Moteur](https://img.shields.io/badge/moteur-Unity%206-black?logo=unity)
+![Plateforme](https://img.shields.io/badge/plateforme-Windows-blue)
 
-## Statut
+🎮 **Jouer sur itch.io** : lien à venir, une fois la démo prête.
 
-🚧 En développement — démo jouable (2 niveaux, 20-30 min) visée pour fin novembre 2026.
+## À propos
 
-## Gameplay
+Spin-off du roman *Anandavira*, situé dans son préquel *Les Exilés d'Ashar*. Le joueur incarne **Kaal'varis Dorn**, ancien messager du Conseil pléiadien condamné à l'exil et détenu dans le complexe pénitentiaire orbital **Phobos IX**. Avec les exilés qu'il a rassemblés, il s'empare d'un vaisseau terrien et s'évade à travers l'orbite martienne — chaque mission dévoilant, via des dialogues en bulle (Ink), une voix off et des entrées de codex, une part d'une intrigue plus vaste de manipulation de l'humanité.
+
+### Gameplay
 
 - Arcade vertical, déplacement 8 directions, tir principal + arme secondaire (piratage)
 - Dash/esquive avec invulnérabilité courte, bouclier éphémère, power-ups
-- Narration en toile de fond : dialogues radio entre les vagues, codex débloqué en fin de mission
-- 3 modes prévus : Story, Normal, Arcade
+- Narration en toile de fond : dialogues en bulle entre les vagues, codex débloqué en fin de mission
+- Un seul niveau de difficulté
 
-## Stack technique
+### Lien avec l'univers Anandavira
 
-- Unity 6.6, Universal Render Pipeline (2D Renderer)
-- C#, architecture par ScriptableObjects (EnemyData, WaveData, PowerUpData, RadioLine, CodexEntry)
-- Cible : PC Windows, WebGL, 1080p/60 fps, export Itch.io
+Ce projet est un pont vers le roman *Anandavira*, pas un résumé : les dialogues et le codex teasent l'univers sans en dévoiler les grandes révélations.
 
-## Portée du projet
+## Contrôles
+
+Provisoires, à valider au premier playtest.
+
+| Action | Clavier | Manette |
+| --- | --- | --- |
+| Déplacement | ZQSD ou flèches | Stick gauche, croix |
+| Tir (maintenu) | Espace | A / Croix, ou gâchette droite |
+| Dash | Maj gauche | B / Rond, ou bouton d'épaule gauche |
+| Impulsion de piratage | E | X / Carré, ou bouton d'épaule droit |
+| Pause | Échap | Start |
+
+## Ce que ce projet m'a appris
+
+À compléter en fin de projet.
+
+## Points techniques
+
+À compléter au fil du développement.
+
+## Tech stack
+
+- Unity 6.6, Universal Render Pipeline (2D Renderer), Pixel Perfect Camera
+- C#, architecture par ScriptableObjects (EnemyData, WaveData, MissionData, PowerUpData, CodexEntry)
+- Input System, TextMeshPro, Ink (inkle) pour les dialogues
+- Unity Test Framework (tests EditMode)
+- Cible : PC Windows, 1080p/60 fps, export Itch.io
+
+## Assets tiers
+
+Les packs achetés ne sont **pas inclus dans ce dépôt** : leurs licences interdisent la redistribution, y compris sous forme retouchée. Ils sont rangés dans `Assets/ThirdParty/`, exclu par le `.gitignore`. Un clone du dépôt affiche donc des sprites manquants : c'est normal.
+
+| Pack | Auteur |
+| --- | --- |
+| Futuristic Spaceship SHMUP Bundle (vaisseaux, ennemis, fonds, explosions) | DyLESTorm (itch.io) |
+| Sci-fi Turret Sprite Pack | Felmir (itch.io) |
+| Futuristic Military Base, Pixel Mars Base Tileset | Cute SCKR (itch.io), packs signalés *AI Assisted* |
+| Cyberpunk Synthwave (musique) | Aleksis Tristan Shaw (itch.io) |
+
+## Méthode
+
+Développé avec **Claude Code**, story par story : chaque story du backlog fait l'objet d'une spec (`docs/specs/`), implémentée sur sa propre branche, puis testée et validée par moi avant fusion. La conception (game, level et narrative design), les arbitrages et les tests restent humains.
+
+## Statut
+
+🚧 En développement — démo jouable (2 missions de 5 à 8 minutes) visée pour fin novembre 2026.
 
 Développé seul, en 8 semaines (pré-production fin septembre, développement du 1ᵉʳ octobre au 25 novembre 2026), dans une logique de **portfolio** : démontrer le game design, le level design et le narrative design du jeu.
 
-## Lien avec l'univers Anandavira
+## Auteur
 
-Ce projet est un pont vers le roman *Anandavira*, pas un résumé : la radio et le codex teasent l'univers sans en dévoiler les grandes révélations.
+**Dyllan Démétrios**
 
 ## Licence
 

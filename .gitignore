@@ -115,3 +115,8 @@ InitTestScene*.unity*
 
 # JetBrains Rider
 .idea/
+
+# Purchased asset packs (and their retouched versions): licences forbid redistribution.
+# Backed up separately, never pushed to the public repository.
+/[Aa]ssets/ThirdParty/
+/[Aa]ssets/ThirdParty.meta
