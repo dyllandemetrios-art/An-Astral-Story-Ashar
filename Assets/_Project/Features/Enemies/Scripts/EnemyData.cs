@@ -29,7 +29,7 @@ namespace Ashar.Enemies
     /// RESPONSIBILITIES: hold the numbers of an enemy type so that a new enemy is a new asset, not new code.
     /// HOW IT WORKS: this is a ScriptableObject asset (EnemyData_GuardDrone...). The wave system reads it to know what to
     /// create, and EnemyController reads it to know how to behave. The look is the prefab it points to.
-    /// PATTERN: data-driven design. Firing patterns, pulse response and power-up drops are added by the stories that use them.
+    /// PATTERN: data-driven design. Pulse response and power-up drops are added by the stories that use them.
     /// </summary>
     [CreateAssetMenu(fileName = "EnemyData_New", menuName = "Ashar/Enemy Data")]
     public class EnemyData : ScriptableObject
@@ -64,6 +64,10 @@ namespace Ashar.Enemies
         [SerializeField, Min(0f), Tooltip("Swings per second, for Sine and LateralSweep.")]
         private float _frequency = 0.5f;
 
+        [Header("Weapon")]
+        [SerializeField, Tooltip("How the enemy fires. Leave empty for an enemy that never fires.")]
+        private FirePatternData _firePattern;
+
         /// <summary>Short unique name of the enemy.</summary>
         public string Id => _id;
 
@@ -84,6 +88,9 @@ namespace Ashar.Enemies
 
         /// <summary>Speed in world units per second.</summary>
         public float Speed => _speed;
+
+        /// <summary>How the enemy fires, or null if it never fires.</summary>
+        public FirePatternData FirePattern => _firePattern;
 
         /// <summary>Swing distance or circle radius, in world units.</summary>
         public float Amplitude => _amplitude;

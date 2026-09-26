@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e78570502434c645b449fead77bd8f8, type: 3}
-  m_Name: EnemyData_GuardDrone
+  m_Name: EnemyData_TestBurstShooter
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Enemies.EnemyData
-  _id: guard_drone
-  _displayNameKey: enemy.guard_drone.name
-  _prefab: {fileID: 3638103934813129999, guid: 9b46da64ae1b67045ac4385de94f7558, type: 3}
-  _maxHp: 50
+  _id: test_testburstshooter
+  _displayNameKey: enemy.test.name
+  _prefab: {fileID: 1961475310695973683, guid: 438ccf35d80fa7740bd062ff0b93fe9e, type: 3}
+  _maxHp: 100
   _score: 100
   _movement: 1
-  _speed: 4.5
-  _amplitude: 1.5
-  _frequency: 0.5
-  _firePattern: {fileID: 11400000, guid: c1cceb93b0e16bc4091ff9f24c382f56, type: 2}
+  _speed: 2
+  _amplitude: 1
+  _frequency: 0.3
+  _firePattern: {fileID: 11400000, guid: 06160869057148e4e9eedd88d998757e, type: 2}

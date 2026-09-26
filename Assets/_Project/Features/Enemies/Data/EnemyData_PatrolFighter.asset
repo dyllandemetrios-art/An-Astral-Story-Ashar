@@ -21,3 +21,4 @@ MonoBehaviour:
   _speed: 4.5
   _amplitude: 0.8
   _frequency: 0.4
+  _firePattern: {fileID: 11400000, guid: c1395c8188127a74db87eefe70cbd4ae, type: 2}

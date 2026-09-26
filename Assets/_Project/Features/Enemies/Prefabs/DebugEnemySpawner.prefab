@@ -49,10 +49,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8535aa69f137cf845914c1db4ddcb72e, type: 2}
   - {fileID: 11400000, guid: 2673fcb7e09ae2c4abbfb30ca5c354bc, type: 2}
   - {fileID: 11400000, guid: c79bf6f117841d84a96f24ff02463fff, type: 2}
+  - {fileID: 11400000, guid: 2b5eea3532b0a604989247a397161fd6, type: 2}
+  - {fileID: 11400000, guid: d1606a4a937d19d40ac02a472a3fef08, type: 2}
+  - {fileID: 11400000, guid: d1427f8e333ec67469d0f069f865d1e4, type: 2}
   _target: {fileID: 0}
   _enemyParent: {fileID: 0}
   _fxParent: {fileID: 0}
+  _projectileParent: {fileID: 0}
   _playArea: {fileID: 0}
   _interval: 1.5
   _lifeMargin: 3
+  _bulletMargin: 1
   _spawnedCount: 0

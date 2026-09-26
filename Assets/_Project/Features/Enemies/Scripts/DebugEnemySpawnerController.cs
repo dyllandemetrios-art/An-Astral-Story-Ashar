@@ -25,6 +25,9 @@ namespace Ashar.Enemies
         [SerializeField, Tooltip("Scene object that holds the effects (Runtime/FX). Set it on the scene instance.")]
         private Transform _fxParent;
 
+        [SerializeField, Tooltip("Scene object that holds the enemy bullets (Runtime/Projectiles). Set it on the scene instance.")]
+        private Transform _projectileParent;
+
         [SerializeField, Tooltip("Play area, used to know where the screen is. Set it on the scene instance.")]
         private PlayAreaController _playArea;
 
@@ -34,6 +37,9 @@ namespace Ashar.Enemies
 
         [SerializeField, Min(0f), Tooltip("How far outside the screen an enemy may go before it is removed, in world units. Must be larger than the distance it appears outside the screen.")]
         private float _lifeMargin = 3f;
+
+        [SerializeField, Min(0f), Tooltip("How far outside the screen an enemy bullet may go before it is destroyed, in world units.")]
+        private float _bulletMargin = 1f;
 
         [Header("Debug")]
         [SerializeField, Tooltip("Read-only: enemies created since the scene started.")]
@@ -45,7 +51,7 @@ namespace Ashar.Enemies
         /// <summary>Checks that every reference is set, and disables the component if one is missing.</summary>
         private void Awake()
         {
-            if (_enemies == null || _enemies.Length == 0 || _target == null || _enemyParent == null || _fxParent == null || _playArea == null)
+            if (_enemies == null || _enemies.Length == 0 || _target == null || _enemyParent == null || _fxParent == null || _projectileParent == null || _playArea == null)
             {
                 Debug.LogError($"{nameof(DebugEnemySpawnerController)} on '{name}' is missing a reference or has no enemy. Spawner disabled.", this);
                 enabled = false;
@@ -89,7 +95,8 @@ namespace Ashar.Enemies
 
             EnemyController enemy = Instantiate(data.Prefab, new Vector3(position.x, position.y, 0f), Quaternion.identity, _enemyParent);
             Rect life = PlayAreaController.Inflate(screen, _lifeMargin);
-            enemy.Initialize(data, new EnemySpawnContext(_target, life, _fxParent));
+            Rect bulletBounds = PlayAreaController.Inflate(screen, _bulletMargin);
+            enemy.Initialize(data, new EnemySpawnContext(_target, life, _fxParent, _projectileParent, bulletBounds));
             _spawnedCount++;
         }
     }

@@ -617,6 +617,10 @@ PrefabInstance:
       propertyPath: _enemyParent
       value: 
       objectReference: {fileID: 617760152}
+    - target: {fileID: 348847774081021202, guid: 73c3cb22251782c448bd74c98905c776, type: 3}
+      propertyPath: _projectileParent
+      value: 
+      objectReference: {fileID: 1075793402}
     - target: {fileID: 1875748221981242312, guid: 73c3cb22251782c448bd74c98905c776, type: 3}
       propertyPath: m_Name
       value: DebugEnemySpawner

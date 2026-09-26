@@ -72,6 +72,13 @@ namespace Ashar.Enemies
             Vector2 target = hasTarget ? (Vector2)context.Target.position : Vector2.zero;
             _direction = EnemyMovement.ChooseDirection(data.Movement, _start, target, hasTarget);
             _time = 0f;
+
+            EnemyShootController shooter = GetComponent<EnemyShootController>();
+            if (shooter != null && data.FirePattern != null)
+            {
+                shooter.Initialize(data.FirePattern, context);
+            }
+
             _block = new MaterialPropertyBlock();
             ApplyFlash(0f);
             _initialized = true;

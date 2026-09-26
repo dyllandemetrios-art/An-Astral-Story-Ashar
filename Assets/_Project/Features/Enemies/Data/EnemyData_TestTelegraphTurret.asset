@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e78570502434c645b449fead77bd8f8, type: 3}
-  m_Name: EnemyData_GuardDrone
+  m_Name: EnemyData_TestTelegraphTurret
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Enemies.EnemyData
-  _id: guard_drone
-  _displayNameKey: enemy.guard_drone.name
-  _prefab: {fileID: 3638103934813129999, guid: 9b46da64ae1b67045ac4385de94f7558, type: 3}
-  _maxHp: 50
+  _id: test_testtelegraphturret
+  _displayNameKey: enemy.test.name
+  _prefab: {fileID: 6630513294460791230, guid: 6400057389a29574ba6cf2628583cb25, type: 3}
+  _maxHp: 300
   _score: 100
-  _movement: 1
-  _speed: 4.5
-  _amplitude: 1.5
-  _frequency: 0.5
-  _firePattern: {fileID: 11400000, guid: c1cceb93b0e16bc4091ff9f24c382f56, type: 2}
+  _movement: 5
+  _speed: 0
+  _amplitude: 0
+  _frequency: 0
+  _firePattern: {fileID: 11400000, guid: a3f456e7e555c6c49ad3a8e6823bacc8, type: 2}
