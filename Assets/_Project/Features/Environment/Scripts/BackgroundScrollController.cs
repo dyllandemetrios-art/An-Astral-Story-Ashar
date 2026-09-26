@@ -8,7 +8,8 @@ namespace Ashar.Environment
     /// RESPONSIBILITIES: move each layer, and wrap it around so the scroll never ends and shows no seam.
     /// HOW IT WORKS: each layer is a root object holding two identical tiles, tile B exactly one tile height
     /// above tile A. The root slides down; once it has moved one tile height, it jumps back to its start.
-    /// Because both tiles look the same, that jump is invisible. A layer's speed is the base speed times its
+    /// Because both tiles look the same, that jump is invisible. Each tile must be taller than the screen, so
+    /// the two of them always cover it. A layer's speed is the base speed times its
     /// speed factor: distant layers get a small factor so they move slower than the near ones.
     /// WHY: the scenery scrolls, not the camera (spec §4), and the base speed is a plain Inspector value so
     /// the wave timeline can change it later.
@@ -22,7 +23,7 @@ namespace Ashar.Environment
             [SerializeField, Tooltip("Object that is moved by the scroll. Holds the two tiles as children.")]
             private Transform _root;
 
-            [SerializeField, Tooltip("Renderer of one tile. Its height is the distance after which the layer wraps around.")]
+            [SerializeField, Tooltip("Renderer of one tile. Its drawn height (also for a Tiled sprite) is the distance after which the layer wraps around, so it must be a whole number of pattern repeats.")]
             private SpriteRenderer _tile;
 
             [SerializeField, Min(0f), Tooltip("Speed of this layer as a fraction of the base speed. Smaller for distant layers.")]
@@ -71,7 +72,9 @@ namespace Ashar.Environment
                     return;
                 }
 
-                _tileHeights[i] = layer.Tile.sprite.bounds.size.y * layer.Tile.transform.lossyScale.y;
+                // The renderer bounds give the height actually drawn in the world. Unlike the sprite size, they are
+                // right for a Tiled sprite too, where one renderer repeats a small pattern several times.
+                _tileHeights[i] = layer.Tile.bounds.size.y;
                 _startPositions[i] = layer.Root.localPosition;
             }
         }

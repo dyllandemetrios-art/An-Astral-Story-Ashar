@@ -15,9 +15,9 @@ Réalisé le 26/09/2026 par Claude Code, à partir de `_AssetInbox/` (dossier lo
 | `Felmir/SciFiTurretPack` | Sci-Fi Turret Pack **v2** | 6 tourelles (autocannon, dual laser, flak, heavy laser, laser, **plasma**) | Tourelles à plasma |
 | `CuteSCKR/FuturisticMilitaryBase` | Futuristic Military Base | 7 feuilles de tuiles 768 px | Hangar de départ (M1), Pacificateurs |
 | `CuteSCKR/PixelMarsBaseTileset` | Pixel Mars Base Tileset, format **RPG Maker MV/MZ** | 7 feuilles de tuiles 768 px | Sol et dômes de Phobos IX (M1) |
-| `AleksisTristanShaw/CyberpunkSynthwave` | Cyberpunk Synthwave | **5 pistes** du tableau §7.14 (Metropolis at Night, Cybernetic Breach, Mecha Fight, Maverick Synth, Posthuman), CLUF et lisez-moi | Toute la musique de la démo |
+| `AleksisTristanShaw/CyberpunkSynthwave` | Cyberpunk Synthwave | **Les 10 pistes** (à écouter avant d'affecter chacune ; le tableau §7.14 n'est qu'une proposition), CLUF et lisez-moi | Toute la musique de la démo |
 
-Total : 620 fichiers, environ 190 Mo (dont 177 Mo de WAV). Les fichiers `Readme` des packs sont conservés.
+Total : environ 630 fichiers, environ 350 Mo (dont 340 Mo de WAV). Les fichiers `Readme` des packs sont conservés.
 
 ## Ce qui a été laissé dans `_AssetInbox/` (et pourquoi)
 
@@ -26,14 +26,15 @@ Total : 620 fichiers, environ 190 Mo (dont 177 Mo de WAV). Les fichiers `Readme`
 - **Pixel Art City Background** : décor terrien, marqué « réserve » au §7.15.
 - **Sci-Fi Turret Pack 2** : tourelles légères (gatling, roquettes, missiles) qui ne servent pas au besoin « canon à plasma ».
 - **Mars, les deux autres formats** (`mars base-20260309-updated` et `mars-base`, mêmes fichiers en 2048 px) : le format MV/MZ est en 768 px, soit 16 × 16 tuiles de 48 px, ce qui correspond au PPU 48 du jeu et à la base militaire. Les versions 2048 px auraient exigé un redimensionnement.
-- **6 pistes de musique** (Alien Weapon, Cyborgs vs. Androids, Highrise Massacre, Off-Grid Outlaw, Resistance is Futile, morceau d'exemple) : le tableau §7.14 n'en utilise que 5. Elles restent disponibles si tu veux changer une affectation à l'écoute.
+- **Le morceau d'exemple** de la musique (« Sample Track ») : un extrait promotionnel, pas une piste du pack.
 - **Fichiers sources `.aseprite`** (ennemis, tourelles) : non importés, car Unity les transformerait en doublons. Ils resteront dans `_AssetInbox/` pour les recolorations (LEASH, sol de Phobos).
 
 ## Réglages appliqués
 
 - **Textures (604)** : Sprite, Point, sans compression, sans mip maps, PPU 48, appliqués automatiquement par `PixelArtImportPostprocessor`. Contrôle fait sur les 604 : 604 conformes.
-- **Musique (5 clips)** : chargement Streaming, compression Vorbis, qualité 0,7, chargement en arrière-plan (§7.14). Réglé à la main dans l'éditeur, car le postprocessor ne gère que les textures.
-- **Limite** : les feuilles de sprites (ex. `planes_07A.png`, 384 × 480) sont importées en un seul sprite. Les images individuelles (`planes_07A_1.png`…) sont déjà découpées et directement utilisables ; les feuilles seront découpées (mode Multiple) si une story d'animation en a besoin.
+- **Musique (10 clips)** : chargement Streaming, compression Vorbis, qualité 0,7, chargement en arrière-plan (§7.14). Réglé à la main dans l'éditeur, car le postprocessor ne gère que les textures.
+- **Mode Single imposé.** Unity 6.6 découpe par défaut chaque nouveau sprite en plusieurs sprites rognés (mode Multiple, découpe automatique) : à l'import, les 608 textures avaient donné 1 778 sprites dont 1 695 rognés, ce qui aurait déplacé le pivot d'une image d'animation à l'autre. `PixelArtImportPostprocessor` impose maintenant `Single`, et les 604 textures déjà importées ont été corrigées (582 restent après le nettoyage ci-dessous, toutes en Single, aucune rognée).
+- **Feuilles de sprites** (ex. `planes_07A.png`, 384 × 480) : importées en un seul sprite. Les images individuelles (`planes_07A_1.png`…) sont déjà découpées et directement utilisables ; les feuilles seront découpées (mode Multiple, manuellement) si une story d'animation en a besoin.
 
 ## Mesures du contenu réel (hors transparence) à PPU 48
 
@@ -59,8 +60,16 @@ Total : 620 fichiers, environ 190 Mo (dont 177 Mo de WAV). Les fichiers `Readme`
 4. **Lisibilité** : le boss 01 est rouge et orange, il devra bien être recoloré en magenta et jaune pour LEASH (§7.15). Les ennemis du pack ne sont pas tous rouge orangé (certains sont verts, violets ou turquoise) : c'est à surveiller au playtest, avec une recoloration si besoin.
 5. **Test du bloom (§8)** : non fait ici, à prévoir avant S7.
 
+## Nettoyage fait après validation (26/09)
+
+- **Placeholders supprimés** : `PlayerShip.png` (joueur) et `BackgroundFar|Mid|Near.png` (fond). Le prefab `PlayerShip` utilise maintenant `planes_07A_1.png`, et `TestBackground` utilise `purple_background`, `stars_2` et `stars_1` (mode Tiled, 22,5 × 20 unités, deux tuiles par couche).
+- **Retiré des packs importés** (les originaux restent dans `_AssetInbox/`) : `enemy.png` et `nebula_collection.png` (aperçus), le dossier `Explosion` du pack Spaceships (doublon du pack VFX), 8 icônes de vaisseaux inutiles (`icon-plane-01` à `06`, `08`, `09` ; on garde `icon-plane-07` pour les vies du HUD et `icon-plane`).
+- **Conservés volontairement** : tous les types d'ennemis (des variantes recolorées sont prévues pour les chasseurs, satellites et brouilleurs), toutes les couleurs d'unités de soutien, les tuiles de bases.
+- **`BackgroundScrollController`** lit désormais la hauteur du renderer (et non celle du sprite), pour que les couches en mode Tiled se raccordent : la distance de réenroulement est de 20 unités, un multiple de la hauteur du motif (10 unités).
+- **Limite visible** : les étoiles du motif `stars_1` se répètent sur une grille régulière (motif de 5,6 × 10 u). Ça se voit en regardant bien ; à remplacer par un fond plus large (nébuleuses) en S3-S4 si ça gêne.
+
 ## Suite proposée
 
-1. Remplacer les placeholders : vaisseau joueur (`Visual` du prefab `PlayerShip`, sprite 07A) et fond d'étoiles (couches de `TestBackground`). Aucun code à changer.
+1. ~~Remplacer les placeholders~~ : fait.
 2. Reprendre E1-03 (tir en rafale) avec les vrais projectiles du joueur (argent-blanc).
 3. Recolorations dans Aseprite (LEASH, sol de Phobos) plus tard, avec les `.aseprite` restés dans `_AssetInbox/`.

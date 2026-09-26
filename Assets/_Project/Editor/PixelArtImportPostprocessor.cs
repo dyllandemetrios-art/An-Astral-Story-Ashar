@@ -5,7 +5,7 @@ namespace Ashar.Editor
 {
     /// <summary>
     /// Gives every new texture in the project's own folders the pixel-art import settings (§3):
-    /// Sprite, Point filtering, no compression, no mip maps, 48 pixels per unit.
+    /// Sprite (Single mode), Point filtering, no compression, no mip maps, 48 pixels per unit.
     /// HOW IT WORKS: Unity calls OnPreprocessTexture() on every AssetPostprocessor before a texture
     /// is imported; we change the importer settings there, so the texture is imported correctly first time.
     /// WHY: a forgotten manual setting (bilinear filtering, compression) is the usual cause of blurry pixel art.
@@ -61,6 +61,10 @@ namespace Ashar.Editor
 
             var textureImporter = (TextureImporter)assetImporter;
             textureImporter.textureType = TextureImporterType.Sprite;
+
+            // Unity 6.6 slices a new sprite texture into several trimmed sprites by default. Single keeps one sprite
+            // per image with its whole cell, so the pivot stays at the cell centre and animation frames never jitter.
+            textureImporter.spriteImportMode = SpriteImportMode.Single;
             textureImporter.spritePixelsPerUnit = PixelsPerUnit;
             textureImporter.filterMode = FilterMode.Point;
             textureImporter.mipmapEnabled = false;
