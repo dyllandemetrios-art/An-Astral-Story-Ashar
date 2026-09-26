@@ -22,3 +22,7 @@ Cette liste **remplace la proposition du §7.14** du cahier des charges (tableau
 - Plusieurs usages pour une même piste (Maverick Synth : pause **et** boss ; Posthuman : boss final **et** menu principal) : confirmer si c'est la même boucle qui reprend ou un départ à zéro à chaque fois.
 - Plusieurs moments de combat (rapide, intense, moyen) : le choix de la piste par vague ou par phase se décide au moment de l'écriture des `MissionData` (champ `music`), pas avant.
 - Le §7.14 prévoyait Metropolis at Night pour le menu et le codex : ils utiliseraient désormais Posthuman (menu principal) ; la musique du codex reste à préciser.
+
+## Principe pour les bruitages (décidé par Dyllan, 26/09/2026)
+
+Peu de bruitages : la musique synthwave est mise en avant, et l'action se passe dans l'espace. Pas de son à chaque collision ni à chaque impact reçu (le retour est visuel). Les bruitages de tir et de dash restent brefs et discrets ; ceux des explosions, alarmes et avertissements de tir (§7.14) restent utiles, mais sobres. À juger à l'oreille avant d'en ajouter.

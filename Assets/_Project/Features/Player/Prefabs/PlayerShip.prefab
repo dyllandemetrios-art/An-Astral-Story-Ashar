@@ -442,7 +442,7 @@ MonoBehaviour:
   _audioSource: {fileID: 2014353751512518466}
   _fireClip: {fileID: 8300000, guid: facd1505e73e7ac41b30fcd1af6989d6, type: 3}
   _dashClip: {fileID: 8300000, guid: c588c4e4a47f3c4499e3e3b57cf6728e, type: 3}
-  _hitClip: {fileID: 8300000, guid: 89cde2b1dc8edaa47be76d93498faf94, type: 3}
+  _hitClip: {fileID: 0}
   _hitElapsed: -1
 --- !u!1 &6462150189907474345
 GameObject:
