@@ -84,7 +84,7 @@ namespace Ashar.Player
         private void Fire()
         {
             ProjectileController bullet = Instantiate(_bulletPrefab, _muzzle.position, Quaternion.identity, _projectileParent);
-            Rect lifeBounds = Inflate(_playArea.ScreenBounds, _despawnMargin);
+            Rect lifeBounds = PlayAreaController.Inflate(_playArea.ScreenBounds, _despawnMargin);
             bullet.Initialize(Vector2.up, _shipData.BulletSpeed, _shipData.BulletDamage, lifeBounds);
         }
 
@@ -117,12 +117,6 @@ namespace Ashar.Player
             // If the safety cap was hit, drop the backlog instead of firing it on the next frames.
             cooldown = Mathf.Max(0f, cooldown);
             return shots;
-        }
-
-        /// <summary>Returns the rectangle grown by the margin on every side.</summary>
-        public static Rect Inflate(Rect rect, float margin)
-        {
-            return new Rect(rect.xMin - margin, rect.yMin - margin, rect.width + 2f * margin, rect.height + 2f * margin);
         }
     }
 }

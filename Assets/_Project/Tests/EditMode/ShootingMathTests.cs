@@ -1,4 +1,5 @@
 using Ashar.Combat;
+using Ashar.Environment;
 using Ashar.Player;
 using NUnit.Framework;
 using UnityEngine;
@@ -129,7 +130,7 @@ namespace Ashar.Tests.EditMode
         [Test]
         public void Inflate_AddsMarginOnEverySide()
         {
-            Rect inflated = PlayerShootController.Inflate(new Rect(-10f, -5.625f, 20f, 11.25f), 1f);
+            Rect inflated = PlayAreaController.Inflate(new Rect(-10f, -5.625f, 20f, 11.25f), 1f);
 
             Assert.AreEqual(-11f, inflated.xMin, Delta);
             Assert.AreEqual(11f, inflated.xMax, Delta);

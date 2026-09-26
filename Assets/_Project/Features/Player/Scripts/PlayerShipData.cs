@@ -39,8 +39,21 @@ namespace Ashar.Player
         [SerializeField, Min(0f), Tooltip("Time between the start of one dash and the moment the next one is allowed, in seconds.")]
         private float _dashCooldown = 1.5f;
 
+        [Header("Hitbox")]
+        [SerializeField, Min(0.01f), Tooltip("Radius of the hitbox: the only part of the ship that can be hit, in world units (spec §4: 0.11, about 5 reference pixels).")]
+        private float _hitboxRadius = 0.11f;
+
+        [SerializeField, Tooltip("Show the silver dot that marks the hitbox. Meant to become an option of the game (accessibility).")]
+        private bool _showHitbox = true;
+
         /// <summary>Ship speed in world units per second.</summary>
         public float MoveSpeed => _moveSpeed;
+
+        /// <summary>Radius of the hitbox, in world units.</summary>
+        public float HitboxRadius => _hitboxRadius;
+
+        /// <summary>True when the silver hitbox dot is shown.</summary>
+        public bool ShowHitbox => _showHitbox;
 
         /// <summary>Distance covered by one dash, in world units.</summary>
         public float DashDistance => _dashDistance;

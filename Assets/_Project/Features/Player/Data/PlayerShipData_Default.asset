@@ -20,3 +20,5 @@ MonoBehaviour:
   _dashDuration: 0.18
   _dashInvulnTime: 0.28
   _dashCooldown: 1.5
+  _hitboxRadius: 0.11
+  _showHitbox: 1

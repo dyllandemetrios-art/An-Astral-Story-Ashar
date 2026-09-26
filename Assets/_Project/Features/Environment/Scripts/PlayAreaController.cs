@@ -62,6 +62,12 @@ namespace Ashar.Environment
                 Mathf.Clamp(position.y, rect.yMin, rect.yMax));
         }
 
+        /// <summary>Returns the rectangle grown by the margin on every side (used to give bullets room to leave the screen).</summary>
+        public static Rect Inflate(Rect rect, float margin)
+        {
+            return new Rect(rect.xMin - margin, rect.yMin - margin, rect.width + 2f * margin, rect.height + 2f * margin);
+        }
+
         /// <summary>Draws the screen and the play area in the Scene view, even when the object is not selected.</summary>
         private void OnDrawGizmos()
         {
