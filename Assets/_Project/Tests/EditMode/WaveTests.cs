@@ -122,6 +122,15 @@ namespace Ashar.Tests.EditMode
             Assert.AreEqual(-1, WaveData.FindTimeOrderProblem(events));
         }
 
+        /// <summary>After a Dialogue, times also start again from 0 (spec E3-02): MissionRunnerController resets its block clock the same way.</summary>
+        [Test]
+        public void FindTimeOrderProblem_TimesRestartAfterDialogue()
+        {
+            var events = new List<WaveEvent> { Event(0f, WaveEventType.Spawn), Event(4f, WaveEventType.Dialogue), Event(1f, WaveEventType.Spawn) };
+
+            Assert.AreEqual(-1, WaveData.FindTimeOrderProblem(events));
+        }
+
         /// <summary>The scroll speed goes from the start value to the target in a straight line, and ends exactly on the target.</summary>
         [Test]
         public void ComputeScrollSpeed_GoesFromStartToTarget()

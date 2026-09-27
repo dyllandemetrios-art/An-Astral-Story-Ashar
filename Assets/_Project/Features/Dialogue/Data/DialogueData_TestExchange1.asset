@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02f0317f8d354e349949875d9b448c42, type: 3}
+  m_Name: DialogueData_TestExchange1
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Dialogue.DialogueData
+  _id: TestExchange1
+  _lines:
+  - _speakerName: KAAL'VARIS
+    _textFr: "\xC0 tous les Exil\xE9s : prenez un vaisseau et d\xE9gagez de cette station. Les Pacificateurs qui vous barrent la route, abattez-les."
+    _textEn: '[EN placeholder] To all Exiles: take a ship and get out of this station. Take down any Peacekeeper blocking your way.'
+    _voiceClip: {fileID: 0}
+  - _speakerName: AMARA
+    _textFr: "Kaal'varis, l'Assembl\xE9e vous a rep\xE9r\xE9s. Des Horizon Scouts et des Guardian Dropships convergent vers vous."
+    _textEn: '[EN placeholder] Kaal''varis, the Assembly has spotted you. Horizon Scouts and Guardian Dropships are converging on your position.'
+    _voiceClip: {fileID: 0}

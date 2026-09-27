@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Ashar.Dialogue;
 using Ashar.Enemies;
 using UnityEngine;
 
 namespace Ashar.Waves
 {
-    /// <summary>The kinds of event a wave timeline can contain (spec §6). Dialogue, Zone and Boss are added by their own stories.</summary>
+    /// <summary>The kinds of event a wave timeline can contain (spec §6). Zone and Boss are added by their own stories. Appended at the end so existing WaveData assets keep their serialized values.</summary>
     public enum WaveEventType
     {
         /// <summary>Creates a group of enemies.</summary>
@@ -19,6 +20,9 @@ namespace Ashar.Waves
 
         /// <summary>Ends the mission.</summary>
         End,
+
+        /// <summary>Plays a dialogue sequence (spec E3-02). Blocking: the timeline waits for it to close.</summary>
+        Dialogue,
     }
 
     /// <summary>How a group of enemies is laid out when it appears.</summary>
@@ -93,6 +97,10 @@ namespace Ashar.Waves
         [SerializeField, Tooltip("Spawn and WaitForClear: name of the group. A WaitForClear waits for the enemies of the group with the same name.")]
         private string _groupTag = "";
 
+        [Header("Dialogue")]
+        [SerializeField, Tooltip("Dialogue: the sequence to play. Blocking, like WaitForClear: the timeline waits for it to close.")]
+        private DialogueData _dialogue;
+
         [Header("Scroll speed")]
         [SerializeField, Min(0f), Tooltip("ScrollSpeed: the scroll speed to reach, in world units per second.")]
         private float _targetSpeed = 4f;
@@ -133,6 +141,9 @@ namespace Ashar.Waves
         /// <summary>Spawn and WaitForClear: name of the group.</summary>
         public string GroupTag => _groupTag;
 
+        /// <summary>Dialogue: the sequence to play.</summary>
+        public DialogueData Dialogue => _dialogue;
+
         /// <summary>ScrollSpeed: the speed to reach.</summary>
         public float TargetSpeed => _targetSpeed;
 
@@ -169,7 +180,8 @@ namespace Ashar.Waves
 
         /// <summary>
         /// Returns the index of the first event whose time is earlier than the previous event of the same block, or -1
-        /// if the order is right. A block ends at a WaitForClear: after it, times start again from 0.
+        /// if the order is right. A block ends at a WaitForClear or a Dialogue: after either, times start again from 0
+        /// (MissionRunnerController resets its block clock the same way once each one closes).
         /// Static and free of Unity state so it can be unit-tested.
         /// </summary>
         public static int FindTimeOrderProblem(IReadOnlyList<WaveEvent> events)
@@ -182,7 +194,7 @@ namespace Ashar.Waves
                     return i;
                 }
 
-                previous = events[i].Type == WaveEventType.WaitForClear ? 0f : events[i].Time;
+                previous = events[i].Type == WaveEventType.WaitForClear || events[i].Type == WaveEventType.Dialogue ? 0f : events[i].Time;
             }
 
             return -1;

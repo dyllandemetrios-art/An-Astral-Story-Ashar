@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Ashar.Core;
+using Ashar.Dialogue;
 using Ashar.Enemies;
 using Ashar.Environment;
 using UnityEngine;
@@ -42,6 +43,9 @@ namespace Ashar.Waves
         [SerializeField, Tooltip("Optional. The background whose scroll speed the ScrollSpeed events change.")]
         private BackgroundScrollController _background;
 
+        [SerializeField, Tooltip("Required for Dialogue events: plays the sequence and reports back when it closes.")]
+        private DialogueController _dialogueController;
+
         [Header("Settings")]
         [SerializeField, Tooltip("Start playing the wave table when the scene starts. Off = call StartMission() from another script.")]
         private bool _autoStart = true;
@@ -75,6 +79,7 @@ namespace Ashar.Waves
         private bool _running;             // True while the timeline runs.
         private bool _finished;            // True after the End event.
         private string _waitingTag;        // Group being waited for, or null.
+        private bool _waitingForDialogue;  // True while a Dialogue event blocks the timeline.
         private float _scrollFrom;         // Scroll speed at the start of the current transition.
         private float _scrollTo;           // Scroll speed to reach.
         private float _scrollDuration;     // Length of the current transition.
@@ -134,6 +139,11 @@ namespace Ashar.Waves
                 return;
             }
 
+            if (_waitingForDialogue)
+            {
+                return; // The clock, the spawns and the events are all frozen until the dialogue closes.
+            }
+
             float deltaTime = Time.deltaTime;
             _clock += deltaTime;
             UpdateScrollTransition(deltaTime);
@@ -154,7 +164,7 @@ namespace Ashar.Waves
 
             _blockTime += deltaTime;
             IReadOnlyList<WaveEvent> events = _waves.Events;
-            while (_eventIndex < events.Count && events[_eventIndex].Time <= _blockTime && !_finished && _waitingTag == null)
+            while (_eventIndex < events.Count && events[_eventIndex].Time <= _blockTime && !_finished && _waitingTag == null && !_waitingForDialogue)
             {
                 RunEvent(events[_eventIndex]);
             }
@@ -189,12 +199,45 @@ namespace Ashar.Waves
 
                     break;
 
+                case WaveEventType.Dialogue:
+                    PlayDialogue(waveEvent.Dialogue);
+                    break;
+
                 default: // End
                     _finished = true;
                     _status = "Finished";
                     GameEvents.RaiseMissionEnded();
                     break;
             }
+        }
+
+        /// <summary>Blocks the timeline and hands the sequence to the DialogueController, or skips it with a diagnostic if it cannot be played.</summary>
+        private void PlayDialogue(DialogueData dialogue)
+        {
+            if (_dialogueController == null)
+            {
+                Debug.LogError($"{nameof(MissionRunnerController)}: a Dialogue event needs a DialogueController reference; skipped.", this);
+                _eventIndex++;
+                return;
+            }
+
+            _waitingForDialogue = true;
+            _status = dialogue != null ? $"Dialogue '{dialogue.Id}'" : "Dialogue";
+            _dialogueController.Play(dialogue, HandleDialogueFinished);
+        }
+
+        /// <summary>Called by the DialogueController once its sequence closes: resumes the timeline from a fresh block, like WaitForClear.</summary>
+        private void HandleDialogueFinished()
+        {
+            if (this == null || !_waitingForDialogue)
+            {
+                return; // The runner is gone, or this call does not match an event we are waiting on.
+            }
+
+            _waitingForDialogue = false;
+            _blockTime = 0f;
+            _eventIndex++;
+            _status = "Running";
         }
 
         /// <summary>Schedules every enemy of a Spawn event, one after the other.</summary>

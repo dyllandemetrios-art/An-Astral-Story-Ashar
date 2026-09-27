@@ -1,7 +1,7 @@
 namespace Ashar.Core
 {
     /// <summary>
-    /// The states the game can be in during a mission (spec §5.3). Dialogue and Paused are added by their own stories.
+    /// The states the game can be in during a mission (spec §5.3). Paused is added by its own story (E3-06).
     /// </summary>
     public enum GameState
     {
@@ -13,5 +13,11 @@ namespace Ashar.Core
 
         /// <summary>The player has lost their last life and has not continued yet.</summary>
         GameOver,
+
+        /// <summary>
+        /// A manual dialogue plays between combats (spec E3-02): the world keeps flying, but no spawn, attack, damage
+        /// or score happens until it closes.
+        /// </summary>
+        Dialogue,
     }
 }

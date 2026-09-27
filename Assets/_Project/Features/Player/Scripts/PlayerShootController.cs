@@ -48,6 +48,7 @@ namespace Ashar.Player
         private bool _debugAlwaysFire;
 
         private float _cooldown; // Seconds left before the next shot is allowed.
+        private bool _suppressUntilReleased; // True right after SuppressUntilReleased(), until Fire is read as not held.
 
         /// <summary>Checks that every reference is set, and disables the component if one is missing.</summary>
         private void Awake()
@@ -69,10 +70,30 @@ namespace Ashar.Player
             }
         }
 
+        /// <summary>
+        /// While this is enabled after a dialogue closes (spec E3-02), the Fire button is shared with the dialogue's
+        /// last UI/Submit press on gamepad: without this, that same press would fire a shot the instant control comes
+        /// back. Held ignores every held frame until the button reads as released once.
+        /// </summary>
+        public void SuppressUntilReleased()
+        {
+            _suppressUntilReleased = true;
+        }
+
         /// <summary>Counts the cooldown and fires the bullets due this frame.</summary>
         private void Update()
         {
             bool held = _debugAlwaysFire || _fireAction.action.IsPressed();
+            if (_suppressUntilReleased)
+            {
+                if (held)
+                {
+                    return;
+                }
+
+                _suppressUntilReleased = false;
+            }
+
             int shots = ConsumeShots(ref _cooldown, Time.deltaTime, 1f / _shipData.FireRate, held, MaxShotsPerFrame);
 
             for (int i = 0; i < shots; i++)

@@ -121,5 +121,23 @@ namespace Ashar.Core
                 State = GameState.MissionEnd;
             }
         }
+
+        /// <summary>Enters the Dialogue state from normal play (spec E3-02): no damage or score while it lasts, since both require Gameplay.</summary>
+        public void EnterDialogue()
+        {
+            if (State == GameState.Gameplay)
+            {
+                State = GameState.Dialogue;
+            }
+        }
+
+        /// <summary>Returns to normal play once a dialogue closes. Does nothing if the state changed for another reason meanwhile.</summary>
+        public void ExitDialogue()
+        {
+            if (State == GameState.Dialogue)
+            {
+                State = GameState.Gameplay;
+            }
+        }
     }
 }
