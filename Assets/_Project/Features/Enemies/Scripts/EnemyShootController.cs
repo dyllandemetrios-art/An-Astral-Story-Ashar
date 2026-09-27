@@ -1,4 +1,5 @@
 using Ashar.Combat;
+using Ashar.Core;
 using UnityEngine;
 
 namespace Ashar.Enemies
@@ -45,9 +46,12 @@ namespace Ashar.Enemies
             _pattern = pattern;
             _context = context;
             int shots = pattern.Type == FirePatternType.Burst ? pattern.Count : 1;
-            _timer = new FireSequenceTimer(pattern.Interval, pattern.TelegraphTime, shots, pattern.BurstSpacing);
+            // The global fire density stretches or shrinks the interval (spec §7.9), from the moment the enemy appears.
+            float density = GameSession.Current != null ? GameSession.Current.FireDensityMultiplier : 1f;
+            float interval = BalanceMath.ScaledFireInterval(pattern.Interval, density);
+            _timer = new FireSequenceTimer(interval, pattern.TelegraphTime, shots, pattern.BurstSpacing);
             // Start part-way through the wait, so a group of enemies created together does not fire all at the same moment.
-            _timer.Restart(Random.Range(0f, pattern.Interval * 0.5f));
+            _timer.Restart(Random.Range(0f, interval * 0.5f));
             SetTelegraph(0f, false);
             _initialized = true;
         }
@@ -111,8 +115,16 @@ namespace Ashar.Enemies
         /// <summary>Creates one bullet at the origin, flying in the given direction.</summary>
         private void Spawn(Vector2 origin, Vector2 direction)
         {
+            GameSession session = GameSession.Current;
+            int alive = _context.ProjectileParent != null ? _context.ProjectileParent.childCount : 0;
+            if (session != null && !BalanceMath.CanCreateProjectile(alive, session.MaxProjectiles))
+            {
+                return; // The limit of bullets alive at once is reached: this shot is skipped, the frame rate stays safe.
+            }
+
+            float speedMultiplier = session != null ? session.BulletSpeedMultiplier : 1f;
             ProjectileController bullet = Instantiate(_pattern.BulletPrefab, origin, Quaternion.identity, _context.ProjectileParent);
-            bullet.Initialize(direction, _pattern.BulletSpeed, 1f, _context.ProjectileBounds);
+            bullet.Initialize(direction, BalanceMath.ScaledBulletSpeed(_pattern.BulletSpeed, speedMultiplier), 1f, _context.ProjectileBounds);
             _firedCount++;
         }
 

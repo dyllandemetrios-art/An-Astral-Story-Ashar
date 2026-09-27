@@ -27,6 +27,27 @@ namespace Ashar.Core
             State = GameState.Gameplay;
         }
 
+        /// <summary>Multiplier of enemy hit points (1 = the values of the enemy data).</summary>
+        public float EnemyHpMultiplier { get; private set; } = 1f;
+
+        /// <summary>Fire density multiplier (1 = the intervals of the pattern data).</summary>
+        public float FireDensityMultiplier { get; private set; } = 1f;
+
+        /// <summary>Multiplier of enemy bullet speed (1 = the speeds of the pattern data).</summary>
+        public float BulletSpeedMultiplier { get; private set; } = 1f;
+
+        /// <summary>Most bullets alive at once (0 = no limit).</summary>
+        public int MaxProjectiles { get; private set; }
+
+        /// <summary>Sets the global balance multipliers. Called every frame by GameSessionController so the asset can be tuned live.</summary>
+        public void SetBalance(float enemyHpMultiplier, float fireDensityMultiplier, float bulletSpeedMultiplier, int maxProjectiles)
+        {
+            EnemyHpMultiplier = enemyHpMultiplier;
+            FireDensityMultiplier = fireDensityMultiplier;
+            BulletSpeedMultiplier = bulletSpeedMultiplier;
+            MaxProjectiles = maxProjectiles;
+        }
+
         /// <summary>Lives left.</summary>
         public int Lives { get; private set; }
 

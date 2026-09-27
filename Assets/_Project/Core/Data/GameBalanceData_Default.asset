@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66d266690d703a146b77b3d26b65b19c, type: 3}
   m_Name: GameBalanceData_Default
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Core.GameBalanceData
+  _enemyHpMultiplier: 1
+  _fireDensityMultiplier: 0.8
+  _bulletSpeedMultiplier: 1
+  _maxProjectiles: 2000
   _startLives: 3
   _continues: -1
   _respawnInvulnTime: 2

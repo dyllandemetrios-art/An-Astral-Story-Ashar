@@ -69,7 +69,8 @@ namespace Ashar.Enemies
         {
             _data = data;
             _context = context;
-            _hp = data.MaxHp;
+            GameSession session = GameSession.Current;
+            _hp = BalanceMath.ScaledHp(data.MaxHp, session != null ? session.EnemyHpMultiplier : 1f);
             _dataId = data.Id;
             _start = transform.position;
             bool hasTarget = context.Target != null;

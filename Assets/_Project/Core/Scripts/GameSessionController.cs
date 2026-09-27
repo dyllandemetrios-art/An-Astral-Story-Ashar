@@ -34,6 +34,7 @@ namespace Ashar.Core
             }
 
             GameSession.Current = new GameSession(_balance.StartLives, _balance.Continues);
+            ApplyBalance();
         }
 
         /// <summary>Starts listening to the game events and announces the starting numbers.</summary>
@@ -71,14 +72,21 @@ namespace Ashar.Core
             GameSession.Current = null;
         }
 
-        /// <summary>While the game is over, starts a continue when the Fire button is pressed.</summary>
+        /// <summary>Copies the balance values into the session, and starts a continue when Fire is pressed during a game over.</summary>
         private void Update()
         {
+            ApplyBalance();
             GameSession session = GameSession.Current;
             if (session != null && session.CanContinue && _continueAction != null && _continueAction.action.WasPressedThisFrame())
             {
                 Continue();
             }
+        }
+
+        /// <summary>Copies the global balance values of the asset into the running session (a few assignments, done every frame).</summary>
+        private void ApplyBalance()
+        {
+            GameSession.Current?.SetBalance(_balance.EnemyHpMultiplier, _balance.FireDensityMultiplier, _balance.BulletSpeedMultiplier, _balance.MaxProjectiles);
         }
 
         /// <summary>Adds points to the score and announces it.</summary>
