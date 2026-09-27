@@ -1,0 +1,18 @@
+key;fr;en
+menu.play;JOUER;PLAY
+menu.options;OPTIONS;OPTIONS
+menu.quit;QUITTER;QUIT
+pause.title;PAUSE;PAUSE
+pause.resume;REPRENDRE;RESUME
+pause.mainmenu;RETOUR AU MENU;RETURN TO MENU
+confirm.title;ABANDONNER LA PARTIE ?;ABANDON THE RUN?
+confirm.cancel;ANNULER;CANCEL
+confirm.confirm;RETOUR AU MENU;RETURN TO MENU
+options.title;OPTIONS;OPTIONS
+options.language;LANGUE;LANGUAGE
+options.music;MUSIQUE;MUSIC
+options.effects;EFFETS;EFFECTS
+options.dialogue;DIALOGUES;DIALOGUE
+options.hitbox;AFFICHER LA HITBOX;SHOW HITBOX
+options.fullscreen;PLEIN ECRAN;FULLSCREEN
+options.back;RETOUR;BACK

@@ -138,5 +138,39 @@ namespace Ashar.Tests.EditMode
             Assert.AreEqual(Language.French, PlayerPreferences.ParseLanguage(null));
             Assert.AreEqual(Language.French, PlayerPreferences.ParseLanguage("Klingon"));
         }
+
+        /// <summary>A well-formed table gives back both languages for every key, skipping the header row.</summary>
+        [Test]
+        public void Loc_ParseCsv_ReadsBothLanguages()
+        {
+            (var french, var english) = Loc.ParseCsv("key;fr;en\nmenu.play;JOUER;PLAY\nmenu.quit;QUITTER;QUIT");
+
+            Assert.AreEqual("JOUER", french["menu.play"]);
+            Assert.AreEqual("PLAY", english["menu.play"]);
+            Assert.AreEqual("QUITTER", french["menu.quit"]);
+            Assert.AreEqual("QUIT", english["menu.quit"]);
+        }
+
+        /// <summary>Blank lines and lines without exactly 3 fields are skipped instead of throwing.</summary>
+        [Test]
+        public void Loc_ParseCsv_SkipsBlankAndMalformedLines()
+        {
+            (var french, var english) = Loc.ParseCsv("key;fr;en\n\nmenu.play;JOUER;PLAY\nbroken;only two fields\nmenu.quit;QUITTER;QUIT");
+
+            Assert.AreEqual(2, french.Count);
+            Assert.IsTrue(french.ContainsKey("menu.play"));
+            Assert.IsTrue(french.ContainsKey("menu.quit"));
+            Assert.IsFalse(french.ContainsKey("broken"));
+        }
+
+        /// <summary>Empty or missing text gives back empty tables rather than throwing.</summary>
+        [Test]
+        public void Loc_ParseCsv_EmptyText_GivesEmptyTables()
+        {
+            (var french, var english) = Loc.ParseCsv("");
+
+            Assert.AreEqual(0, french.Count);
+            Assert.AreEqual(0, english.Count);
+        }
     }
 }
