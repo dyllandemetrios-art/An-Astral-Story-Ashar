@@ -5,6 +5,15 @@ Projet solo : Dyllan conçoit, teste et valide ; Claude Code implémente. Démo 
 développée du 1er octobre au 25 novembre 2026. Finalité : **portfolio**. Le code et le projet Unity seront lus par des recruteurs :
 ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (`Stuffy_Infinite_Runner`, `Snake_2D`).
 
+## Lecture ciblée et contexte
+
+- Commencer par la spec demandée et son compte rendu, puis vérifier la branche, le statut Git et le diff pertinent. Pour une tâche sans story, partir du périmètre demandé.
+- Lire les sections documentaires référencées et les fichiers concernés ; élargir aux dépendances nécessaires. Ne pas charger tout docs/, le backlog entier ou les autres specs par défaut.
+- Ne pas relire un contenu encore présent dans le contexte, sauf modification, doute ou information manquante. Après une nouvelle session ou une compaction, reprendre les règles applicables et le relais utile.
+- Cibler les recherches dans Assets/_Project/, Packages/ et ProjectSettings/ selon le besoin. Caches, builds, assets tiers et logs : seulement pour un diagnostic ciblé ; conserver les rapports complets sur disque et lire les passages utiles.
+- Avant un changement de session, conserver dans le compte rendu de la spec : branche/commit, changements non commités, décisions, preuves de tests et prochaine action.
+- Cette lecture ciblée ne dispense d'aucune règle, vérification de dépendance ou validation requise.
+
 ## Documents de référence (dossier `docs/`)
 
 | Fichier | Rôle pour toi |
@@ -28,9 +37,9 @@ ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (
 8. **Lisibilité** : projectiles joueur argent-blanc, ennemis rouge orangé, boss LEASH magenta et jaune ; jamais plus de 3 couleurs de projectiles par phase de boss.
 9. **Un dialogue est une pause narrative, jamais un gel du jeu.** Pendant un dialogue : actions ennemies en attente, vagues suspendues, décor qui défile, musique qui continue, vaisseau en **pilote automatique** (le joueur ne le contrôle plus) ; le bouton de tir fait avancer, et fermer la fenêtre de dialogue rend la main. **N'utilise jamais `Time.timeScale = 0` pour un dialogue** (réservé au menu pause). Aucun dialogue pendant l'action. Une voix off absente ne doit jamais provoquer d'erreur. Détails : cahier des charges §7.7.
 10. **Ne modifie pas `docs/`**, sauf `docs/notes/` et le fichier de spec en cours (section « Compte rendu »).
-11. **N'édite jamais à la main** les fichiers `.unity`, `.prefab` ou `.asset`. Passe par l'éditeur ouvert via le **Unity CLI** (voie active, voir « Outillage ») ou, à défaut, par un script d'éditeur de mise en place idempotent (menu `Ashar/Setup/<ID>`), que Dyllan lance en un clic.
+11. **N'édite jamais à la main** les fichiers `.unity`, `.prefab` ou `.asset`. Passe par l'éditeur ouvert via le **Unity CLI** (voie active, voir la référence Outillage) ou, à défaut, par un script d'éditeur de mise en place idempotent (menu `Ashar/Setup/<ID>`), que Dyllan lance en un clic.
 12. **Assets achetés : jamais sur GitHub.** Tout `Assets/ThirdParty/` est ignoré par Git (packs d'origine **et** leurs retouches : les licences interdisent de redistribuer même une version modifiée). Tu ne modifies jamais un fichier d'origine ; une version retouchée va dans `Assets/ThirdParty/_Modified/<Pack>/`. Seuls les sprites, sons et polices **entièrement faits maison** vont dans `Assets/_Project/`. N'utilise jamais `git add -f` ni `git add .` sans vérifier `git status`.
-13. **Commandes (cahier des charges §7.2, v1.6)** : tir K / A, bouclier L / X, impulsion M / LT, dash **Espace** / RT, pause Échap / Start, déplacement ZQSD ou flèches, valider un menu ou continuer une partie **Espace / Entrée / bouton Sud** (action `UI/Submit`, distincte du tir : ne jamais réutiliser l'action de tir pour un menu). Les trois touches d'action sont liées à la lettre imprimée (`<Keyboard>/#(m)`), le déplacement et le dash à la position physique. **Point ouvert : le bouclier éphémère avec sa touche L n'est pas spécifié** (durée, cooldown, appui sans charge) : n'écris aucun code de bouclier et signale à Dyllan que la story E5-05 est bloquée avant de la commencer.
+13. **Commandes** : le mapping v3.1 de docs/specs/E3-00.md (référencé au cahier des charges §7.2) fait foi et remplace les anciens contrôles ; le lire avant toute tâche liée aux entrées, menus ou dialogues. Garder UI/Submit distinct du tir. E3-00 est un préalable obligatoire à E3-01 (voir backlog). **Bouclier bloqué (E5-05)** : durée, cooldown et appui sans charge restent à préciser ; aucun code de bouclier avant décision de Dyllan.
 
 ## Stack
 
@@ -38,99 +47,13 @@ Unity 6.6 (6000.6.2f1), URP avec 2D Renderer, Pixel Perfect Camera URP (`UnityEn
 
 Outillage d'éditeur installé : `com.unity.pipeline` (pont du Unity CLI, désactivé dans les builds) et `com.unity.ai.assistant`. Retirés en P0-12 : Visual Scripting, Collab Proxy, IET Framework, AI Inference (Sentis). Aucun autre package sans accord.
 
-## Outillage : Unity CLI (voie active depuis P0-12)
+## Références à lire selon la tâche
 
-L'éditeur de Dyllan reste ouvert sur le projet ; tu le pilotes depuis le terminal.
-- `unity status` : vérifie qu'un éditeur est connecté (`state: ready`) avant toute action sur une scène ou un asset.
-- `unity command <nom>` : `move_asset`, `create_scene`, `open_scene`, `save_scene`, `create_prefab`, `recompile` / `recompile_status`, `console` / `console_status`, `run_tests --mode EditMode`, `build` / `build_status`, `package_add` / `package_remove`… (`unity command` sans argument liste tout).
-- `unity command eval_file --file <script.cs>` exécute du C# dans l'éditeur. Pas de directive `using` : écris les noms complets (`UnityEditor.AssetDatabase…`). Les scripts temporaires vont dans le scratchpad, jamais dans `Assets/`.
-- Les commandes qui modifient le projet (paquets, réglages) exigent `--confirm true`. Après un changement de paquet ou une recompilation, l'éditeur recharge son domaine : une erreur « Network error » est normale, attends que `unity status` revienne à `ready`.
-- Build de test : `Build/Windows/AsharDemo.exe` (dossier ignoré par Git).
-
-## Structure du projet Unity
-
-Organisation **par fonctionnalité**, sur le modèle de `Component/<Feature>/` du dépôt Stuffy (nommée ici `Features/` pour éviter la confusion avec les composants Unity). Arborescence complète : cahier des charges §5.1.
-
-```
-Assets/
-  _Project/
-    Core/         Scripts/ Data/ Prefabs/        (GameSession, GameEvents, Layers, SceneFlow)
-    Features/
-      <Feature>/  Scripts/ Prefabs/ Data/ Art/ Animations/ Audio/   (seulement les sous-dossiers utiles)
-    Scenes/       Boot, MainMenu, Mission, TestBed (TestBed exclue du build)
-    Settings/     URP/ (UniversalRP, Renderer2D), Input/ (AsharControls.inputactions), Mixer
-    Editor/       PixelArtImportPostprocessor, scripts de mise en place (menu Ashar/Setup/<ID>)
-    Tests/        EditMode/
-  ThirdParty/     packs achetés + _Modified/  → IGNORÉ PAR GIT
-```
-
-Règles :
-- Aucun fichier à la racine de `Assets/` ni de `_Project/`. Aucun dossier vide versionné. Aucun dossier « Misc », « Temp », « New Folder ».
-- Un script vit dans la fonctionnalité qui le possède. S'il sert à plusieurs fonctionnalités, il va dans `Core/` ou dans `Features/Combat/` (dégâts, projectiles).
-- Noms de dossiers et de fichiers en PascalCase anglais, sans espace.
-- Assembly definitions : `Ashar.Runtime` (racine de `_Project/`), `Ashar.Editor` (`Editor/`), `Ashar.Tests.EditMode` (`Tests/EditMode/`). Le namespace `Ashar.Editor` masque la classe `UnityEditor.Editor` : dans un inspecteur personnalisé, écris `UnityEditor.Editor` en entier.
-
-## Conventions C# (anglais, pédagogique)
-
-**Nommage**
-- Namespace racine `Ashar`, puis la fonctionnalité : `Ashar.Player`, `Ashar.Enemies`, `Ashar.Core`…
-- MonoBehaviour de gameplay : suffixe `Controller` (`PlayerDashController`). UI : préfixe `UI` (`UIHudController`, `UIDialogueBubbleView` pour un affichage pur). ScriptableObject : suffixe `Data` (`EnemyData`). Classe statique ou C# pur : pas de suffixe (`GameEvents`, `Layers`).
-- PascalCase pour les types, méthodes, propriétés et événements (`OnPlayerHit`) ; `_camelCase` pour les champs privés ; `camelCase` pour les paramètres et variables locales.
-- Les noms de classes cités ailleurs dans le cahier des charges sont indicatifs : applique toujours ces suffixes.
-
-**Commentaires : en anglais, informatifs et pédagogiques**
-- Chaque classe a un en-tête `/// <summary>` qui explique **ce qu'elle fait, comment, et pourquoi ce choix**, avec si utile les blocs `RESPONSIBILITIES`, `HOW IT WORKS`, `PATTERN` (style du `NarrativeManager` de Snake_2D).
-- Chaque méthode (y compris `Awake`, `OnEnable`, `Update`…) a un `/// <summary>` d'une ligne.
-- Chaque champ privé a un commentaire en fin de ligne ; chaque champ sérialisé a un `[Tooltip]` en anglais, pour que l'Inspector se lise sans ouvrir le code.
-- Les champs sont regroupés par `[Header("...")]` ; l'état runtime utile au débogage est exposé en lecture seule sous `[Header("Debug")]`.
-- Un commentaire explique le **pourquoi**, jamais la paraphrase du code. Une formule ou une astuce Unity non évidente (ordre d'exécution, `Time.unscaledDeltaTime`, normalisation des diagonales) est expliquée pour un lecteur débutant.
-
-**Architecture**
-- Un MonoBehaviour = une responsabilité. Pas de `Find*`, de `GetComponent` ni d'allocation dans `Update`.
-- Communication découplée par un **bus d'événements statique `GameEvents`** (le motif `EventSystem` de Stuffy, renommé pour ne pas entrer en conflit avec `UnityEngine.EventSystems.EventSystem` utilisé par l'UI). Chaque événement est commenté. On s'abonne dans `OnEnable`, on se désabonne dans `OnDisable`.
-- Un seul point d'accès global à l'état de partie : `GameSession` (état de jeu, mission, score, vies).
-- Pas de code mort, pas de `Debug.Log` laissé hors d'un bloc `[Conditional("UNITY_EDITOR")]` ou d'un bool de debug sérialisé.
-
-**Exemple du style attendu**
-
-```csharp
-namespace Ashar.Player
-{
-    /// <summary>
-    /// Short burst of movement that makes the ship briefly invulnerable.
-    /// HOW IT WORKS: on input, the ship travels dashDistance over dashDuration,
-    /// then the dash goes on cooldown. Values come from PlayerShipData so they
-    /// can be tuned in the Inspector without touching code.
-    /// </summary>
-    public class PlayerDashController : MonoBehaviour
-    {
-        [Header("Data")]
-        [SerializeField, Tooltip("Tuning values shared by all player components.")]
-        private PlayerShipData _shipData;
-
-        [Header("Debug")]
-        [SerializeField, Tooltip("Read-only: true while the dash grants invulnerability.")]
-        private bool _isInvulnerable;
-
-        private float _cooldownTimer; // Seconds left before the next dash is allowed.
-
-        /// <summary>True while the dash protects the ship from damage.</summary>
-        public bool IsInvulnerable => _isInvulnerable;
-    }
-}
-```
-
-## Conventions Unity (projet propre dans l'éditeur)
-
-- **Tout ce qui apparaît en jeu est un prefab.** Aucun sprite glissé directement dans une scène, aucun GameObject de gameplay qui n'est pas une instance de prefab.
-- **Structure d'un prefab** : la racine porte la logique et le collider ; un enfant `Visual` porte le `SpriteRenderer` (et l'`Animator`). Changer de sprite ne casse jamais la logique.
-- **Variantes** : une unité qui dérive d'une autre est une *Prefab Variant* (ex. `Interceptor` variante de `PatrolFighter`). Les parties d'un boss sont des prefabs imbriqués.
-- **Hiérarchie des scènes** : des GameObjects vides servent de sections, dans cet ordre : `--- SYSTEMS ---`, `--- CAMERA ---`, `--- ENVIRONMENT ---`, `--- GAMEPLAY ---`, `--- UI ---`. Les objets créés en jeu sont rangés sous `Runtime/Enemies`, `Runtime/Projectiles`, `Runtime/FX`.
-- **Nommage dans l'éditeur** : GameObjects, prefabs et assets en PascalCase anglais (`PlayerShip`, `EnemyData_GuardDrone`, `WaveData_M1_Tunnels`).
-- **Import des sprites** : réglages pixel art du cahier des charges §3 (Sprite, Point, sans compression, sans mip maps, PPU 48), appliqués par `Editor/PixelArtImportPostprocessor` à toute texture de `_Project/` et `ThirdParty/`, **au premier import seulement** (pour ne jamais écraser un réglage manuel de Dyllan). Le pivot se règle par sprite.
-- **Caméra de chaque scène** (sous `--- CAMERA ---`) : orthographique, taille 5,625 (11,25 u de haut, §4), fond noir, HDR et MSAA désactivés.
-- Aucune référence manquante (`Missing`) dans une scène ou un prefab livré.
-- **Assets** : les packs achetés sont importés dans `Assets/ThirdParty/` (inventaire, mesures et choix : `docs/notes/import-assets.md`). Utilise-les à la place de placeholders. Le vaisseau du joueur est `Plane 07` de `DyLESTorm/AnimatedPixelShips`. Attention : les tailles du cahier des charges sont celles des cases ; les colliders suivent le contenu visible du sprite. Un placeholder reste permis quand aucun asset ne convient (formes de base, palette du jeu), rangé dans `Features/<Feature>/Art/Placeholder/` sous l'enfant `Visual` du prefab, et listé dans le compte rendu. Ne référence jamais un fichier de `_AssetInbox/` (dossier local hors projet).
+Ces liens sont des lectures ciblées, pas des imports automatiques. Les conventions restent obligatoires pour les fichiers concernés.
+- C# (création, modification ou revue) : [structure et conventions](docs/notes/agent-code.md).
+- Scènes, prefabs, assets et imports (création, modification ou revue) : [conventions Unity](docs/notes/agent-assets.md).
+- Avant une commande Unity : [outillage](docs/notes/agent-outillage.md), puis vérifier la connexion et les commandes disponibles.
+- Contrôles : cahier des charges §7.2, source unique du mapping souhaité. Ne pas déduire les touches d'une ancienne spec.
 
 ## Blocage : quand tu ne peux pas faire ce qui est demandé
 

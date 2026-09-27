@@ -10,7 +10,11 @@ Shoot'em up narratif — Unity 6 • PC • Solo • 2–3 heures
 
 *« Évadé de la prison orbitale de Phobos IX, Kaal**'**varis Dorn traverse l**'**orbite de Mars pour briser les chaînes des opprimés de la Chienne Rouge. »*
 
-## Changements de la v2.4 (par rapport à la v2.3, 26 sept. 2026)
+## Contrôles actuels
+
+Le [mapping v3.1 définitif de Dyllan](specs/E3-00.md) remplace toutes les versions de contrôles ci-dessous. E3-00 est le préalable à E3-01 ; les paramètres du bouclier restent ouverts.
+
+## Changements de la v2.4 (historique ; contrôles remplacés par v3.1)
 
 - Commandes révisées. Clavier : déplacement ZQSD ou flèches ; tir J ; bouclier éphémère K ; impulsion de piratage L ; dash M ; pause Échap. Sur AZERTY, W, X, C et V (main gauche) font la même chose que J, K, L et M. Manette : stick gauche ou croix pour se déplacer ; tir A ; bouclier X ; impulsion LT ; dash RT ; pause Start.
 - Espace n'est plus utilisé, y compris pour avancer un dialogue : la touche de tir (J ou W, A à la manette) fait avancer les répliques.
@@ -120,7 +124,7 @@ Mécaniques principales : déplacement 8 directions, tir principal (rafale), arm
 
 Interface : HUD simple (vies, score, jauges) développé en interne ; dialogues affichés en bulle textuelle pleine largeur en bas d'écran, façon Pokémon (système Ink, jusqu'à 3 lignes) ; défilement caractère par caractère avec bruitage 16-bit, un timbre distinct par interlocuteur ; le bouton de tir complète la ligne puis passe à la suivante. Pendant un dialogue, l'action est suspendue : actions ennemies en attente, décor qui défile, musique qui continue, vaisseau en pilote automatique jusqu'à la fermeture de la fenêtre. Des répliques clés sont doublées en voix off filtrée radio (coupe n° 0).
 
-Commandes : clavier (ZQSD ou flèches pour se déplacer ; K, L, M pour tirer, protéger et pirater, X, C, V équivalents sur AZERTY ; Espace pour esquiver) et manette.
+Commandes : voir le mapping v3.1 définitif dans docs/specs/E3-00.md ; un schéma clavier unique, sans préréglages.
 
 Style graphique : pixel art (Futuristic Spaceship SHMUP Bundle, DyLESTorm), fonds sombres, Mars en arrière-plan atténué. Règle de lisibilité : 3 couleurs de projectiles maximum par phase de boss.
 

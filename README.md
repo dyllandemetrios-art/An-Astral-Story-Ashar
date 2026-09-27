@@ -25,15 +25,10 @@ Ce projet est un pont vers le roman *Anandavira*, pas un résumé : les dialogue
 
 ## Contrôles
 
-Provisoires, à valider au premier playtest.
-
-| Action | Clavier | Manette |
-| --- | --- | --- |
-| Déplacement | ZQSD ou flèches | Stick gauche, croix |
-| Tir (maintenu) | Espace | A / Croix, ou gâchette droite |
-| Dash | Maj gauche | B / Rond, ou bouton d'épaule gauche |
-| Impulsion de piratage | E | X / Carré, ou bouton d'épaule droit |
-| Pause | Échap | Start |
+Le [mapping v3.1 définitif](docs/specs/E3-00.md) remplace tous les anciens schémas.
+Clavier : ZQSD et flèches simultanément actifs ; tir Espace, bouclier Maj gauche/droite, impulsion Ctrl gauche/droite, dash F, menus Entrée, codex Tab, pause Échap.
+Manette Xbox : déplacement stick/croix ; tir A, bouclier X, dash B, impulsion Y, menus A, codex View, pause Menu. Gâchettes et bumpers inutilisés pour le gameplay core.
+Implémentation et validation prévues dans E3-00, préalable obligatoire à E3-01 ; mécanique du bouclier encore à spécifier.
 
 ## Ce que ce projet m'a appris
 
