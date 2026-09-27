@@ -1,6 +1,7 @@
 # Cahier des charges — An Astral Story : Ashar (démo)
 
 Version 1.1 — 24 septembre 2026 — livrable **P0-11** (spécification technique + CLAUDE.md du dépôt)
+v1.7 : bouclier éphémère redéfini par Dyllan comme capacité de base (§7.1), retiré des power-ups (§7.10) ; cooldown de l'impulsion de piratage porté de 12 à 45 s.
 Contrôles : mapping v3.1 définitif au §7.2, prioritaire sur les versions historiques.
 v1.1 : décisions de la section 2 validées ; voix off hybride ajoutée (Concept v2.2).
 v1.4 : Game Concept v2.3 — difficulté unique (§7.9), dialogues en pause narrative avec pilote automatique (§7.7), FR/EN obligatoire (§7.13).
@@ -267,7 +268,8 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 | Hitbox | Cercle au centre du vaisseau ; point argent visible (désactivable dans les options). **[Fiche]** | rayon 0,11 u |
 | Dash | Déplacement rapide dans la direction de l'entrée, vers le haut sans entrée, avec une invulnérabilité courte. Traînée visuelle. **[GC] [Fiche]** | 2,8 u en 0,18 s ; invulnérable 0,28 s ; cooldown 1,5 s |
 | Graze | Zone circulaire distincte de la hitbox. Un projectile ennemi qui la traverse sans toucher la hitbox rapporte un bonus, **une seule fois par projectile**. Pas de graze pendant le dash. **[GC] + [Proposition]** | rayon 0,6 u ; +20 points ; −0,25 s sur le cooldown de l'impulsion. Coût faible. Le bonus d'impulsion relie le pilotage agressif au piratage : à retirer s'il déséquilibre. |
-| Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | cooldown 12 s ; rayon 3,4 u ; 300 dégâts aux tourelles et à la navette ; sans effet sur LEASH ni sur ses projectiles |
+| Bouclier éphémère | **[Décision de Dyllan le 28/09/2026, remplace la ligne « Bouclier éphémère » du §7.10]** Capacité de base, déclenchée par le joueur (touche dédiée, §7.2), avec son propre cooldown — pas un power-up à ramasser. Pendant sa durée, il pare tous les impacts (pas seulement un seul). Halo argent pendant l'activation. | Durée 5 s ; cooldown 25 s (fourchette donnée par Dyllan : 20 à 30 s, valeur de départ à affiner au playtest E5). **Comportement à confirmer avant de coder (E5-05)** : un appui pendant le cooldown ne fait rien, par cohérence avec le Dash — à valider par Dyllan, ce n'est pas lui qui l'a formulé. |
+| Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | **cooldown 45 s** (révisé par Dyllan le 28/09/2026, remplace 12 s) ; rayon 3,4 u ; 300 dégâts aux tourelles et à la navette ; sans effet sur LEASH ni sur ses projectiles |
 | Vies et respawn | Un impact = une vie perdue, perte du multi-shot, réapparition en bas au centre, invulnérabilité avec clignotement. **[Bestiaire §5]** | voir §7.9 |
 | Continue | Reprise sur place, vies remises à leur valeur de départ, score remis à 0 (convention arcade). **[Proposition]**, coût faible | — |
 | Game over | Sans continue restant : écran de game over, puis « Recommencer la mission » ou « Menu ». | — |
@@ -402,7 +404,7 @@ Un seul niveau de difficulté. Les valeurs vivent dans `GameBalanceData_Default`
 | Power-up | Priorité | Effet |
 | --- | --- | --- |
 | Multi-shot | Must | Niveau 1 : 1 flux (100 dégâts/s) ; niveau 2 : 2 flux parallèles (200/s) ; niveau 3 : 3 flux en éventail étroit (≈ 260/s). Retour au niveau 1 au premier impact. |
-| Bouclier éphémère | Must | Absorbe 1 impact, 10 s au maximum, halo argent. |
+| ~~Bouclier éphémère~~ | — | **Retiré des power-ups le 28/09/2026** : devient une capacité de base du joueur, décrite au §7.1 (durée 5 s, pare tout, cooldown 25 s). N'apparaît donc plus comme objet à ramasser dans `WaveData`. |
 | Drones de garde piratés | Could (coupe n° 3) | Non spécifié. Ne pas implémenter avant le point de contrôle de fin S4. |
 | Laser pléiadien | Could (coupe n° 4) | Non spécifié. Même règle. |
 
