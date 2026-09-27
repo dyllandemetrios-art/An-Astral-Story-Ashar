@@ -1,7 +1,7 @@
 namespace Ashar.Core
 {
     /// <summary>
-    /// The states the game can be in during a mission (spec §5.3). Paused is added by its own story (E3-06).
+    /// The states the game can be in during a mission (spec §5.3).
     /// </summary>
     public enum GameState
     {
@@ -19,5 +19,11 @@ namespace Ashar.Core
         /// or score happens until it closes.
         /// </summary>
         Dialogue,
+
+        /// <summary>
+        /// A voluntary pause (spec E3-06): time is frozen (Time.timeScale = 0) and combat/dialogue inputs are
+        /// explicitly suspended, since freezing time alone does not stop a script from reading a fresh button press.
+        /// </summary>
+        Paused,
     }
 }

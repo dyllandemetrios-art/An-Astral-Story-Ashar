@@ -13,6 +13,7 @@ namespace Ashar.Core
     {
         private readonly int _startLives;   // Lives given at the start and after a continue.
         private int _continuesLeft;         // Continues still available; -1 = unlimited.
+        private GameState _stateBeforePause = GameState.Gameplay; // Restored by ExitPause; only Gameplay or Dialogue is ever stored here.
 
         /// <summary>The session of the game that is running, or null when none is.</summary>
         public static GameSession Current { get; set; }
@@ -137,6 +138,29 @@ namespace Ashar.Core
             if (State == GameState.Dialogue)
             {
                 State = GameState.Gameplay;
+            }
+        }
+
+        /// <summary>
+        /// Enters the Paused state (spec E3-06) from normal play or a dialogue, remembering which one to restore.
+        /// Does nothing from GameOver or MissionEnd (pause is not offered there) or if already Paused (a second
+        /// pause request changes nothing, so opening the pause menu twice cannot lose the original return state).
+        /// </summary>
+        public void EnterPause()
+        {
+            if (State == GameState.Gameplay || State == GameState.Dialogue)
+            {
+                _stateBeforePause = State;
+                State = GameState.Paused;
+            }
+        }
+
+        /// <summary>Leaves the Paused state, restoring Gameplay or Dialogue, whichever was running before.</summary>
+        public void ExitPause()
+        {
+            if (State == GameState.Paused)
+            {
+                State = _stateBeforePause;
             }
         }
     }

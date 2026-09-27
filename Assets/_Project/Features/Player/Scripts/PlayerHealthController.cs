@@ -70,7 +70,7 @@ namespace Ashar.Player
             }
         }
 
-        /// <summary>Applies the hitbox size and the dot visibility from the ship data, so they can be tuned live.</summary>
+        /// <summary>Applies the hitbox size and the dot visibility, so they can be tuned live.</summary>
         private void Update()
         {
             Vector2 size = ComputeHitboxSize(_shipData.HitboxRadius, _shipData.HitboxHeight);
@@ -79,9 +79,12 @@ namespace Ashar.Player
                 _hitbox.size = size;
             }
 
-            if (_hitboxDot != null && _hitboxDot.activeSelf != _shipData.ShowHitbox)
+            // The player's Options choice (spec E3-06) overrides the design default once set; until then, the
+            // ship data's own value (Dyllan's design setting) decides, unchanged from before Options existed.
+            bool showHitbox = PlayerPreferences.ShowHitboxOverride ?? _shipData.ShowHitbox;
+            if (_hitboxDot != null && _hitboxDot.activeSelf != showHitbox)
             {
-                _hitboxDot.SetActive(_shipData.ShowHitbox);
+                _hitboxDot.SetActive(showHitbox);
             }
         }
 
