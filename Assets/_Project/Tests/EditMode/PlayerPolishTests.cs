@@ -4,49 +4,69 @@ using NUnit.Framework;
 namespace Ashar.Tests.EditMode
 {
     /// <summary>
-    /// Tests the ship banking calculation: the tilt angle it asks for, and how it eases towards it.
-    /// WHY: "leans right when moving right" is easy to get backwards (a sign mistake), and the easing must never
-    /// overshoot its target, so both are cheap to pin down here without playing.
+    /// Tests the ship banking calculation: which frame set the horizontal input asks for, and which frame of it plays.
+    /// WHY: "leans left when moving left" is easy to get backwards (a sign mistake), and the deadzone and looping must
+    /// behave exactly, so both are cheap to pin down here without playing.
     /// </summary>
     public class PlayerPolishTests
     {
-        private const float Delta = 0.0001f; // Tolerance for float comparisons.
-
-        /// <summary>Full input gives the full tilt angle, leaning towards the side of the input.</summary>
+        /// <summary>A clearly negative input asks for the left-banking frames.</summary>
         [Test]
-        public void ComputeTargetBankAngle_FullInput_IsFullAngle()
+        public void ComputeBankState_NegativeInput_IsLeft()
         {
-            Assert.AreEqual(-14f, PlayerBankController.ComputeTargetBankAngle(1f, 14f), Delta);
-            Assert.AreEqual(14f, PlayerBankController.ComputeTargetBankAngle(-1f, 14f), Delta);
+            Assert.AreEqual(ShipBankState.Left, PlayerBankController.ComputeBankState(-1f, 0.15f));
         }
 
-        /// <summary>No horizontal input means no tilt.</summary>
+        /// <summary>A clearly positive input asks for the right-banking frames.</summary>
         [Test]
-        public void ComputeTargetBankAngle_NoInput_IsZero()
+        public void ComputeBankState_PositiveInput_IsRight()
         {
-            Assert.AreEqual(0f, PlayerBankController.ComputeTargetBankAngle(0f, 14f), Delta);
+            Assert.AreEqual(ShipBankState.Right, PlayerBankController.ComputeBankState(1f, 0.15f));
         }
 
-        /// <summary>An input beyond 1 (should not normally happen) is clamped, never over-tilting the ship.</summary>
+        /// <summary>No input, or a light touch inside the deadzone, keeps the level flight loop.</summary>
         [Test]
-        public void ComputeTargetBankAngle_InputBeyondOne_IsClamped()
+        public void ComputeBankState_InsideDeadzone_IsBase()
         {
-            Assert.AreEqual(-14f, PlayerBankController.ComputeTargetBankAngle(2.5f, 14f), Delta);
+            Assert.AreEqual(ShipBankState.Base, PlayerBankController.ComputeBankState(0f, 0.15f));
+            Assert.AreEqual(ShipBankState.Base, PlayerBankController.ComputeBankState(0.1f, 0.15f));
+            Assert.AreEqual(ShipBankState.Base, PlayerBankController.ComputeBankState(-0.1f, 0.15f));
         }
 
-        /// <summary>The angle moves towards its target by the allowed step, without passing it.</summary>
+        /// <summary>An input right at the edge of the deadzone already counts as a bank (the deadzone is exclusive).</summary>
         [Test]
-        public void ComputeNextAngle_StepsTowardsTargetWithoutOvershooting()
+        public void ComputeBankState_AtDeadzoneEdge_Banks()
         {
-            Assert.AreEqual(-5f, PlayerBankController.ComputeNextAngle(0f, -14f, 5f), Delta);
-            Assert.AreEqual(-14f, PlayerBankController.ComputeNextAngle(-12f, -14f, 5f), Delta); // Would overshoot to -17: clamped.
+            Assert.AreEqual(ShipBankState.Right, PlayerBankController.ComputeBankState(0.15f, 0.15f));
+            Assert.AreEqual(ShipBankState.Left, PlayerBankController.ComputeBankState(-0.15f, 0.15f));
         }
 
-        /// <summary>Once at the target, the angle stays there.</summary>
+        /// <summary>The first frame of a loop is shown at time 0.</summary>
         [Test]
-        public void ComputeNextAngle_AtTarget_StaysThere()
+        public void LoopFrameIndex_AtStart_IsFrameZero()
         {
-            Assert.AreEqual(-14f, PlayerBankController.ComputeNextAngle(-14f, -14f, 5f), Delta);
+            Assert.AreEqual(0, PlayerBankController.LoopFrameIndex(0f, 12f, 8));
+        }
+
+        /// <summary>Partway through, the frame matches elapsed time x frame rate.</summary>
+        [Test]
+        public void LoopFrameIndex_Partway_MatchesElapsedTimes12Fps()
+        {
+            Assert.AreEqual(3, PlayerBankController.LoopFrameIndex(0.29f, 12f, 8)); // 0.29 x 12 = 3.48 -> 3.
+        }
+
+        /// <summary>Past the end of the strip, the animation wraps back to the start instead of running off the array.</summary>
+        [Test]
+        public void LoopFrameIndex_PastTheEnd_WrapsAround()
+        {
+            Assert.AreEqual(1, PlayerBankController.LoopFrameIndex(0.75f, 12f, 8)); // 0.75 x 12 = 9 -> 9 % 8 = 1.
+        }
+
+        /// <summary>A frame count of 0 never indexes out of range.</summary>
+        [Test]
+        public void LoopFrameIndex_NoFrames_IsZero()
+        {
+            Assert.AreEqual(0, PlayerBankController.LoopFrameIndex(1f, 12f, 0));
         }
     }
 }

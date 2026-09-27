@@ -596,11 +596,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e5ae7e2c9e39542822b7d097a17a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerBankController
-  _visual: {fileID: 4467055756079710631}
+  _visual: {fileID: 1683735508203174330}
   _moveAction: {fileID: -1246895598473198080, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  _maxBankAngle: 14
-  _turnSpeed: 480
-  _currentAngle: 0
+  _baseFrames:
+  - {fileID: 21300000, guid: 9d5cfecbbc1969b429ee009a58ca2ed5, type: 3}
+  - {fileID: 21300000, guid: 8b7ca1e30f32122469d15e0c763da3df, type: 3}
+  - {fileID: 21300000, guid: 647aed0df43540d44be4fb537ad80b2d, type: 3}
+  - {fileID: 21300000, guid: 61da8b8fb90822643b15bfd968f04914, type: 3}
+  _leftFrames:
+  - {fileID: 21300000, guid: 54de2944b739ff74b8d4b9b35f861c9a, type: 3}
+  - {fileID: 21300000, guid: 2117011d697de024a821043a8274f23c, type: 3}
+  - {fileID: 21300000, guid: 36736e8dd51845042b14645635107fac, type: 3}
+  - {fileID: 21300000, guid: f3070accfa1c3b54aae5e5ffea8e1635, type: 3}
+  - {fileID: 21300000, guid: 3894c7a0b0187d7428e0346624e455b2, type: 3}
+  - {fileID: 21300000, guid: a88e2cd8eb8ab634aae3c44787764e44, type: 3}
+  - {fileID: 21300000, guid: 2c75151884da7844d8b3d8ca4508ae30, type: 3}
+  - {fileID: 21300000, guid: 515af039e5bcdb4478ef9e81bd4bc453, type: 3}
+  _rightFrames:
+  - {fileID: 21300000, guid: 22f035a3b07588540a9fe9f892db9d0a, type: 3}
+  - {fileID: 21300000, guid: 4163c547d72ff0240b0d7aa56698fb84, type: 3}
+  - {fileID: 21300000, guid: 22d9bd3d21b525242ac8d2252e8975c9, type: 3}
+  - {fileID: 21300000, guid: 623a7c6532896a84fa647c7735aa452f, type: 3}
+  - {fileID: 21300000, guid: 129b1c42f75e1034497709af83f45bbb, type: 3}
+  - {fileID: 21300000, guid: 3f3bf0c126e88d14f8565cb46bdea9b8, type: 3}
+  - {fileID: 21300000, guid: edbfe7f86ea7f9b41933a108fc3b347a, type: 3}
+  - {fileID: 21300000, guid: ef292d409e03cc842892fb9182aad5f3, type: 3}
+  _deadzone: 0.15
+  _framesPerSecond: 12
+  _currentState: 0
 --- !u!1 &6462150189907474345
 GameObject:
   m_ObjectHideFlags: 0
