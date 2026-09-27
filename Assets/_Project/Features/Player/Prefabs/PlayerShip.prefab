@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 5168070720775072745}
   - component: {fileID: 4909109372825651635}
   - component: {fileID: 4668080460523628301}
+  - component: {fileID: 1805000040816047790}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -568,6 +569,7 @@ MonoBehaviour:
   _visual: {fileID: 1683735508203174330}
   _fxParent: {fileID: 0}
   _deathEffect: {fileID: 290130063281578538, guid: ba43a54d379f77b47a011db5cc01d45f, type: 3}
+  _projectileParent: {fileID: 0}
   _flightScripts:
   - {fileID: 8629334214438046894}
   - {fileID: 4390884428910743579}
@@ -582,6 +584,23 @@ MonoBehaviour:
   _blinkFaintAlpha: 0.3
   _protectionLeft: 0
   _isOff: 0
+--- !u!114 &1805000040816047790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195100340313331399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49e5ae7e2c9e39542822b7d097a17a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerBankController
+  _visual: {fileID: 4467055756079710631}
+  _moveAction: {fileID: -1246895598473198080, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _maxBankAngle: 14
+  _turnSpeed: 480
+  _currentAngle: 0
 --- !u!1 &6462150189907474345
 GameObject:
   m_ObjectHideFlags: 0

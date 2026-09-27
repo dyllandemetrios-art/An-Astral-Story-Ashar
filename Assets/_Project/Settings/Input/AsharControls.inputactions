@@ -215,7 +215,7 @@
                 {
                     "name": "",
                     "id": "d5662fdf-fbb5-4819-9b43-15f6a21f1031",
-                    "path": "<Keyboard>/#(j)",
+                    "path": "<Keyboard>/#(k)",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -236,17 +236,6 @@
                 },
                 {
                     "name": "",
-                    "id": "99e83e4f-9d44-44b5-b57c-bc1a2b43912e",
-                    "path": "<Keyboard>/#(m)",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "92473c73-1c98-4779-9dec-0298c6244c5b",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
@@ -259,7 +248,7 @@
                 {
                     "name": "",
                     "id": "54cabf78-7fde-4f38-b9ce-a28522c9ec17",
-                    "path": "<Keyboard>/#(l)",
+                    "path": "<Keyboard>/#(m)",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -281,7 +270,7 @@
                 {
                     "name": "",
                     "id": "89aa3262-e2a8-4ef5-a801-55d02529c5c8",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -292,7 +281,7 @@
                 {
                     "name": "",
                     "id": "cbf575eb-f242-4b14-b75a-dc3ec6caa7d0",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -302,8 +291,8 @@
                 },
                 {
                     "name": "",
-                    "id": "06ec5303-c034-40fa-ae9a-1dc1edfc058c",
-                    "path": "<Keyboard>/v",
+                    "id": "6e7b9fc2-b116-4a0d-80bb-409571906c1a",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -834,6 +823,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42459204-7e8f-4282-bddf-8e61b67dae00",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

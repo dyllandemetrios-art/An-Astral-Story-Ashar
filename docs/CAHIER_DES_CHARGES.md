@@ -274,21 +274,21 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 
 ### 7.2 Commandes **[Proposition, à valider au playtest E1-08]**
 
-**[Mise à jour v1.5, Game Concept v2.4]** : le mapping ci-dessous remplace entièrement l'ancien. **Espace est retiré de tous les usages**, y compris pour avancer un dialogue.
+**[Mise à jour v1.6, décidée par Dyllan après le premier essai en jeu]** : le mapping ci-dessous remplace entièrement l'ancien. Espace n'est plus retiré de tous les usages : il redevient le **Dash**, pour rester sur une touche isolée facile à presser en plein pilotage. Les trois autres actions se décalent d'une lettre.
 
 | Action | Clavier | Manette |
 | --- | --- | --- |
 | Déplacement | ZQSD, ou flèches | Stick gauche, croix |
-| Tir (maintenu) | J, ou W | A |
-| Bouclier éphémère | K, ou X (non lié : point ouvert ci-dessous) | X |
-| Impulsion de piratage | L, ou C | LT (gâchette gauche) |
-| Dash | M, ou V | RT (gâchette droite) |
+| Tir (maintenu) | K, ou X | A |
+| Bouclier éphémère | L, ou C (non lié : point ouvert ci-dessous) | X |
+| Impulsion de piratage | M, ou V | LT (gâchette gauche) |
+| Dash | Espace | RT (gâchette droite) |
 | Pause | Échap | Start |
-| Avancer un dialogue (hors action) | J ou W (touches de tir) | A |
+| Avancer un dialogue / valider (hors action) | Espace ou Entrée | A / Sud |
 
-Sur un clavier AZERTY, W, X, C et V (rangée du bas, main gauche) font la même chose que J, K, L et M. Elles sont liées par **position physique** (`<Keyboard>/z`, `x`, `c`, `v`) : elles ne se gênent donc pas avec le déplacement, ni sur AZERTY ni sur QWERTY (où ce sont Z, X, C et V).
+Sur un clavier AZERTY, X, C et V (rangée du bas, main gauche) font la même chose que K, L et M. Elles sont liées par **position physique** (`<Keyboard>/x`, `c`, `v`) : elles ne se gênent donc pas avec le déplacement, ni sur AZERTY ni sur QWERTY. Espace est la même touche sur tous les claviers, donc le Dash n'a pas besoin d'une seconde liaison. **Valider un menu ou continuer une partie** utilise une action séparée (`UI/Submit` : Espace, Entrée, bouton Sud de la manette), pas l'action de tir, pour que le même bouton fonctionne aussi bien en jeu qu'à l'écran de game over ou dans les futurs menus.
 
-**Point ouvert, bloquant pour E5-05** : la touche K fait du bouclier éphémère une action déclenchée par le joueur, alors que le §7.10 le décrit comme un effet automatique de power-up (« absorbe 1 impact, 10 s au maximum »). À trancher avant E5-05 : la durée est-elle toujours de 10 s une fois activé ? y a-t-il un cooldown ? que se passe-t-il si le joueur appuie sur K sans charge de bouclier disponible ? **Aucun code sur le bouclier tant que ce point n'est pas tranché** ; la touche K et le bouton X ne sont pas liés à une action pour l'instant.
+**Point ouvert, bloquant pour E5-05** : la touche L fait du bouclier éphémère une action déclenchée par le joueur, alors que le §7.10 le décrit comme un effet automatique de power-up (« absorbe 1 impact, 10 s au maximum »). À trancher avant E5-05 : la durée est-elle toujours de 10 s une fois activé ? y a-t-il un cooldown ? que se passe-t-il si le joueur appuie sur L sans charge de bouclier disponible ? **Aucun code sur le bouclier tant que ce point n'est pas tranché** ; la touche L et le bouton X (manette) ne sont pas liés à une action pour l'instant.
 
 Note technique : l'Input System sait lier une touche de deux façons. Le déplacement utilise la **position physique** : `<Keyboard>/w`, `a`, `s`, `d` donnent ZQSD sur un clavier AZERTY et WASD sur un QWERTY, sans code supplémentaire. Les actions J, K, L et M utilisent au contraire la **lettre imprimée sur la touche** (`<Keyboard>/#(m)`), car le M d'un clavier AZERTY n'est pas à la même place physique que celui d'un QWERTY.
 

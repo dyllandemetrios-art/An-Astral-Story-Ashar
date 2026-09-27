@@ -1,5 +1,6 @@
 using Ashar.Core;
 using Ashar.Environment;
+using Ashar.Enemies;
 using UnityEngine;
 
 namespace Ashar.Player
@@ -8,10 +9,12 @@ namespace Ashar.Player
     /// Handles the life of the ship on the screen: the explosion when it is hit, the reappearance with a short blinking
     /// protection, and the disappearance at game over.
     /// RESPONSIBILITIES: put the ship back at the bottom centre when a life is lost, make it untouchable for a few seconds
-    /// (blinking so the player sees it), hide and freeze it when the game is over, and bring it back after a continue.
-    /// HOW IT WORKS: it listens to GameEvents. OnPlayerRespawnRequested makes the explosion where the ship is, then moves it
-    /// and starts the protection timer; OnGameStateChanged to GameOver makes the explosion and turns the ship off. While the ship is "off", its flying
-    /// scripts are disabled and its picture and colliders are hidden, but this script keeps running so it can bring the ship back.
+    /// (blinking so the player sees it), clear the enemy bullets so it does not reappear into the pattern that killed it,
+    /// hide and freeze it when the game is over, and bring it back after a continue.
+    /// HOW IT WORKS: it listens to GameEvents. OnPlayerRespawnRequested makes the explosion where the ship is, clears every
+    /// enemy bullet on screen, then moves the ship and starts the protection timer; OnGameStateChanged to GameOver makes the
+    /// explosion and turns the ship off. While the ship is "off", its flying scripts are disabled and its picture and
+    /// colliders are hidden, but this script keeps running so it can bring the ship back.
     /// WHY: separating this from PlayerHealthController keeps hit detection simple. The rules of lives and game over stay in
     /// GameSession; this script only shows them on the ship.
     /// </summary>
@@ -32,6 +35,9 @@ namespace Ashar.Player
 
         [SerializeField, Tooltip("Optional. Explosion created where the ship is hit.")]
         private GameObject _deathEffect;
+
+        [SerializeField, Tooltip("Optional. Scene object that holds the enemy bullets (Runtime/Projectiles). Set it on the scene instance. Cleared on respawn, so the ship never reappears into the pattern that just killed it.")]
+        private Transform _projectileParent;
 
         [SerializeField, Tooltip("Scripts that make the ship fly and fire. They are switched off while the ship is hidden (game over).")]
         private Behaviour[] _flightScripts;
@@ -120,12 +126,34 @@ namespace Ashar.Player
             }
 
             SetOff(false);
+            ClearEnemyBullets();
 
             Rect screen = _playArea.ScreenBounds;
             transform.position = new Vector3(screen.center.x, screen.yMin + _respawnHeight, transform.position.z);
 
             _protectionLeft = _balance.RespawnInvulnTime;
             _protectionTime = 0f;
+        }
+
+        /// <summary>
+        /// Destroys every enemy bullet on screen, so a fresh life never starts inside the pattern that took the last one.
+        /// Only the EnemyBullet layer is cleared: the player's own bullets and the enemies themselves are left alone.
+        /// </summary>
+        private void ClearEnemyBullets()
+        {
+            if (_projectileParent == null)
+            {
+                return;
+            }
+
+            for (int i = _projectileParent.childCount - 1; i >= 0; i--)
+            {
+                GameObject bulletObject = _projectileParent.GetChild(i).gameObject;
+                if (bulletObject.layer == Layers.EnemyBullet)
+                {
+                    Destroy(bulletObject);
+                }
+            }
         }
 
         /// <summary>Turns the ship off when the game is over. (A continue brings it back through the respawn request.)</summary>

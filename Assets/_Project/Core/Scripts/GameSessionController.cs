@@ -9,8 +9,8 @@ namespace Ashar.Core
     /// declare the game over, and start a continue when the player asks for one.
     /// HOW IT WORKS: it subscribes to GameEvents in OnEnable. It owns the GameSession (also reachable through
     /// GameSession.Current) and raises OnScoreChanged, OnLivesChanged, OnGameStateChanged and OnPlayerRespawnRequested for the
-    /// HUD and the ship to react. While the game is over, pressing the Fire button continues (provisional: the game over
-    /// screen with "Restart the mission" and "Menu" comes with the menus).
+    /// HUD and the ship to react. While the game is over, pressing the UI Submit button continues (Space/Enter, gamepad
+    /// South) rather than the gameplay Fire button, so the same input will also work to confirm menus later.
     /// WHY: the rules live in GameSession (pure, tested); this class is only the link with the game events.
     /// </summary>
     public class GameSessionController : MonoBehaviour
@@ -20,7 +20,7 @@ namespace Ashar.Core
         private GameBalanceData _balance;
 
         [Header("References")]
-        [SerializeField, Tooltip("Fire action (Button) of the AsharControls input asset. Pressed during a game over, it starts a continue.")]
+        [SerializeField, Tooltip("Submit action (Button) of the UI action map (Space/Enter, gamepad South). Pressed during a game over, it starts a continue.")]
         private InputActionReference _continueAction;
 
         /// <summary>Checks the data, creates the session and makes it the current one.</summary>
@@ -72,7 +72,7 @@ namespace Ashar.Core
             GameSession.Current = null;
         }
 
-        /// <summary>Copies the balance values into the session, and starts a continue when Fire is pressed during a game over.</summary>
+        /// <summary>Copies the balance values into the session, and starts a continue when Submit is pressed during a game over.</summary>
         private void Update()
         {
             ApplyBalance();

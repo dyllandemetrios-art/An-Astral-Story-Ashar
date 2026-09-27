@@ -500,6 +500,10 @@ PrefabInstance:
       propertyPath: _playArea
       value: 
       objectReference: {fileID: 1252028976}
+    - target: {fileID: 4668080460523628301, guid: b5b14f62861f2484ea0988ba8bfe9872, type: 3}
+      propertyPath: _projectileParent
+      value: 
+      objectReference: {fileID: 1075793402}
     - target: {fileID: 6195100340313331399, guid: b5b14f62861f2484ea0988ba8bfe9872, type: 3}
       propertyPath: m_Name
       value: PlayerShip

@@ -120,7 +120,7 @@ Mécaniques principales : déplacement 8 directions, tir principal (rafale), arm
 
 Interface : HUD simple (vies, score, jauges) développé en interne ; dialogues affichés en bulle textuelle pleine largeur en bas d'écran, façon Pokémon (système Ink, jusqu'à 3 lignes) ; défilement caractère par caractère avec bruitage 16-bit, un timbre distinct par interlocuteur ; le bouton de tir complète la ligne puis passe à la suivante. Pendant un dialogue, l'action est suspendue : actions ennemies en attente, décor qui défile, musique qui continue, vaisseau en pilote automatique jusqu'à la fermeture de la fenêtre. Des répliques clés sont doublées en voix off filtrée radio (coupe n° 0).
 
-Commandes : clavier (ZQSD ou flèches pour se déplacer ; J, K, L, M pour tirer, protéger, pirater et esquiver ; W, X, C, V équivalents sur AZERTY) et manette.
+Commandes : clavier (ZQSD ou flèches pour se déplacer ; K, L, M pour tirer, protéger et pirater, X, C, V équivalents sur AZERTY ; Espace pour esquiver) et manette.
 
 Style graphique : pixel art (Futuristic Spaceship SHMUP Bundle, DyLESTorm), fonds sombres, Mars en arrière-plan atténué. Règle de lisibilité : 3 couleurs de projectiles maximum par phase de boss.
 
