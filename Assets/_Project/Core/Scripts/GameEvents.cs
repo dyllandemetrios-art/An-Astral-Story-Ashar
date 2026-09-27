@@ -33,6 +33,18 @@ namespace Ashar.Core
         /// <summary>Raised when the wave table reaches its End event: the mission is over.</summary>
         public static event Action OnMissionEnded;
 
+        /// <summary>Raised when the score changes. The value is the new score.</summary>
+        public static event Action<int> OnScoreChanged;
+
+        /// <summary>Raised when the number of lives changes. The value is the lives left.</summary>
+        public static event Action<int> OnLivesChanged;
+
+        /// <summary>Raised when the game state changes (for example to GameOver, or back to Gameplay after a continue).</summary>
+        public static event Action<GameState> OnGameStateChanged;
+
+        /// <summary>Raised when the player has lost a life but has another one: the ship must reappear.</summary>
+        public static event Action OnPlayerRespawnRequested;
+
         /// <summary>Announces that the player ship has been hit.</summary>
         public static void RaisePlayerHit()
         {
@@ -55,6 +67,30 @@ namespace Ashar.Core
         public static void RaiseMissionEnded()
         {
             OnMissionEnded?.Invoke();
+        }
+
+        /// <summary>Announces the new score.</summary>
+        public static void RaiseScoreChanged(int score)
+        {
+            OnScoreChanged?.Invoke(score);
+        }
+
+        /// <summary>Announces the lives left.</summary>
+        public static void RaiseLivesChanged(int lives)
+        {
+            OnLivesChanged?.Invoke(lives);
+        }
+
+        /// <summary>Announces the new game state.</summary>
+        public static void RaiseGameStateChanged(GameState state)
+        {
+            OnGameStateChanged?.Invoke(state);
+        }
+
+        /// <summary>Announces that the ship must reappear after losing a life.</summary>
+        public static void RaisePlayerRespawnRequested()
+        {
+            OnPlayerRespawnRequested?.Invoke();
         }
 
         /// <summary>Announces that the player ship has fired a bullet.</summary>

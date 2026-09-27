@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 2014353751512518466}
   - component: {fileID: 5168070720775072745}
   - component: {fileID: 4909109372825651635}
+  - component: {fileID: 4668080460523628301}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -412,6 +413,7 @@ MonoBehaviour:
   _hitboxRelay: {fileID: 1125332908260301090}
   _hitboxDot: {fileID: 219492365711694360}
   _dash: {fileID: 1412678168849207220}
+  _respawn: {fileID: 4668080460523628301}
   _hitCount: 0
 --- !u!82 &2014353751512518466
 AudioSource:
@@ -549,6 +551,37 @@ MonoBehaviour:
   _dash: {fileID: 1412678168849207220}
   _grazeCount: 0
   _grazePoints: 0
+--- !u!114 &4668080460523628301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195100340313331399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b180cfa44db824494751874a432c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerRespawnController
+  _playArea: {fileID: 0}
+  _balance: {fileID: 11400000, guid: 20897385cfd60c347b92fe905424ff87, type: 2}
+  _visual: {fileID: 1683735508203174330}
+  _fxParent: {fileID: 0}
+  _deathEffect: {fileID: 290130063281578538, guid: ba43a54d379f77b47a011db5cc01d45f, type: 3}
+  _flightScripts:
+  - {fileID: 8629334214438046894}
+  - {fileID: 4390884428910743579}
+  - {fileID: 1412678168849207220}
+  _hiddenWhileOff:
+  - {fileID: 2800007990980766357}
+  - {fileID: 7544484526456727445}
+  - {fileID: 1968044003506698899}
+  - {fileID: 7807611368247512328}
+  _respawnHeight: 1.8
+  _blinkPeriod: 0.14
+  _blinkFaintAlpha: 0.3
+  _protectionLeft: 0
+  _isOff: 0
 --- !u!1 &6462150189907474345
 GameObject:
   m_ObjectHideFlags: 0
