@@ -42,6 +42,8 @@ ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (
 12. **Assets achetés : jamais sur GitHub.** Tout `Assets/ThirdParty/` est ignoré par Git (packs d'origine **et** leurs retouches : les licences interdisent de redistribuer même une version modifiée). Tu ne modifies jamais un fichier d'origine ; une version retouchée va dans `Assets/ThirdParty/_Modified/<Pack>/`. Seuls les sprites, sons et polices **entièrement faits maison** vont dans `Assets/_Project/`. N'utilise jamais `git add -f` ni `git add .` sans vérifier `git status`.
 13. **Commandes** : mapping v3.1 conservé ; lecture/suspension du combat selon E3-02. UI/Submit distinct du tir. Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. Capacité indépendante du générateur, paramètres exposés. Champ magnétique : chargement initial 45 s ; voir le relais.
 
+14. **Survie et continuité de la démo** : aucun score présenté au joueur (E3-09). Partie continue du tutoriel à l'épilogue ; aucun écran de fin entre zones ou après le premier boss. MissionEnd réservé à la conclusion globale dans les données finales ; le End du test E3-02 reste autorisé pour la QA. Vies, continues et pause volontaire conservés.
+
 ## Stack
 
 Unity 6.6 (6000.6.2f1), URP avec 2D Renderer, Pixel Perfect Camera URP (`UnityEngine.Rendering.Universal`, **ne pas installer** `com.unity.2d.pixel-perfect`), Input System (seul actif), TextMeshPro, dialogues linéaires en ScriptableObjects (sans Ink), Unity Test Framework. Build Windows x86_64, Mono.

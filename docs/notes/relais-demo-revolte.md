@@ -1,4 +1,4 @@
-> **État actuel :** E3-02 spécifiée sans Ink. Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. E3-06/E3-08 et la spec complète E5-05 restent à rédiger.
+> **État actuel :** E3-02 implémentée selon compte rendu ; essais physiques et pause intégrée à confirmer. E3-09 prête : survie sans score visible. Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. E3-06/E3-08 et la spec complète E5-05 restent à rédiger.
 
 # Relais documentaire — Révolte d'Ashar
 
@@ -6,7 +6,7 @@
 
 Auteur de la note : Dyllan. Intégration documentaire : Codex.
 Source intégrale : docs/Demo_Revolte_Ashar.md, prioritaire pour les points remplacés.
-Base Git : fix/ship-bank-frames, 335d3a2. Modifications documentaires non commitées.
+Base Git actuelle : main, 13c17fd. Auteur actuel : Codex, préparation documentaire E3-09 et mise à jour du suivi ; modifications non commitées. Claude Code reste l'auteur de l'implémentation Unity.
 Le Word du préquel, les assets Unity et les comptes rendus existants restent inchangés.
 
 ## Décisions de la note
@@ -30,8 +30,8 @@ Dyllan a explicitement confié la gestion du projet à Codex et le développemen
 Les IDs existants et comptes rendus sont conservés. E3-08 est ajouté pour assembler le tutoriel après les capacités. Les estimations des tâches remaniées sont « À réestimer » : pas de promesse fondée sur les anciennes demi-journées. Les semaines historiques non remaniées ne sont pas des engagements mis à jour.
 
 Ordre de réalisation (dépendances du CSV prioritaires sur les numéros de story) :
-1. Confirmer les essais physiques E3-00 ; ne pas réimplémenter le mapping. E3-01 est livré sur main (732c34f) ; E3-02 est la prochaine spec prête.
-2. Lot A : affichage radio E3-01, dialogues linéaires E3-02 selon sa spec, menus E3-06. Les dialogues fournis suffisent aux essais de présentation ; P0-09 reste requis pour leur intégration finale.
+1. Confirmer les essais physiques E3-00 ; ne pas réimplémenter le mapping. E3-01 est livré sur main (732c34f) ; E3-02 est implémentée (9052951 et 13c17fd), sans nouvelle validation gameplay déduite. E3-09 est la prochaine spec prête.
+2. Lot A : affichage radio E3-01, dialogues linéaires E3-02 selon sa spec, retrait du score visible E3-09, puis menus E3-06 (spec à rédiger). Les dialogues fournis suffisent aux essais de présentation ; P0-09 reste requis pour leur intégration finale.
 3. Cadrage : P0-16 inspecte les assets déjà présents sans refaire le bootstrap P0-12/P0-15 ; P0-07/P0-08 précisent boss et séquences ; P0-09/P0-10 préparent les contenus avec Dyllan.
 4. Lot B : bouclier E5-05 (paramètres résolus, spec complète à rédiger) et champ E5-06 après arbitrages, cibles E4-02, puis tutoriel E3-08 ; environnement/vagues/boss Assemblée E4 ; intégration et playtests E3-07/E4-06.
 5. Lot C : Culte, captifs alliés et assaut E5-01 à E5-04, puis intégration E6 et épilogue Amara ; playtest complet E6-07.
@@ -49,3 +49,14 @@ Aucun commit ni push dans cette tâche.
 ## Réparation autorisée
 
 Dyllan a autorisé la réparation des quatre documents depuis Git et les corrections actuelles ont été réappliquées. Copies des fichiers tronqués conservées hors dépôt. Aucun code ni asset Unity modifié.
+
+## Reprise depuis idees.md — 27/09/2026
+
+Prochaine action Claude : implémenter uniquement docs/specs/E3-09.md, puis remplir son compte rendu et arrêter pour le test de Dyllan.
+Décisions reprises : objectif de survie sans score visible ; aucune fin intermédiaire dans le parcours final. Continuité distribuée entre P0-08, E4-05 et E6-06, vérifiée globalement en E6-07.
+Choix réversible : conserver les données internes de points pour éviter une migration ; aucune modification des vies, continues ou graze.
+Fichiers documentaires de cette reprise : CLAUDE.md, docs/backlog.csv, docs/CAHIER_DES_CHARGES.md, docs/Demo_Revolte_Ashar.md, docs/specs/E3-02.md, docs/specs/E3-09.md, docs/notes/idees.md et ce relais.
+Le compte rendu E3-02 est conservé ; son ancien câblage TestBed est corrigé par une note de suivi (13c17fd).
+Aucun test Unity exécuté par Codex ; aucun PASS gameplay. Les 155 tests rapportés sont ceux du compte rendu Claude, pas une nouvelle exécution.
+
+Vérification de cette reprise : module Python csv, 86 stories / 11 colonnes, IDs uniques et dépendances sans cycle ; compte rendu E3-02 identique à HEAD. git diff --check réussi ; git diff --exit-code -- Assets Packages ProjectSettings sans différence. Modifications documentaires uniquement, non commitées.

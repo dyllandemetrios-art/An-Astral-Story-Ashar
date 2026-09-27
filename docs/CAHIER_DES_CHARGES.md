@@ -40,10 +40,9 @@ Une démo jouable Windows (.exe) publiée sur Itch.io : 2 missions de 5 à 8 min
 ### 1.3 Boucle de mission **[GC v2.3]**
 
 ```
-Menu → Mission N
-  dialogue de briefing → vague → dialogue → vague → … → (mini-)boss
-  → écran de fin de mission (score) → entrée de codex débloquée → sauvegarde
-  → Mission N+1 ou menu
+Menu → tutoriel en vol → Phobos IX → Mars / Assemblée → Culte
+  vagues → dialogues manuels entre combats → boss → suite sans écran intermédiaire
+  → libération des captifs → épilogue Amara → dernière validation → fin de démo
 ```
 
 ---
@@ -371,7 +370,9 @@ Apparition : uniquement sur les ennemis marqués `dropsPowerUp` dans `EnemyData`
 
 ### 7.11 HUD et menus
 
-- HUD **[GC]** : vies, score, jauge de l'impulsion (cooldown), niveau de multi-shot, barre de vie du boss (en haut, visible seulement pendant un combat de boss), bulle de dialogue (§7.7).
+**Correction actuelle — E3-09 :** aucun score présenté au joueur ; aucune fin de mission entre zones. Les menus de choix/fin de mission décrits historiquement ci-dessous ne doivent pas interrompre le parcours. P0-08 définit les jalons codex/sauvegarde sans écran imposé. Les anciens calculs internes de score peuvent rester sans rôle dans la progression ; vies et continues inchangés.
+
+- HUD **[Décision actuelle]** : vies, jauge de l'impulsion (cooldown), niveau de multi-shot, barre de vie du boss (en haut, visible seulement pendant un combat de boss), bulle de dialogue (§7.7).
 - Le glitch de LEASH (coupe n° 2) : perturbation visuelle de 0,5 à 1 s sur les bords du HUD et sur la bulle, jamais sur les commandes ni sur les projectiles.
 - Menus : principal ; choix de la mission (seulement les missions débloquées) ; codex ; options (langue FR/EN, volumes musique, effets et dialogues, hitbox visible, plein écran) ; pause (reprendre, codex, options, abandonner la mission) ; fin de mission ; game over.
 - Tous les menus sont navigables au clavier et à la manette.

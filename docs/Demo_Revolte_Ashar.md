@@ -1,3 +1,5 @@
+> **Précision issue des tests E3-02 (Dyllan, consignée dans idees.md) :** objectif de survie, sans score présenté au joueur. Partie continue du tutoriel à l'épilogue, sans écran de fin intermédiaire. Dialogues entre combats, pause volontaire et Game Over conservés. Application : E3-09 et intégration P0-08/E4-05/E6-06.
+
 > **Clarification actuelle de Dyllan :** Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Contrat : [E3-02](specs/E3-02.md).
 
 > **Bouclier actualisé :** Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. Cooldown de 20 s demandé par Dyllan ; durée de 5 s conservée et réactivation précisée pour éviter la protection permanente.
