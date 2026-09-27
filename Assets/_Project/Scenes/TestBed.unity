@@ -119,6 +119,59 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &180535318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180535319}
+  - component: {fileID: 180535320}
+  m_Layer: 0
+  m_Name: DebugRadioDisplayDriver
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180535319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180535318}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 937463580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &180535320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180535318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0b27697a6f9f642b42ae4620d0fe73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.UI.DebugRadioDisplayDriver
+  _radioDisplay: {fileID: 1768087687}
+  _advanceAction: {fileID: 2064916234097673511, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _testLines:
+  - SpeakerName: KAAL'VARIS
+    Text: "G\xE9n\xE9rateur pl\xE9iadien connect\xE9. Encore 45 secondes\u2026 et on va voir ce que ce tas de boue a dans le ventre."
+  - SpeakerName: AMARA
+    Text: "Kaal'varis, l'Assembl\xE9e vous a rep\xE9r\xE9s. Des Horizon Scouts et des Guardian Dropships convergent vers vous."
+  - SpeakerName: KAAL'VARIS
+    Text: "Le Culte\u2026 Ils viennent finir le travail. Restez group\xE9s. On s'est \xE9vad\xE9s ensemble, on sortira d'ici ensemble."
 --- !u!1 &298152609
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +414,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1135317821}
+  - {fileID: 1768087684}
+  - {fileID: 180535319}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1075793401
@@ -911,6 +966,22 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8172437030916970356, guid: 73c3cb22251782c448bd74c98905c776, type: 3}
   m_PrefabInstance: {fileID: 1734501717}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &1768087684 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+  m_PrefabInstance: {fileID: 5664532558611307908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1768087687 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3359837103625951125, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+  m_PrefabInstance: {fileID: 5664532558611307908}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66446b9afe97f84aa1ccca1c1d5abea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.UI.UIRadioDisplayView
 --- !u!1 &1768426621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,6 +1249,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1376198216}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5664532558611307908
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 937463580}
+    m_Modifications:
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3877215263478746365, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9084672356270289235, guid: 76ca441993b0a12488f5944da4091888, type: 3}
+      propertyPath: m_Name
+      value: UIRadioDisplay
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 76ca441993b0a12488f5944da4091888, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
