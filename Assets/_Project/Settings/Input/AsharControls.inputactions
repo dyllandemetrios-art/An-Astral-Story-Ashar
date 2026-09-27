@@ -55,6 +55,26 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Shield",
+                    "type": "Button",
+                    "id": "a1361d3f-5155-4b1a-b404-5357885d53c0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Codex",
+                    "type": "Button",
+                    "id": "e735fb1c-98ce-4b68-8472-bf424599e9be",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -214,8 +234,8 @@
                 },
                 {
                     "name": "",
-                    "id": "d5662fdf-fbb5-4819-9b43-15f6a21f1031",
-                    "path": "<Keyboard>/#(k)",
+                    "id": "0472a9a1-f5a4-4368-9f45-f0bdef7946cf",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -225,7 +245,7 @@
                 },
                 {
                     "name": "",
-                    "id": "1b4d76cb-48b6-41e3-b51a-cbf3c868a4f7",
+                    "id": "28045a5c-3df9-4277-8b3f-b6d74379c302",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
@@ -236,8 +256,85 @@
                 },
                 {
                     "name": "",
-                    "id": "92473c73-1c98-4779-9dec-0298c6244c5b",
-                    "path": "<Gamepad>/rightTrigger",
+                    "id": "157f1823-4303-4336-b611-97c067fdf34d",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd6d50fb-b5f9-47b0-a4d3-6ae4cec8e2a0",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecf7c03e-35e1-4149-9d7a-1295f41568b1",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf1130cb-eebc-42d9-8be9-aa9e1af161d9",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pulse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa94f645-7ccd-452d-854a-c74dbb92f308",
+                    "path": "<Keyboard>/rightCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Pulse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a9702e8-2334-4365-8df6-8d40d888f323",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Pulse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "491de9df-e434-4508-a20c-0b98ef3ff76d",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cd1f654d-961f-49fd-9906-e668c773ac17",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
@@ -247,56 +344,23 @@
                 },
                 {
                     "name": "",
-                    "id": "54cabf78-7fde-4f38-b9ce-a28522c9ec17",
-                    "path": "<Keyboard>/#(m)",
+                    "id": "3e09305c-3d2c-4f7d-86e6-7deb5d1abcfc",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Pulse",
+                    "action": "Codex",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "4cd70906-ea24-4452-b8b1-d4b0561b37d4",
-                    "path": "<Gamepad>/leftTrigger",
+                    "id": "a85b09b0-b49d-4960-af52-220947c10f15",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Pulse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "89aa3262-e2a8-4ef5-a801-55d02529c5c8",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cbf575eb-f242-4b14-b75a-dc3ec6caa7d0",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Pulse",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "6e7b9fc2-b116-4a0d-80bb-409571906c1a",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Dash",
+                    "action": "Codex",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -823,17 +887,6 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "42459204-7e8f-4282-bddf-8e61b67dae00",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Submit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
