@@ -54,6 +54,13 @@ namespace Ashar.Environment
         private float[] _tileHeights;        // World height of one tile of each layer, read once at start.
         private Vector3[] _startPositions;   // Local position of each layer root when the scene starts.
 
+        /// <summary>Scroll speed of the nearest layer, in world units per second. The wave system changes it during a mission.</summary>
+        public float BaseSpeed
+        {
+            get => _baseSpeed;
+            set => _baseSpeed = Mathf.Max(0f, value);
+        }
+
         /// <summary>Reads the tile heights and start positions once, so Update() needs no lookups.</summary>
         private void Awake()
         {

@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7001f9dd224116e4c8d01b38bcb0695b, type: 3}
+  m_Name: WaveData_TestM1
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Waves.WaveData
+  _events:
+  - _time: 0
+    _type: 0
+    _enemy: {fileID: 11400000, guid: 5375306d1d22ea44fa4fa09af6db06bb, type: 2}
+    _count: 5
+    _formation: 2
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 2
+    _delayBetweenUnits: 0.25
+    _groupTag: drones
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 1
+    _type: 2
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: 
+    _targetSpeed: 7
+    _transitionDuration: 2
+  - _time: 4
+    _type: 0
+    _enemy: {fileID: 11400000, guid: 8535aa69f137cf845914c1db4ddcb72e, type: 2}
+    _count: 3
+    _formation: 1
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 3
+    _delayBetweenUnits: 0
+    _groupTag: dives
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 6
+    _type: 0
+    _enemy: {fileID: 11400000, guid: 2673fcb7e09ae2c4abbfb30ca5c354bc, type: 2}
+    _count: 3
+    _formation: 1
+    _entry: 1
+    _entryOffset: 2
+    _entryDepth: 0
+    _spacing: 1.5
+    _delayBetweenUnits: 0.7
+    _groupTag: fighters
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 10
+    _type: 1
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: fighters
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 0
+    _type: 2
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: 
+    _targetSpeed: 2
+    _transitionDuration: 1.5
+  - _time: 0.5
+    _type: 0
+    _enemy: {fileID: 11400000, guid: d1606a4a937d19d40ac02a472a3fef08, type: 2}
+    _count: 1
+    _formation: 0
+    _entry: 3
+    _entryOffset: -5
+    _entryDepth: 2.5
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: turrets
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 0.5
+    _type: 0
+    _enemy: {fileID: 11400000, guid: d1427f8e333ec67469d0f069f865d1e4, type: 2}
+    _count: 1
+    _formation: 0
+    _entry: 3
+    _entryOffset: 5
+    _entryDepth: 2.5
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: turrets
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 2
+    _type: 1
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: turrets
+    _targetSpeed: 0
+    _transitionDuration: 0
+  - _time: 1
+    _type: 2
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: 
+    _targetSpeed: 4
+    _transitionDuration: 2
+  - _time: 3
+    _type: 3
+    _enemy: {fileID: 0}
+    _count: 1
+    _formation: 0
+    _entry: 0
+    _entryOffset: 0
+    _entryDepth: 0
+    _spacing: 1.8
+    _delayBetweenUnits: 0
+    _groupTag: 
+    _targetSpeed: 0
+    _transitionDuration: 0

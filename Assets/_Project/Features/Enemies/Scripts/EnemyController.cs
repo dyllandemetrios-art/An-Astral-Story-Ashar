@@ -1,3 +1,4 @@
+using System;
 using Ashar.Combat;
 using Ashar.Core;
 using UnityEngine;
@@ -54,6 +55,9 @@ namespace Ashar.Enemies
         private bool _dead;                  // True once dead, so it can die only once.
         private MaterialPropertyBlock _block; // Per-renderer shader values, so the shared material is left alone.
 
+        /// <summary>Raised when the enemy is removed from the game, killed or not. The wave system uses it to count groups.</summary>
+        public event Action<EnemyController> Removed;
+
         /// <summary>Hit points left.</summary>
         public float Hp => _hp;
 
@@ -103,6 +107,12 @@ namespace Ashar.Enemies
             }
 
             UpdateFlash();
+        }
+
+        /// <summary>Tells the listeners that the enemy is gone, however it went (killed, left the screen, scene closed).</summary>
+        private void OnDestroy()
+        {
+            Removed?.Invoke(this);
         }
 
         /// <summary>Called by Unity when another trigger enters this enemy: a player bullet costs it hit points.</summary>

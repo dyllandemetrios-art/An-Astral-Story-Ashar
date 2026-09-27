@@ -30,6 +30,9 @@ namespace Ashar.Core
         /// <summary>Raised when the player destroys an enemy. The value is the score points it is worth.</summary>
         public static event Action<int> OnEnemyKilled;
 
+        /// <summary>Raised when the wave table reaches its End event: the mission is over.</summary>
+        public static event Action OnMissionEnded;
+
         /// <summary>Announces that the player ship has been hit.</summary>
         public static void RaisePlayerHit()
         {
@@ -46,6 +49,12 @@ namespace Ashar.Core
         public static void RaiseEnemyKilled(int points)
         {
             OnEnemyKilled?.Invoke(points);
+        }
+
+        /// <summary>Announces that the mission has ended.</summary>
+        public static void RaiseMissionEnded()
+        {
+            OnMissionEnded?.Invoke();
         }
 
         /// <summary>Announces that the player ship has fired a bullet.</summary>
