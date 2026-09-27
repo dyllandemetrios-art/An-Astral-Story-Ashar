@@ -1,3 +1,7 @@
+> **Clarification actuelle de Dyllan :** Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Contrat : [E3-02](specs/E3-02.md).
+
+> **Bouclier actualisé :** Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. Cooldown de 20 s demandé par Dyllan ; durée de 5 s conservée et réactivation précisée pour éviter la protection permanente.
+
 # Mise à jour — Démo « Les Exilés d’Ashar »
 
 ## Objectif de la démo
@@ -59,7 +63,7 @@ Le bouclier fait partie du vaisseau indépendamment du générateur pléiadien.
 
 Son cooldown doit être visible dans l'UI.
 
-**Valeur à déterminer : 20 ou 30 secondes.**
+**Valeurs retenues : 5 s de protection, puis 20 s de cooldown sans protection.**
 
 ## Cibles du tutoriel
 
@@ -144,7 +148,7 @@ Puis :
 
 « Ils vont tenter de couper votre trajectoire. Ne les laissez pas refermer le passage. »
 
-Les dialogues doivent se dérouler pendant le gameplay autant que possible.
+Les dialogues se déroulent entre les combats ; le vol continue, les attaques attendent la dernière validation.
 
 Amara apporte principalement les **informations tactiques**, tandis que Kaal’varis commande les Exilés.
 
@@ -292,8 +296,8 @@ Respecter les règles suivantes :
 - interventions très courtes ;
 - environ deux lignes maximum par prise de parole ;
 - éviter les successions de nombreuses validations avec Entrée ;
-- privilégier les dialogues joués pendant l'action ;
-- interrompre le gameplay uniquement lorsque la mise en scène le nécessite réellement ;
+- placer les dialogues dans les moments calmes entre les combats ;
+- suspendre le combat pendant la lecture, sans figer le vol ni les animations ;
 - Amara apporte principalement renseignements et informations tactiques ;
 - Kaal’varis commande les Exilés et porte leur discours politique/narratif ;
 - éviter de présenter Kaal’varis comme le « sauveur » d'Amara ou de son escadrille : ils sont des alliés engagés dans le même conflit.
@@ -339,7 +343,7 @@ Respecter les règles suivantes :
 
 Ne pas prendre de décision définitive sans validation concernant :
 
-- cooldown du bouclier : **20 ou 30 secondes** ;
+- cooldown du bouclier : **résolu — 20 s après les 5 s de protection** ;
 - nombre exact de Pacificateurs du tutoriel ;
 - nombre exact de vagues ;
 - composition exacte des vagues ;

@@ -40,7 +40,7 @@ Le travail avance par fonctionnalités : intention, spécification, implémentat
 - Évasion collective depuis Phobos IX, puis survol de la surface de Mars.
 - Forces de l'Assemblée blanches et rouges, suivies de vaisseaux du Culte plus sombres.
 - Deux boss, dont un croiseur auquel sont enchaînés les vaisseaux à libérer.
-- Interventions radio courtes pendant le gameplay et épilogue jouable.
+- Dialogues courts entre les combats, validés manuellement pendant que le vol continue, et épilogue jouable.
 - Une difficulté unique, ajustée par les playtests.
 
 Ces éléments décrivent la cible de la démo ; leur intégration est en cours.
@@ -52,7 +52,7 @@ Ces éléments décrivent la cible de la démo ; leur intégration est en cours.
 - **ScriptableObjects** pour exposer les données de gameplay et faciliter les réglages dans l'Inspector.
 - **Input System** pour séparer les actions de leurs bindings clavier et manette.
 - **Unity Test Framework** pour vérifier la logique concernée.
-- **Ink** prévu pour les dialogues, avec des textes externalisés en français et en anglais.
+- **Dialogues linéaires en ScriptableObjects**, textes français/anglais et validation manuelle.
 
 **Cible actuelle : PC Windows**, avec un objectif de 1080p à 60 images par seconde.
 

@@ -1,6 +1,8 @@
+> **Décisions actuelles : sans Ink ; dialogues manuels entre combats ; bouclier 5 s puis 20 s de recharge.** Les anciennes mentions historiques ne sont pas une instruction d'installation.
+
 # Cahier des charges — An Astral Story : Ashar (démo)
 
-> **Révision actuelle : [note de Dyllan](Demo_Revolte_Ashar.md).** Elle prime sur les mentions historiques du Chacal, de LEASH comme boss, des dialogues bloquants et des valeurs remplacées. Les anciens calendriers M1/M2 ne fixent pas le nombre de scènes Unity ; recalage dans P0-08.
+> **Révision actuelle : [note de Dyllan](Demo_Revolte_Ashar.md).** Elle prime sur les mentions historiques du Chacal, de LEASH comme boss, des anciennes règles de dialogue et des valeurs remplacées. Les anciens calendriers M1/M2 ne fixent pas le nombre de scènes Unity ; recalage dans P0-08.
 
 Version 1.1 — 24 septembre 2026 — livrable **P0-11** (spécification technique + CLAUDE.md du dépôt)
 v1.7 : bouclier éphémère redéfini par Dyllan comme capacité de base (§7.1), retiré des power-ups (§7.10) ; cooldown de l'impulsion de piratage porté de 12 à 45 s.
@@ -53,7 +55,7 @@ Ces écarts venaient des changements de la v2.1. Les propositions ci-dessous son
 | # | Écart | Décision | Coût |
 | --- | --- | --- | --- |
 | 1 | L'échelle de la Fiche v2 (1 unité = 108 px, caméra de 10 unités de haut) n'est pas compatible avec le pixel art 48 px en rendu Pixel Perfect. | Résolution de référence 640×360 (×3 en 1080p, ×4 en 1440p, ×6 en 4K), PPU 48, 1 unité = 48 px de référence = 144 px à l'écran. Toutes les distances et vitesses de la Fiche sont multipliées par 0,75 pour garder les mêmes sensations à l'écran (§4). À confirmer au test d'import. | Faible |
-| 2 | Le backlog prévoit une « fenêtre radio holographique avec portrait » et des répliques en ScriptableObject `RadioLine`. La v2.1 prévoit une bulle façon Pokémon, avec Ink, sans portrait. | Les dialogues sont écrits en Ink. Le ScriptableObject `RadioLine` disparaît et devient un événement `Dialogue` dans `WaveData`, qui pointe vers un knot Ink (§7.7). Reformuler E3-01 et E3-02. | Moyen (intégration d'Ink) |
+| 2 | Ancienne proposition de dialogue à remplacer. | Décision actuelle : DialogueData linéaire, sans Ink ; événement Dialogue de WaveData selon E3-02. | Aucun package narratif |
 | 3 | La bulle de dialogue « en bas d'écran » recouvre la zone où évolue le vaisseau du joueur dans un shmup vertical. | **Remplacé par le point 9** : les dialogues suspendant l'action, la bulle redevient pleine largeur en bas d'écran. | — |
 | 4 | Le graze (ajouté en v2.1) n'apparaît ni dans le backlog ni dans la Fiche. | Nouvelle story **E1-09 Graze** en S1, 1 ½ j, coupe n° 6. La charge de S1 passe de 6,5 à 7,5 ½ j. | Faible |
 | 5 | P0-15 prévoit de tester le Stylized 2D Space Shooter Pack, abandonné. | P0-15 devient « Test d'import du Futuristic Spaceship SHMUP Bundle (DyLESTorm) en URP, Pixel Perfect, PPU 48 ». La correspondance ennemis ↔ assets du Bestiaire (§4) est à refaire sur ce pack. | Faible |
@@ -75,7 +77,7 @@ Reste à aligner sur la v2.3 : le prompt du projet, le Bestiaire v2 et la Fiche 
 | Entrées | Input System (package officiel) ; ancien Input Manager désactivé |
 | Texte | TextMeshPro avec une police pixel (à choisir dans le plan d'assets P0-14) |
 | UI | uGUI (Canvas) : le plus simple pour un HUD et des menus en pixel art ; Canvas Scaler en résolution de référence 1920×1080 |
-| Dialogues | Ink, via le package ink-unity-integration d'inkle (installation par URL Git ou Asset Store, gratuit) |
+| Dialogues | Séquences linéaires DialogueData (ScriptableObject), FR/EN, validation UI/Submit ; aucune dépendance narrative |
 | Tests | Unity Test Framework (EditMode en priorité) |
 | Versionnement | Git + GitHub, `.gitignore` Unity. Git LFS pour `*.wav`, `*.ogg`, `*.psd`, `*.aseprite` **[Proposition]**. **Les assets achetés ne doivent jamais être poussés sur un dépôt public** : leurs licences interdisent la redistribution. Tout `Assets/ThirdParty/` (packs d'origine **et** retouches, car les licences interdisent aussi la redistribution d'une version modifiée) est exclu par le `.gitignore` et sauvegardé à part. Le dépôt peut ainsi rester public pour le portfolio. |
 | Build | Windows x86_64, Mono (IL2CPP inutile pour la démo) |
@@ -142,7 +144,7 @@ Organisation **par fonctionnalité**, reprise du `Component/<Feature>/{Scripts,P
       Waves/                Scripts/ Data/                        (MissionRunnerController, WaveData, MissionData)
       Environment/          Scripts/ Prefabs/                     (PlayAreaController, BackgroundScrollController, couches de décor M1 et M2)
       PowerUps/             Scripts/ Prefabs/ Data/
-      Dialogue/             Scripts/ Prefabs/ Data/ Ink/          (bulle, SpeakerData, VoiceLibrary, m1_fr.ink…)
+      Dialogue/             Scripts/ Prefabs/ Data/               (DialogueData, SpeakerData, références de voix facultatives)
       Codex/                Scripts/ Prefabs/ Data/
       UI/
         HUD/  Menus/  Pause/  EndOfMission/   chacun : Scripts/ Prefabs/
@@ -184,7 +186,7 @@ GameSession (état de jeu, mission en cours, vies, score)
    │
 MissionRunner ── lit ── MissionData ── WaveData (timeline d'événements)
    │                                     ├─ Spawn    → EnemyController (EnemyData)
-   │                                     ├─ Dialogue → état Dialogue (ennemis en attente, pilote automatique), DialogueDirector (knot Ink), reprise à la fermeture
+   │                                     ├─ Dialogue → état Dialogue (ennemis en attente, pilote automatique), DialogueDirector (identifiant de séquence), reprise à la fermeture
    │                                     ├─ Zone     → change la zone de décor (M1 : hangar → dômes → espace)
    │                                     ├─ Wait     → attend la destruction d'un groupe
    │                                     ├─ Scroll   → vitesse du décor
@@ -227,7 +229,7 @@ Liste ordonnée d'événements `{ time (s), type, paramètres }` :
 | Type | Paramètres |
 | --- | --- |
 | `Spawn` | EnemyData, nombre, formation (enum `Line`, `V`, `Column`, `Single`), point d'entrée (haut, gauche, droite + décalage), délai entre unités, `groupTag` |
-| `Dialogue` | nom du knot Ink. **Bloquant** : la timeline attend la fermeture de la fenêtre de dialogue (§7.7) |
+| `Dialogue` | nom du identifiant de séquence. **Bloquant** : la timeline attend la fermeture de la fenêtre de dialogue (§7.7) |
 | `Zone` | identifiant de zone de décor ; transition de 2 s entre les couches |
 | `WaitForClear` | `groupTag` : la timeline se met en pause jusqu'à la destruction ou la sortie de tout le groupe |
 | `ScrollSpeed` | vitesse cible, durée de transition |
@@ -237,7 +239,7 @@ Liste ordonnée d'événements `{ time (s), type, paramètres }` :
 Le temps s'écoule depuis le dernier `WaitForClear` terminé. On peut ainsi réordonner les blocs sans recalculer toute la timeline.
 
 ### MissionData
-`id` (M1, M2), `titleKey`, `waves` (liste de WaveData jouées à la suite), `backgroundLayers`, `music`, `bossMusic`, `inkStory` (par langue), `voiceLibrary` (VoiceLibrary, optionnel), `codexUnlocked` (CodexEntry), `nextMission`.
+`id` (M1, M2), `titleKey`, `waves` (liste de WaveData jouées à la suite), `backgroundLayers`, `music`, `bossMusic`, `dialogueSequences` (DialogueData FR/EN), `voiceLibrary` (VoiceLibrary, optionnel), `codexUnlocked` (CodexEntry), `nextMission`.
 
 ### GameBalanceData
 Un seul asset (`GameBalanceData_Default`), réglages globaux : `enemyHPMultiplier`, `fireDensityMultiplier` (divise l'intervalle de tir), `bulletSpeedMultiplier`, `startLives`, `continues` (-1 = illimités), `respawnInvulnTime`. Valeurs de départ au §7.9.
@@ -249,13 +251,13 @@ Un seul asset (`GameBalanceData_Default`), réglages globaux : `enemyHPMultiplie
 `id`, `titleKey`, `bodyKey`, `mission`, `canonStatus` (enum `Canon`, `Adapte`, `Invente`), usage interne pour le dossier de design, jamais affiché.
 
 ### SpeakerData
-`id` (KAAL, CHACAL, LEASH, DISSIDENTS), `nameKey`, `nameColor`, `blipClip`, `blipPitch`, `charsPerSecond`.
+`id` (KAAL, AMARA), `nameKey`, `nameColor`, `blipClip`, `blipPitch`, `charsPerSecond`.
 
 ### DialogueSettingsData
 `autopilotPosition` (position de croisière, en unités), `autopilotBlendTime` (s), `autopilotBobAmplitude` (u), `leftoverFadeTime` (s), `resumeGraceTime` (s), `typewriterSkipOnFirstPress` (bool).
 
 ### VoiceLibrary (coupe n° 0)
-Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag Ink `#vo:` d'une réplique. Voix en français uniquement, quelle que soit la langue des sous-titres.
+Un asset par mission : liste `{ voId, AudioClip }`. Le voId référence un clip facultatif associé à une réplique DialogueData. Voix en français uniquement, quelle que soit la langue des sous-titres.
 
 ---
 
@@ -263,7 +265,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 
 ### 7.1 Joueur
 
-**Révision démo** : champ magnétique du générateur pléiadien, chargement initial 45 s et neutralisation/destruction des Pacificateurs de la zone. Correspondance avec Pulse / ancienne impulsion et effets hors tutoriel à confirmer avant code, sans créer implicitement une seconde capacité. Bouclier indépendant du générateur, cooldown visible de 20 ou 30 s à valider (remplace 25 s).
+**Révision démo** : champ magnétique du générateur pléiadien, chargement initial 45 s et neutralisation/destruction des Pacificateurs de la zone. Correspondance avec Pulse / ancienne impulsion et effets hors tutoriel à confirmer avant code, sans créer implicitement une seconde capacité. Bouclier indépendant du générateur, 5 s de protection puis cooldown visible de 20 s sans protection.
 
 | Fonction | Comportement | Valeurs de départ |
 | --- | --- | --- |
@@ -272,7 +274,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 | Hitbox | Cercle au centre du vaisseau ; point argent visible (désactivable dans les options). **[Fiche]** | rayon 0,11 u |
 | Dash | Déplacement rapide dans la direction de l'entrée, vers le haut sans entrée, avec une invulnérabilité courte. Traînée visuelle. **[GC] [Fiche]** | 2,8 u en 0,18 s ; invulnérable 0,28 s ; cooldown 1,5 s |
 | Graze | Zone circulaire distincte de la hitbox. Un projectile ennemi qui la traverse sans toucher la hitbox rapporte un bonus, **une seule fois par projectile**. Pas de graze pendant le dash. **[GC] + [Proposition]** | rayon 0,6 u ; +20 points ; −0,25 s sur le cooldown de l'impulsion. Coût faible. Le bonus d'impulsion relie le pilotage agressif au piratage : à retirer s'il déséquilibre. |
-| Bouclier éphémère | **[Décision de Dyllan le 28/09/2026, remplace la ligne « Bouclier éphémère » du §7.10]** Capacité de base, déclenchée par le joueur (touche dédiée, §7.2), avec son propre cooldown — pas un power-up à ramasser. Pendant sa durée, il pare tous les impacts (pas seulement un seul). Halo argent pendant l'activation. | Durée 5 s ; cooldown à valider : 20 ou 30 s (fourchette donnée par Dyllan : 20 à 30 s, valeur de départ à affiner au playtest E5). **Comportement à confirmer avant de coder (E5-05)** : un appui pendant le cooldown ne fait rien, par cohérence avec le Dash — à valider par Dyllan, ce n'est pas lui qui l'a formulé. |
+| Bouclier éphémère | Capacité de base indépendante du générateur ; pare tous les impacts pendant la protection, halo argent. | Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. Valeurs réglables, UI de protection et recharge. |
 | Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | **cooldown 45 s** (révisé par Dyllan le 28/09/2026, remplace 12 s) ; rayon 3,4 u ; 300 dégâts aux tourelles et à la navette ; sans effet sur LEASH ni sur ses projectiles |
 | Vies et respawn | Un impact = une vie perdue, perte du multi-shot, réapparition en bas au centre, invulnérabilité avec clignotement. **[Bestiaire §5]** | voir §7.9 |
 | Continue | Reprise sur place, vies remises à leur valeur de départ, score remis à 0 (convention arcade). **[Proposition]**, coût faible | — |
@@ -328,19 +330,12 @@ Le croiseur final laisse comprendre la situation avant son affrontement principa
 
 Nombre de captifs, attaches et seuil de libération à valider. L'ancienne fiche LEASH (drones libérés hostiles, noyau et phase de transmission) est historique. La note ne désigne pas LEASH comme pilote du croiseur.
 
-### 7.7 Dialogues et tutoriel
+### 7.7 Dialogues manuels entre les combats
 
-Source : [note de Dyllan](Demo_Revolte_Ashar.md), répliques fournies et principes de dialogue.
-- Radio pendant le gameplay par défaut : interventions très courtes, environ deux lignes ; ne pas suspendre systématiquement vagues et commandes ni imposer le pilote automatique.
-- Tutoriel : conserver les contrôles et avancer après l'action attendue ou UI/Submit ; afficher les bindings actuels. Prévenir le double traitement de A (tir et validation) selon le contexte.
-- Interruption uniquement si la mise en scène le nécessite ; règle d'avancement et durée d'affichage hors tutoriel à définir sans inventer de mapping.
-- Amara renseigne ; Kaal’varis commande les Exilés. Pas de Chacal, pas de posture de sauveur d'Amara.
-- Conserver Ink, SpeakerData, tags speaker et voix optionnelle, FR/EN, textes externalisés et erreur explicite si knot absent. Voix absente : texte fonctionnel.
-- Intégrer les répliques de Dyllan ; ne pas inventer les formulations encore ouvertes.
-- Épilogue : invitation à Taygeta Prime, choix d'un refuge proche de la Terre, scientifiques du Culte nommés responsables des augmentations forcées, déclaration finale de la note.
-- Ne pas utiliser Time.timeScale = 0 pour les dialogues ; réserver le gel au menu pause.
+Contrat : [E3-02](specs/E3-02.md), sans Ink.
+Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation.
 
-QA : gameplay actif pendant radio/tutoriel ; consigne terminée par action ou validation ; aucun saut multiple ; lisibilité sans masquer les menaces ; interruption uniquement prévue par la mise en scène. Vérifier la reprise et les tirs involontaires si une séquence interrompt le combat.
+Avant un boss : arrivée visuelle, attente animée sans attaque, échange puis combat. DialogueData contient les répliques linéaires (interlocuteur et textes FR/EN). Réutiliser UIRadioDisplayView. Suspendre attaques, spawns et horloge de combat sans Time.timeScale = 0 ; reprise sans rattrapage. QA et intégration dans E3-02.
 
 ### 7.8 Codex **[GC]**
 
@@ -368,7 +363,7 @@ Un seul niveau de difficulté. Les valeurs vivent dans `GameBalanceData_Default`
 | Power-up | Priorité | Effet |
 | --- | --- | --- |
 | Multi-shot | Must | Niveau 1 : 1 flux (100 dégâts/s) ; niveau 2 : 2 flux parallèles (200/s) ; niveau 3 : 3 flux en éventail étroit (≈ 260/s). Retour au niveau 1 au premier impact. |
-| ~~Bouclier éphémère~~ | — | **Retiré des power-ups le 28/09/2026** : devient une capacité de base du joueur, décrite au §7.1 (durée 5 s, pare tout, cooldown à valider : 20 ou 30 s). N'apparaît donc plus comme objet à ramasser dans `WaveData`. |
+| ~~Bouclier éphémère~~ | — | **Retiré des power-ups le 28/09/2026** : devient une capacité de base du joueur, décrite au §7.1 (durée 5 s, pare tout, puis cooldown 20 s sans protection). N'apparaît donc plus comme objet à ramasser dans `WaveData`. |
 | Drones de garde piratés | Could (coupe n° 3) | Non spécifié. Ne pas implémenter avant le point de contrôle de fin S4. |
 | Laser pléiadien | Could (coupe n° 4) | Non spécifié. Même règle. |
 
@@ -400,7 +395,7 @@ Un fichier corrompu ou absent donne une sauvegarde neuve, avec un avertissement 
 ### 7.13 Localisation **[GC v2.3]**
 
 - Interface : `Localization/strings.csv` (`key;fr;en`) chargé dans un dictionnaire par une classe `Loc`. Clé absente : affichage `#key#` et avertissement dans la console. **[Proposition]** : plus léger que le package Unity Localization pour une démo de cette taille (coût faible).
-- Dialogues : un fichier Ink par langue (§7.7). Codex : clés de la table.
+- Dialogues : un données DialogueData par langue (§7.7). Codex : clés de la table.
 - **FR et EN obligatoires** (Game Concept v2.3) : la localisation n'est plus une coupe. Langue choisie dans les options, FR par défaut, mémorisée dans la sauvegarde.
 
 ### 7.14 Audio **[GC v2.3]**
@@ -531,7 +526,7 @@ Le backlog reste la référence ; stories ajoutées ou modifiées par ce documen
 | S0 (jusqu'au 30 sept) | P0-07, P0-08, **P0-15 (pack DyLESTorm)**, **P0-16 (alignement v2.3)**, P0-14, P0-09 (avec répliques `#vo`), P0-10, P0-12 | Projet vide + build + test d'import validé |
 | S1 (1-7 oct) | E1-01 à E1-06, **E1-09 Graze**, E1-07, E1-08 | Premier build Windows jouable |
 | S2 (8-14 oct) | E2-01 à E2-07 | Point de contrôle 1 : performance |
-| S3 (15-21 oct) | **E3-01 Bulle de dialogue**, **E3-02 Ink et état Dialogue**, E3-03 à E3-07 | — |
+| S3 (15-21 oct) | **E3-01 Bulle de dialogue**, **E3-02 dialogues manuels sans Ink**, E3-03 à E3-07 | — |
 | S4 (22-28 oct) | E4-01 à E4-07 | Point de contrôle 2 : coupes 1, 3, 4 |
 | S5 (29 oct-4 nov) | E5-01 à E5-06 (+ E5-07 à E5-09 si non coupées) | — |
 | S6 (5-11 nov) | E6-01 à E6-07 (+ E6-05 et E6-08 si non coupées) | Point de contrôle 3 : coupes 0, 2, 5 |
@@ -555,7 +550,7 @@ Chaque bloc se copie dans `docs/specs/<ID>.md`.
   3. Créer l'arborescence du §5.1 (seulement les dossiers utilisés en S1, aucun dossier vide) ; déplacer le contenu de `Assets/Settings/` vers `Assets/_Project/Settings/` **depuis l'éditeur** (pour conserver les GUID) ; renommer `InputSystem_Actions` en `AsharControls`. Asmdefs `Ashar.Runtime`, `Ashar.Editor`, `Ashar.Tests.EditMode`.
   4. Input System seul actif (ancien Input Manager désactivé) ; réglages pixel art du §3, dont `Editor/PixelArtImportPostprocessor.cs` qui applique Point, sans compression, sans mip maps, PPU 48 à toute texture importée dans `_Project/` et `ThirdParty/`.
   5. Scènes `Boot`, `MainMenu`, `Mission` et `TestBed` dans `_Project/Scenes/`, chacune avec les sections de hiérarchie du §5.1, enregistrées dans les Build Settings (`Boot` en premier, `TestBed` exclue).
-  6. README : restructurer le `README.md` existant au format du §9.3 **en gardant le texte de Dyllan**, avec ces corrections : Kaal'varis n'est pas « ancien militaire » (retiré en Concept v2.2, Annexe B : ancien messager du Conseil pléiadien) ; Phobos IX est un « complexe pénitentiaire orbital » ; « dialogues radio » devient « dialogues en bulle (Ink) et voix off » ; retirer `RadioLine` et WebGL (cible : Windows) ; ajouter les sections « Assets tiers » et « Méthode ».
+  6. README : restructurer le `README.md` existant au format du §9.3 **en gardant le texte de Dyllan**, avec ces corrections : Kaal'varis n'est pas « ancien militaire » (retiré en Concept v2.2, Annexe B : ancien messager du Conseil pléiadien) ; Phobos IX est un « complexe pénitentiaire orbital » ; « dialogues radio » devient « dialogues manuels entre combats et voix facultative » ; retirer `RadioLine` et WebGL (cible : Windows) ; ajouter les sections « Assets tiers » et « Méthode ».
   7. Outillage : vérifier si le Unity CLI ou un serveur MCP Unity est utilisable (le package `com.unity.ai.assistant` est installé) pour créer prefabs et scènes dans l'éditeur ouvert ; sinon, poser la base des scripts de mise en place (menu `Ashar/Setup/<ID>`). Indiquer dans le compte rendu la voie active.
 - **Critères** : le projet s'ouvre sans erreur ni avertissement ; un build Windows se lance et affiche un fond noir ; un test EditMode factice passe ; un fichier déposé dans `Assets/ThirdParty/` n'apparaît pas dans `git status` ; une texture importée reçoit automatiquement les réglages pixel art ; plus aucun fichier du template dans `Assets/`.
 - **Test** : ouvrir le projet, lancer le Test Runner, construire et lancer l'exécutable, déposer une image dans `Assets/ThirdParty/` puis lancer `git status`.

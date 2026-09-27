@@ -1,3 +1,5 @@
+> **Règle actuelle : [E3-02](specs/E3-02.md), sans Ink.** Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Comptes rendus ci-dessous conservés ; vue E3-01 réutilisable.
+
 > **Document historique amendé par la nouvelle note.** Les éléments remplacés ne font plus foi ; conserver les informations non concernées. Voir [note actuelle de Dyllan](Demo_Revolte_Ashar.md) et [relais](notes/relais-demo-revolte.md). Aucun Chacal dans cette démo ; dialogues en action privilégiés ; final = croiseur du Culte et libération des alliés.
 
 An Astral Story : Ashar
