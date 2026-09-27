@@ -1,3 +1,5 @@
+> **Ancienne proposition remplacée pour la démo.** Ses phases et valeurs ne sont plus le contrat du boss actuel. Voir [note actuelle de Dyllan](Demo_Revolte_Ashar.md) et [relais](notes/relais-demo-revolte.md). Aucun Chacal dans cette démo ; dialogues en action privilégiés ; final = croiseur du Culte et libération des alliés.
+
 # Fiche boss — LEASH, croiseur de poursuite (Mission 2)
 
 Livrable **P0-07** — 24/09/2026 — **en attente de validation**.

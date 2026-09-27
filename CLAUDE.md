@@ -1,7 +1,7 @@
 # CLAUDE.md — An Astral Story : Ashar
 
 Shoot'em up narratif 2D à scroll vertical, pixel art, Unity 6 (URP, C#), PC Windows, export Itch.io.
-Projet solo : Dyllan conçoit, teste et valide ; Claude Code implémente. Démo de 2 missions (M1 Phobos IX, M2 La course hors de Mars),
+Projet solo : Dyllan conçoit, teste et valide ; Codex gère le planning et les revues ; Claude Code implémente. Démo de la Révolte : tutoriel en vol, Phobos IX, Mars, Assemblée, Culte, libération et épilogue ;
 développée du 1er octobre au 25 novembre 2026. Finalité : **portfolio**. Le code et le projet Unity seront lus par des recruteurs :
 ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (`Stuffy_Infinite_Runner`, `Snake_2D`).
 
@@ -18,28 +18,29 @@ ils doivent être impeccables, au niveau des dépôts de référence de Dyllan (
 
 | Fichier | Rôle pour toi |
 | --- | --- |
+| `docs/Demo_Revolte_Ashar.md` | **Décision actuelle de Dyllan** : trame, dialogues et tutoriel. Prime sur les anciennes versions ; lire les sections utiles. |
 | `docs/CAHIER_DES_CHARGES.md` | **Ta source principale** : architecture, données, comportements, valeurs. |
 | `docs/specs/<ID>.md` | La story en cours. Tu ne travailles que sur elle. |
-| `docs/Game_Concept.md` | Fait foi sur le design. Si le cahier des charges le contredit, arrête-toi et signale-le. |
-| `docs/Fiche_boss_LEASH.md` | Spécification du boss (stories E5). |
+| `docs/Game_Concept.md` | Historique du concept ; la note Demo_Revolte_Ashar.md prime pour la démo actuelle. |
+| `docs/Fiche_boss_LEASH.md` | Proposition historique remplacée ; boss actuel : note Demo_Revolte_Ashar.md §5. |
 | `docs/Bestiaire_v2.md`, `docs/Fiche_vaisseau_v2.md` | Contexte de design uniquement. **Leurs valeurs d'échelle et de vitesse sont obsolètes** : utilise exclusivement celles du cahier des charges. |
 | `docs/backlog.csv` | IDs des stories (P0-xx, E1-xx…). |
 
 ## Règles non négociables
 
-1. **Une story à la fois, puis stop.** Tu implémentes la spec donnée, rien de plus. Quand elle est terminée, tu remplis le compte rendu, tu commites sur la branche de la story et **tu t'arrêtes** : Dyllan teste et valide. Tu ne fusionnes jamais dans `main` et tu n'enchaînes jamais sur la story suivante sans qu'il le demande. Une idée ou un besoin hors périmètre va dans `docs/notes/idees.md`, sans être codé.
+1. **Une story à la fois, puis stop.** Tu implémentes la spec donnée, rien de plus. Quand elle est terminée, tu remplis le compte rendu, tu commites sur la branche de la story et **tu t'arrêtes** : Dyllan teste et valide dans Unity. Dès que Dyllan confirme ce test, tu fusionnes la branche de la story dans `main` (fast-forward, sans PR, sans demande de confirmation séparée pour ce merge), tu pousses `main` sur origin, puis tu t'arrêtes à nouveau : tu n'enchaînes jamais sur la story suivante sans qu'il le demande. À la fin de chaque Epic (E1, E2, E3…), tu regénères en plus le build Windows via le Unity CLI, en écrasant `Build/Windows/` (déjà ignoré par Git) : un seul build à jour, jamais d'accumulation. La publication sur Itch.io reste un geste manuel de Dyllan. Une idée ou un besoin hors périmètre va dans `docs/notes/idees.md`, sans être codé.
 2. **Si tu ne peux pas répondre au besoin, tu t'arrêtes et tu le dis** (voir « Blocage » plus bas). Tu ne simules jamais un succès, tu n'affaiblis jamais un critère d'acceptation, tu ne désactives jamais un test pour le faire passer, et tu ne contournes jamais un obstacle par une bidouille (édition YAML d'une scène, valeur en dur, suppression d'une fonctionnalité).
 3. **Les réglages manuels de Dyllan sont sacrés.** Toute valeur ajustable est exposée dans un ScriptableObject ou dans l'Inspector, avec un `[Tooltip]`. Un script de mise en place crée un asset **uniquement s'il n'existe pas** : il ne réécrit jamais un `.asset`, un prefab ou une scène existants. Si une story doit changer une valeur déjà réglée, propose-le dans le compte rendu au lieu de le faire.
 4. **Aucun service en ligne** : pas de serveur, d'analytics, de multijoueur, de leaderboard en ligne, de SDK réseau.
 5. **Données pilotées** : toute valeur d'équilibrage vit dans un ScriptableObject ; tout texte visible passe par la table de chaînes ou par Ink. Rien en dur dans le code.
 6. **Prototype d'abord, mais propre** : `Instantiate`/`Destroy`, MonoBehaviour simples, `enum` + paramètres. Pas de pooling, de système de patterns générique, de machine à états générique, d'injection de dépendances ni d'ECS tant qu'une mesure (story E2-01) ou la spec ne le demande pas. Simple ne veut pas dire négligé : les conventions ci-dessous s'appliquent dès la première ligne.
-7. **Tu n'écris jamais de contenu narratif** (dialogues, codex, noms de lieux) : utilise des placeholders `[TODO-TEXTE: description]`.
-8. **Lisibilité** : projectiles joueur argent-blanc, ennemis rouge orangé, boss LEASH magenta et jaune ; jamais plus de 3 couleurs de projectiles par phase de boss.
-9. **Un dialogue est une pause narrative, jamais un gel du jeu.** Pendant un dialogue : actions ennemies en attente, vagues suspendues, décor qui défile, musique qui continue, vaisseau en **pilote automatique** (le joueur ne le contrôle plus) ; le bouton de tir fait avancer, et fermer la fenêtre de dialogue rend la main. **N'utilise jamais `Time.timeScale = 0` pour un dialogue** (réservé au menu pause). Aucun dialogue pendant l'action. Une voix off absente ne doit jamais provoquer d'erreur. Détails : cahier des charges §7.7.
-10. **Ne modifie pas `docs/`**, sauf `docs/notes/` et le fichier de spec en cours (section « Compte rendu »).
+7. **Contenu narratif** : intégrer les répliques fournies par Dyllan dans docs/Demo_Revolte_Ashar.md. Ne pas inventer de dialogues, codex ou noms ; placeholders pour les manques, formulations ouvertes soumises à Dyllan.
+8. **Lisibilité** : projectiles joueur argent-blanc, ennemis rouge orangé ; jamais plus de 3 couleurs de projectiles par phase. Coques Assemblée blanches/rouges, Culte sombres/rouges, croiseur Amara argent/bleu ; palette détaillée des boss à valider.
+9. **Dialogues courts pendant le gameplay par défaut** : environ deux lignes, commandes actives ; Amara informe, Kaal'varis commande. Tutoriel : action demandée ou validation passe la consigne, gameplay actif. Interruption uniquement pour une mise en scène qui la nécessite ; aucun pilote automatique systématique. Ne pas utiliser Time.timeScale = 0 pour un dialogue. Voir docs/Demo_Revolte_Ashar.md et cahier des charges §7.7.
+10. **Documentation** : Claude Code modifie docs/notes/ et le compte rendu de sa spec ; toute autre révision demande un périmètre autorisé. Codex maintient documentation et backlog dans son rôle de gestion de projet autorisé par Dyllan. Les décisions de gameplay et de canon restent à Dyllan.
 11. **N'édite jamais à la main** les fichiers `.unity`, `.prefab` ou `.asset`. Passe par l'éditeur ouvert via le **Unity CLI** (voie active, voir la référence Outillage) ou, à défaut, par un script d'éditeur de mise en place idempotent (menu `Ashar/Setup/<ID>`), que Dyllan lance en un clic.
 12. **Assets achetés : jamais sur GitHub.** Tout `Assets/ThirdParty/` est ignoré par Git (packs d'origine **et** leurs retouches : les licences interdisent de redistribuer même une version modifiée). Tu ne modifies jamais un fichier d'origine ; une version retouchée va dans `Assets/ThirdParty/_Modified/<Pack>/`. Seuls les sprites, sons et polices **entièrement faits maison** vont dans `Assets/_Project/`. N'utilise jamais `git add -f` ni `git add .` sans vérifier `git status`.
-13. **Commandes** : le mapping v3.1 de docs/specs/E3-00.md (référencé au cahier des charges §7.2) fait foi et remplace les anciens contrôles ; le lire avant toute tâche liée aux entrées, menus ou dialogues. Garder UI/Submit distinct du tir. E3-00 est un préalable obligatoire à E3-01 (voir backlog). **Bouclier (E5-05)** : capacité de base précisée par Dyllan le 28/09/2026 — 5 s, pare tout, cooldown 25 s (§7.1) ; reste à confirmer avant de coder : le comportement d'un appui pendant le cooldown (proposition : ne rien faire, comme le Dash). Ne pas coder avant que ce dernier point soit validé et avant la story E5-05 elle-même (ordre du backlog).
+13. **Commandes** : mapping v3.1 dans docs/specs/E3-00.md ; son ancien blocage des actions en dialogue est remplacé par la note Demo_Revolte_Ashar.md. UI/Submit reste distinct du tir. **Bouclier** indépendant du générateur : cooldown rouvert à 20 ou 30 s, ancienne valeur 25 s remplacée. Durée/effet précédemment documentés conservés sauf décision contraire ; appui pendant cooldown à valider. Champ magnétique : chargement initial 45 s ; lire docs/notes/relais-demo-revolte.md avant implémentation.
 
 ## Stack
 

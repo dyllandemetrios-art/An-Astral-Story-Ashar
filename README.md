@@ -1,76 +1,95 @@
 # An Astral Story : Ashar
 
-Shoot'em up narratif 2D à scroll vertical, en pixel art, développé en solo sous **Unity 6 (URP, C#)**.
+**Shoot'em up narratif 2D en pixel art — projet de portfolio en technical game design.**
 
-![Statut](https://img.shields.io/badge/statut-en%20d%C3%A9veloppement-orange)
-![Moteur](https://img.shields.io/badge/moteur-Unity%206-black?logo=unity)
-![Plateforme](https://img.shields.io/badge/plateforme-Windows-blue)
+Je développe ce projet en solo sous **Unity 6 (URP, C#)**, avec une assistance IA pour la production technique. J'en assure la conception, la direction créative, les arbitrages et les playtests.
 
-🎮 **Jouer sur itch.io** : lien à venir, une fois la démo prête.
+## Le jeu
 
-## À propos
+Issu de mon univers *Anandavira*, **Ashar** adapte le début de l'acte 3 du préquel *Les Exilés d'Ashar*.
 
-Spin-off du roman *Anandavira*, situé dans son préquel *Les Exilés d'Ashar*. Le joueur incarne **Kaal'varis Dorn**, ancien messager du Conseil pléiadien condamné à l'exil et détenu dans le complexe pénitentiaire orbital **Phobos IX**. Avec les exilés qu'il a rassemblés, il s'empare d'un vaisseau terrien et s'évade à travers l'orbite martienne — chaque mission dévoilant, via des dialogues en bulle (Ink), une voix off et des entrées de codex, une part d'une intrigue plus vaste de manipulation de l'humanité.
+Le joueur incarne **Kaal'varis Dorn**, ancien messager du Conseil pléiadien, au moment où les détenus de **Phobos IX** prennent leur envol à bord de vaisseaux volés. La fuite les mène au-dessus de Mars, face aux forces de l'Assemblée Terrienne puis du Culte de l'Ascension Cybernétique.
 
-### Gameplay
+Avec le soutien radio de la capitaine **Amara Solvik**, les fugitifs doivent ouvrir un passage et libérer une escadrille captive. L'action raconte la naissance d'un collectif : les Exilés d'Ashar.
 
-- Arcade vertical, déplacement 8 directions, tir principal + arme secondaire (piratage)
-- Dash/esquive avec invulnérabilité courte, bouclier éphémère, power-ups
-- Narration en toile de fond : dialogues en bulle entre les vagues, codex débloqué en fin de mission
-- Un seul niveau de difficulté
+## Mon rôle de technical game designer
 
-### Lien avec l'univers Anandavira
+Mon travail consiste à transformer une intention de jeu en comportements observables, en paramètres réglables et en critères de validation.
 
-Ce projet est un pont vers le roman *Anandavira*, pas un résumé : les dialogues et le codex teasent l'univers sans en dévoiler les grandes révélations.
+- **Game design** : boucle de combat, commandes, capacités, progression et équilibre entre prise de risque et lisibilité.
+- **Technical design** : spécifications des systèmes, états et interactions, organisation des données et critères d'acceptation.
+- **Level design** : composition des vagues, rythme des rencontres, apprentissage progressif et mise en scène des boss.
+- **Narrative design** : adaptation de mon univers, rôle des personnages et articulation entre dialogues courts et action.
+- **Itération dans Unity** : réglage des paramètres, sélection et intégration des assets, playtests et analyse des retours.
+- **Pilotage de production** : définition du périmètre, priorisation du backlog et arbitrages pour aboutir à une démo courte et complète.
 
-## Contrôles
+Un exemple central de cette démarche : les vaisseaux captifs du boss final doivent devenir des alliés une fois leurs entraves détruites. L'objectif est de rendre la libération immédiatement visible et utile dans le combat.
 
-Le [mapping v3.1 définitif](docs/specs/E3-00.md) remplace tous les anciens schémas.
-Clavier : ZQSD et flèches simultanément actifs ; tir Espace, bouclier Maj gauche/droite, impulsion Ctrl gauche/droite, dash F, menus Entrée, codex Tab, pause Échap.
-Manette Xbox : déplacement stick/croix ; tir A, bouclier X, dash B, impulsion Y, menus A, codex View, pause Menu. Gâchettes et bumpers inutilisés pour le gameplay core.
-Implémentation et validation prévues dans E3-00, préalable obligatoire à E3-01 ; mécanique du bouclier encore à spécifier.
+## Développement avec l'IA
 
-## Ce que ce projet m'a appris
+J'utilise **Codex** pour m'accompagner dans la gestion du projet, la documentation, le découpage des tâches et les revues. **Claude Code** prend en charge l'implémentation technique à partir des spécifications, ainsi que les vérifications automatisées et les comptes rendus.
 
-À compléter en fin de projet.
+Le code est donc développé avec une contribution importante de l'IA. Mon apport porte sur la conception du jeu, la définition des comportements attendus, la direction du travail et la validation du résultat.
 
-## Points techniques
+Le travail avance par fonctionnalités : intention, spécification, implémentation, vérifications, puis test en jeu. Je garde la décision sur le gameplay, le récit et les compromis de production. Les tests automatisés vérifient une partie du fonctionnement ; les sensations de contrôle, le rythme et la lisibilité se jugent en jouant.
 
-À compléter au fil du développement.
+## Gameplay visé pour la démo
 
-## Tech stack
+- Déplacement à huit directions, tir principal, dash, bouclier et champ magnétique pléiadien.
+- Tutoriel en vol : apprentissage par l'action pendant le chargement du générateur.
+- Évasion collective depuis Phobos IX, puis survol de la surface de Mars.
+- Forces de l'Assemblée blanches et rouges, suivies de vaisseaux du Culte plus sombres.
+- Deux boss, dont un croiseur auquel sont enchaînés les vaisseaux à libérer.
+- Interventions radio courtes pendant le gameplay et épilogue jouable.
+- Une difficulté unique, ajustée par les playtests.
 
-- Unity 6.6, Universal Render Pipeline (2D Renderer), Pixel Perfect Camera
-- C#, architecture par ScriptableObjects (EnemyData, WaveData, MissionData, PowerUpData, CodexEntry)
-- Input System, TextMeshPro, Ink (inkle) pour les dialogues
-- Unity Test Framework (tests EditMode)
-- Cible : PC Windows, 1080p/60 fps, export Itch.io
+Ces éléments décrivent la cible de la démo ; leur intégration est en cours.
 
-## Assets tiers
+## Approche technique
 
-Les packs achetés ne sont **pas inclus dans ce dépôt** : leurs licences interdisent la redistribution, y compris sous forme retouchée. Ils sont rangés dans `Assets/ThirdParty/`, exclu par le `.gitignore`. Un clone du dépôt affiche donc des sprites manquants : c'est normal.
+- **Unity 6.6**, Universal Render Pipeline avec **2D Renderer** et rendu pixel perfect.
+- **C#**, composants aux responsabilités ciblées et organisation par fonctionnalité.
+- **ScriptableObjects** pour exposer les données de gameplay et faciliter les réglages dans l'Inspector.
+- **Input System** pour séparer les actions de leurs bindings clavier et manette.
+- **Unity Test Framework** pour vérifier la logique concernée.
+- **Ink** prévu pour les dialogues, avec des textes externalisés en français et en anglais.
 
-| Pack | Auteur |
-| --- | --- |
-| Futuristic Spaceship SHMUP Bundle (vaisseaux, ennemis, fonds, explosions) | DyLESTorm (itch.io) |
-| Sci-fi Turret Sprite Pack | Felmir (itch.io) |
-| Futuristic Military Base, Pixel Mars Base Tileset | Cute SCKR (itch.io), packs signalés *AI Assisted* |
-| Cyberpunk Synthwave (musique) | Aleksis Tristan Shaw (itch.io) |
+**Cible actuelle : PC Windows**, avec un objectif de 1080p à 60 images par seconde.
 
-## Méthode
+## Documentation du projet
 
-Développé avec **Claude Code**, story par story : chaque story du backlog fait l'objet d'une spec (`docs/specs/`), implémentée sur sa propre branche, puis testée et validée par moi avant fusion. La conception (game, level et narrative design), les arbitrages et les tests restent humains.
+Le dépôt conserve les décisions de conception et les traces du développement :
+
+- [Vision actuelle de la démo](docs/Demo_Revolte_Ashar.md)
+- [Cahier des charges](docs/CAHIER_DES_CHARGES.md)
+- [Backlog de production](docs/backlog.csv)
+- [Spécifications et comptes rendus](docs/specs/)
+- [Playtests et mesures](docs/playtests/)
 
 ## Statut
 
-🚧 En développement — démo jouable (2 missions de 5 à 8 minutes) visée pour fin novembre 2026.
+🚧 **En développement.** Démo gratuite destinée à itch.io.
 
-Développé seul, en 8 semaines (pré-production fin septembre, développement du 1ᵉʳ octobre au 25 novembre 2026), dans une logique de **portfolio** : démontrer le game design, le level design et le narrative design du jeu.
+L'objectif initial de livraison est fixé à **fin novembre 2026**. Le calendrier est à recalibrer selon le périmètre actualisé et les résultats des playtests. La durée finale de la démo reste à valider.
 
-## Auteur
+## Remerciements et assets
 
-**Dyllan Démétrios**
+Merci aux créateurs dont les packs contribuent à l'identité visuelle et sonore du projet :
 
-## Licence
+| Auteur | Contribution |
+| --- | --- |
+| **DyLESTorm** | *Futuristic Spaceship SHMUP Bundle* : vaisseaux, ennemis, décors spatiaux, projectiles et effets |
+| **Felmir** | *Sci-Fi Turret Pack v2* : tourelles |
+| **Cute SCKR** | *Futuristic Military Base* et *Pixel Mars Base Tileset* : installations et décors martiens |
+| **Aleksis Tristan Shaw** | *Cyberpunk Synthwave* : musique |
 
-Projet personnel à but non commercial, distribué gratuitement sur [itch.io](#) une fois la démo prête. Lien à venir.
+Les packs de Cute SCKR sont signalés *AI Assisted* dans la documentation du projet.
+
+Les assets tiers ne sont pas redistribués dans ce dépôt. Ils sont conservés dans le dossier Assets/ThirdParty/, exclu du suivi Git : un clone peut donc présenter des références manquantes sans les packs correspondants.
+
+## Auteur et diffusion
+
+**Dyllan Démétrios — Technical Game Design · Game Design · Narrative Design**
+
+Projet personnel de portfolio, à but non commercial. Distribution gratuite prévue sur itch.io ; lien à venir.
+Les assets tiers restent soumis aux licences de leurs auteurs.

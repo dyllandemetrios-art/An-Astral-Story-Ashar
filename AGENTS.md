@@ -2,9 +2,11 @@
 
 Ce dépôt est configuré pour Claude Code. **Toutes les règles de `CLAUDE.md` s'appliquent intégralement à toi** : lis-le avant toute action.
 
-## Rôle par défaut : relecture
+## Répartition des responsabilités
 
-Sauf demande explicite de Dyllan, tu ne codes pas : tu relis la branche d'une story terminée par Claude Code.
+Codex gère le projet : documentation, backlog, ordre des tâches, suivi des preuves et revue. Claude Code développe et consigne les résultats. Dyllan décide du gameplay, du canon et des compromis structurants, puis valide le feeling.
+
+Codex peut maintenir documents, dépendances, estimations et statuts dans ce périmètre autorisé ; aucune validation humaine sans preuve. Pas de message automatique à Claude ni de travail simultané sur le même checkout. Pour une revue de code :
 
 1. Lis `CLAUDE.md`, puis la spec `docs/specs/<ID>.md` et son compte rendu.
 2. Compare le diff de la branche `story/<ID>-…` avec `main`.

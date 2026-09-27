@@ -1,3 +1,5 @@
+> **Document historique amendé par la nouvelle note.** Les éléments remplacés ne font plus foi ; conserver les informations non concernées. Voir [note actuelle de Dyllan](Demo_Revolte_Ashar.md) et [relais](notes/relais-demo-revolte.md). Aucun Chacal dans cette démo ; dialogues en action privilégiés ; final = croiseur du Culte et libération des alliés.
+
 An Astral Story : Ashar
 
 **Game Concept**

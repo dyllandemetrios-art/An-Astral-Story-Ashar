@@ -1,5 +1,7 @@
 # Cahier des charges — An Astral Story : Ashar (démo)
 
+> **Révision actuelle : [note de Dyllan](Demo_Revolte_Ashar.md).** Elle prime sur les mentions historiques du Chacal, de LEASH comme boss, des dialogues bloquants et des valeurs remplacées. Les anciens calendriers M1/M2 ne fixent pas le nombre de scènes Unity ; recalage dans P0-08.
+
 Version 1.1 — 24 septembre 2026 — livrable **P0-11** (spécification technique + CLAUDE.md du dépôt)
 v1.7 : bouclier éphémère redéfini par Dyllan comme capacité de base (§7.1), retiré des power-ups (§7.10) ; cooldown de l'impulsion de piratage porté de 12 à 45 s.
 Contrôles : mapping v3.1 définitif au §7.2, prioritaire sur les versions historiques.
@@ -261,6 +263,8 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 
 ### 7.1 Joueur
 
+**Révision démo** : champ magnétique du générateur pléiadien, chargement initial 45 s et neutralisation/destruction des Pacificateurs de la zone. Correspondance avec Pulse / ancienne impulsion et effets hors tutoriel à confirmer avant code, sans créer implicitement une seconde capacité. Bouclier indépendant du générateur, cooldown visible de 20 ou 30 s à valider (remplace 25 s).
+
 | Fonction | Comportement | Valeurs de départ |
 | --- | --- | --- |
 | Déplacement | 8 directions, diagonales normalisées, bloqué dans la zone jouable. **[GC]** | 9 u/s |
@@ -268,7 +272,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le `voId` correspond au tag 
 | Hitbox | Cercle au centre du vaisseau ; point argent visible (désactivable dans les options). **[Fiche]** | rayon 0,11 u |
 | Dash | Déplacement rapide dans la direction de l'entrée, vers le haut sans entrée, avec une invulnérabilité courte. Traînée visuelle. **[GC] [Fiche]** | 2,8 u en 0,18 s ; invulnérable 0,28 s ; cooldown 1,5 s |
 | Graze | Zone circulaire distincte de la hitbox. Un projectile ennemi qui la traverse sans toucher la hitbox rapporte un bonus, **une seule fois par projectile**. Pas de graze pendant le dash. **[GC] + [Proposition]** | rayon 0,6 u ; +20 points ; −0,25 s sur le cooldown de l'impulsion. Coût faible. Le bonus d'impulsion relie le pilotage agressif au piratage : à retirer s'il déséquilibre. |
-| Bouclier éphémère | **[Décision de Dyllan le 28/09/2026, remplace la ligne « Bouclier éphémère » du §7.10]** Capacité de base, déclenchée par le joueur (touche dédiée, §7.2), avec son propre cooldown — pas un power-up à ramasser. Pendant sa durée, il pare tous les impacts (pas seulement un seul). Halo argent pendant l'activation. | Durée 5 s ; cooldown 25 s (fourchette donnée par Dyllan : 20 à 30 s, valeur de départ à affiner au playtest E5). **Comportement à confirmer avant de coder (E5-05)** : un appui pendant le cooldown ne fait rien, par cohérence avec le Dash — à valider par Dyllan, ce n'est pas lui qui l'a formulé. |
+| Bouclier éphémère | **[Décision de Dyllan le 28/09/2026, remplace la ligne « Bouclier éphémère » du §7.10]** Capacité de base, déclenchée par le joueur (touche dédiée, §7.2), avec son propre cooldown — pas un power-up à ramasser. Pendant sa durée, il pare tous les impacts (pas seulement un seul). Halo argent pendant l'activation. | Durée 5 s ; cooldown à valider : 20 ou 30 s (fourchette donnée par Dyllan : 20 à 30 s, valeur de départ à affiner au playtest E5). **Comportement à confirmer avant de coder (E5-05)** : un appui pendant le cooldown ne fait rien, par cohérence avec le Dash — à valider par Dyllan, ce n'est pas lui qui l'a formulé. |
 | Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | **cooldown 45 s** (révisé par Dyllan le 28/09/2026, remplace 12 s) ; rayon 3,4 u ; 300 dégâts aux tourelles et à la navette ; sans effet sur LEASH ni sur ses projectiles |
 | Vies et respawn | Un impact = une vie perdue, perte du multi-shot, réapparition en bas au centre, invulnérabilité avec clignotement. **[Bestiaire §5]** | voir §7.9 |
 | Continue | Reprise sur place, vies remises à leur valeur de départ, score remis à 0 (convention arcade). **[Proposition]**, coût faible | — |
@@ -308,75 +312,35 @@ Prototype (E2-03) : un seul composant `EnemyShooter` qui lit `FirePatternData` e
 
 ### 7.5 Missions et vagues
 
-Structure narrative et de combat **[GC §6]**. Chronologie détaillée : **[À venir P0-08]**.
+Source : [note de démo](Demo_Revolte_Ashar.md), sections 1 à 6. Début de l'acte 3 ; évasion à pied non jouée, Kaal’varis déjà en vol. Aucun Chacal dans cette démo.
 
-**M1 Phobos IX, « La Chienne Rouge »** (5-8 min), avec un scroll qui monte du hangar vers la surface puis vers l'espace :
-1. Hangar et tunnels : drones de garde. Tutoriel en dialogue avec le Chacal.
-2. Dômes : Pacificateurs au sol, chasseurs de patrouille, satellites sentinelles.
-3. Sortie : 3 tourelles à plasma. Le scroll ralentit, puis s'arrête (`ScrollSpeed` à 0) ; `WaitForClear` sur le groupe « tourelles » ouvre la sortie.
-4. Mini-boss : navette de garde (§7.6).
+Ordre : tutoriel sécurisé → Pacificateurs de Phobos IX / départs des exilés → survol de la surface de Mars / Horizon Scouts et Guardian Dropships blancs et rouges → boss Assemblée → Culte sombre et rouge / vague d'élite → croiseur du Culte / libération des captifs → épilogue jouable dans les astéroïdes / croiseur d'Amara argent et bleu / déclaration des Exilés.
 
-**M2 La course hors de Mars** (5-8 min), orbite puis champ de débris :
-1. Chasseurs et intercepteurs, avec le Chacal en ailier (coupe n° 5 : sinon, présence en dialogue seulement).
-2. Satellites sentinelles à désactiver.
-3. Boss LEASH (§7.6), puis fin de démo.
+Tutoriel : UI du chargement initial de 45 s du générateur ; déplacement, tir, dash, bouclier ; consigne passée par action ou validation sans interrompre le jeu. Pacificateurs au sol inoffensifs pendant cette phase. Après chargement, activation du champ magnétique neutralise/détruit les cibles de la zone et termine le tutoriel ; comportements ennemis normaux ensuite.
 
-**Rythme et décor** :
-- Les vagues suivent une **timeline en secondes**, indépendante de la musique : aucune synchronisation au tempo. La musique tourne en boucle en continu, y compris pendant les dialogues, donc rien ne se désynchronise quand un dialogue dure.
-- Le décor **n'est pas procédural** : chaque mission a des zones dessinées à la main (level design), faites de couches qui bouclent. Le passage d'une zone à la suivante est déclenché par l'événement `Zone` de la timeline, jamais par la distance parcourue. Pendant un dialogue, la zone courante continue de défiler en boucle aussi longtemps que nécessaire.
-
-En attendant P0-08, Claude Code crée des `WaveData` de test (`Test_M1.asset`) qui couvrent chaque type d'événement.
+Pas de flotte complète simulée : quelques départs en arrière-plan suffisent. Durées, vagues, cibles et découpage technique à valider. Cas à décider : fin du compte à rebours avant les consignes, cibles déjà détruites, passage de la dernière consigne sans activer la capacité.
 
 ### 7.6 Boss
 
-**Navette de garde pénitentiaire (mini-boss M1)** **[Bestiaire 3.6]** : 4 500 PV, 5 000 points, script dédié `GuardShuttle` à 2 phases, **sans machine à états générique**.
-- Phase 1 : balayage horizontal ; canons en proue, avec éventails larges et tirs visés lents.
-- Phase 2 (à 50 % des PV) : 2 vagues de drones de garde larguées ; canons plus lents.
-- Barre de vie ; une amélioration (multi-shot) garantie à la destruction.
+Deux boss : vaisseau de l'Assemblée puis croiseur du Culte. Pas de petit boss supplémentaire : vague d'élite avant le final. Statistiques, patterns et durées non fixés.
 
-**LEASH, croiseur de poursuite (boss M2)** **[Bestiaire 3.7]** + **[À venir P0-07]** : 6 000 PV (3 phases de 2 000), 10 000 points.
-- Phase 1 : des drones enchaînés tournent autour du croiseur (projectiles rouge orangé).
-- Phase 2 : les chaînes coupées libèrent des drones à tête chercheuse (magenta).
-- Phase 3 : noyau exposé, salves denses et lisibles (jaune).
-- Phase 4 optionnelle : LEASH tente de couper la transmission (coupe n° 1).
-- Transitions : 1,5 s d'invulnérabilité entre les phases **[Proposition]**, pour compenser le multi-shot (jusqu'à 2,6 fois le DPS de base, risque signalé par la Fiche §4). Les dialogues de LEASH se placent **uniquement à ces transitions** (projectiles effacés, boss figé) : le combat reprend à la fin du dialogue.
-- Implémentation : E5-01 crée une machine à états **simple et propre à LEASH** (liste de phases avec seuil de PV, pattern, couleur) ; on ne la généralise que si la navette y gagne nettement.
+Le croiseur final laisse comprendre la situation avant son affrontement principal. Détruire les entraves, pas les vaisseaux de l'escadrille d'Amara. Chaque captif libéré se détache, devient allié et combat le Culte. Une fois suffisamment de captifs libérés, assaut collectif.
 
-### 7.7 Dialogues (Ink) et voix off **[GC v2.3] + [Proposition d'implémentation]**
+Nombre de captifs, attaches et seuil de libération à valider. L'ancienne fiche LEASH (drones libérés hostiles, noyau et phase de transmission) est historique. La note ne désigne pas LEASH comme pilote du croiseur.
 
-Rendu : bulle pleine largeur en bas d'écran, façon Pokémon : nom de l'interlocuteur, jusqu'à 3 lignes, texte qui défile caractère par caractère avec un bruitage 16-bit par caractère (ou par groupe de 2), timbre distinct par interlocuteur (`SpeakerData`), indicateur ▼ quand la ligne est complète. LEASH a un son synthétique, menaçant et mécanique.
+### 7.7 Dialogues et tutoriel
 
-**Un dialogue est une pause narrative** (état de jeu `Dialogue`) : le jeu n'est pas mis en pause, **les actions ennemies sont mises en attente** et **le vaisseau et la carte passent en pilote automatique**.
-1. **Début** : l'événement `Dialogue` de la timeline arrive après une séquence de jeu (normalement placé juste après un `WaitForClear`, donc sur un écran vide). La timeline des vagues est suspendue : aucun nouvel ennemi. Filet de sécurité si l'écran n'est pas vide : les ennemis encore présents cessent de tirer et quittent l'écran par le haut, les projectiles ennemis s'estompent en 0,3 s, sans points.
-2. **Pilote automatique** : le joueur perd le contrôle du vaisseau (déplacement, tir, dash, impulsion ignorés). Le vaisseau rejoint en douceur une position de croisière (`autopilotPosition`, par défaut au centre, au-dessus de la bulle) en `autopilotBlendTime` (0,6 s), puis oscille légèrement pour rester vivant. **Le décor continue de défiler et la musique continue en boucle.** Le vaisseau ne peut pas être touché.
-3. **Lecture** : le bouton de tir (J / A) fait avancer : première pression, la ligne s'affiche en entier ; deuxième pression, ligne suivante. Pause (Échap / Start) reste disponible.
-4. **Fin** : la pression sur la dernière ligne ferme la fenêtre de dialogue. Le joueur reprend immédiatement les commandes, depuis la position de croisière ; le tir est ignoré pendant `resumeGraceTime` (0,3 s) pour qu'un appui prolongé ne tire pas aussitôt ; la timeline des vagues reprend.
+Source : [note de Dyllan](Demo_Revolte_Ashar.md), répliques fournies et principes de dialogue.
+- Radio pendant le gameplay par défaut : interventions très courtes, environ deux lignes ; ne pas suspendre systématiquement vagues et commandes ni imposer le pilote automatique.
+- Tutoriel : conserver les contrôles et avancer après l'action attendue ou UI/Submit ; afficher les bindings actuels. Prévenir le double traitement de A (tir et validation) selon le contexte.
+- Interruption uniquement si la mise en scène le nécessite ; règle d'avancement et durée d'affichage hors tutoriel à définir sans inventer de mapping.
+- Amara renseigne ; Kaal’varis commande les Exilés. Pas de Chacal, pas de posture de sauveur d'Amara.
+- Conserver Ink, SpeakerData, tags speaker et voix optionnelle, FR/EN, textes externalisés et erreur explicite si knot absent. Voix absente : texte fonctionnel.
+- Intégrer les répliques de Dyllan ; ne pas inventer les formulations encore ouvertes.
+- Épilogue : invitation à Taygeta Prime, choix d'un refuge proche de la Terre, scientifiques du Culte nommés responsables des augmentations forcées, déclaration finale de la note.
+- Ne pas utiliser Time.timeScale = 0 pour les dialogues ; réserver le gel au menu pause.
 
-**Règle technique non négociable : ne jamais utiliser `Time.timeScale = 0` pour un dialogue.** C'est ce qui figeait tout dans Snake_2D. Le dialogue suspend uniquement la timeline des vagues, l'IA et les tirs ennemis, et bascule le vaisseau en pilote automatique (via `GameEvents.OnGameStateChanged`). `Time.timeScale = 0` est réservé au menu pause.
-
-Placement : entre les vagues et aux transitions de phase des boss, **jamais pendant l'action**. 3 lignes maximum par bulle.
-
-Voix off (coupe n° 0 ; stories E7-07 à E7-09) :
-- 15 à 20 répliques clés portent un tag `#vo:<id>`.
-- Si le clip existe dans la `VoiceLibrary` : il joue à la place des bruitages et le texte sert de sous-titre ; si le joueur avance avant la fin, le clip s'arrête.
-- Tag présent mais clip absent : comportement texte normal, sans erreur. Le jeu fonctionne donc tel quel si la coupe n° 0 s'applique.
-- Coût : faible côté code (0,5 ½ j) ; l'essentiel est la production (séance, montage, filtre radio).
-
-Format Ink attendu (l'écriture relève de P0-09 ; Claude Code n'écrit que des placeholders) :
-
-```ink
-=== m1_intro ===
-#speaker:CHACAL #vo:m1_001
-[TODO-TEXTE: le Chacal explique le déplacement]
-#speaker:KAAL
-[TODO-TEXTE: réponse de Kaal'varis]
--> DONE
-```
-
-- Un fichier `.ink` par mission et par langue (`m1_fr.ink`, `m1_en.ink`), avec des noms de knots identiques dans les deux langues.
-- La langue choisie dans les options (FR ou EN) détermine le fichier Ink chargé ; un changement de langue s'applique au dialogue suivant.
-- Le tag `#speaker:ID` détermine le nom affiché, la couleur et le son ; le tag optionnel `#vo:id` associe une voix off.
-- `WaveData` déclenche un knot par son nom ; un nom de knot introuvable produit une erreur explicite dans la console.
+QA : gameplay actif pendant radio/tutoriel ; consigne terminée par action ou validation ; aucun saut multiple ; lisibilité sans masquer les menaces ; interruption uniquement prévue par la mise en scène. Vérifier la reprise et les tirs involontaires si une séquence interrompt le combat.
 
 ### 7.8 Codex **[GC]**
 
@@ -404,7 +368,7 @@ Un seul niveau de difficulté. Les valeurs vivent dans `GameBalanceData_Default`
 | Power-up | Priorité | Effet |
 | --- | --- | --- |
 | Multi-shot | Must | Niveau 1 : 1 flux (100 dégâts/s) ; niveau 2 : 2 flux parallèles (200/s) ; niveau 3 : 3 flux en éventail étroit (≈ 260/s). Retour au niveau 1 au premier impact. |
-| ~~Bouclier éphémère~~ | — | **Retiré des power-ups le 28/09/2026** : devient une capacité de base du joueur, décrite au §7.1 (durée 5 s, pare tout, cooldown 25 s). N'apparaît donc plus comme objet à ramasser dans `WaveData`. |
+| ~~Bouclier éphémère~~ | — | **Retiré des power-ups le 28/09/2026** : devient une capacité de base du joueur, décrite au §7.1 (durée 5 s, pare tout, cooldown à valider : 20 ou 30 s). N'apparaît donc plus comme objet à ramasser dans `WaveData`. |
 | Drones de garde piratés | Could (coupe n° 3) | Non spécifié. Ne pas implémenter avant le point de contrôle de fin S4. |
 | Laser pléiadien | Could (coupe n° 4) | Non spécifié. Même règle. |
 
