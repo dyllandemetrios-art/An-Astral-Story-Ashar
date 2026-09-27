@@ -98,3 +98,6 @@ Fiches P0-08/P0-09/P0-10, E3-03/E3-04/E3-05/E3-07 et E5-10 rédigées. Corpus do
 Séquencier : trame existante, groupes/espacements prototype identifiés ; codex : deux synthèses proposées exclusivement sur faits de la note. Sauvegarde : reprise simple aux débuts de segments, hypothèse de prototype détaillée dans E3-04.
 Les mentions précédentes « specs E3-03 à E3-07 / E5-10 à rédiger » sont remplacées par ce lot. Dépendances d'implémentation toujours requises ; aucun statut Fait ni validation humaine inventé.
 Claude peut prendre E3-06 puis E5-05/E5-06 ; E5-10 et intégration corpus E3-05 disposent aussi d'un contrat. E3-08 attend notamment les Pacificateurs E4-02. Les boss/environnements finaux restent des travaux distincts.
+
+Complément : P0-07 (contrat des boss prototype), P0-16 (rôles/assets à inspecter) et E4-02 (Pacificateurs/Assemblée) rédigés. Aucun choix artistique final prétendument validé. Contrôle final : 87 stories/11 colonnes, IDs uniques, dépendances existantes sans cycle ; 14 répliques CSV toutes présentes littéralement dans la note source.
+L'inventaire d'assets reste une inspection réelle à effectuer, pas une question de gameplay à renvoyer à Dyllan. Hypothèses d'équilibrage et de reprise de sauvegarde à vérifier en prototype ; aucune validation humaine inventée.
