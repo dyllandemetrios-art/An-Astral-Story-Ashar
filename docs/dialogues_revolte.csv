@@ -1,0 +1,15 @@
+id,sequence,segment,speaker,fr,en,statut
+radio_01,tutorial_intro,tutorial,Kaal’varis,Générateur pléiadien connecté. Encore 45 secondes… et on va voir ce que ce tas de boue a dans le ventre.,[EN placeholder],texte fourni
+radio_02,tutorial_ready,tutorial,Kaal’varis,Générateur chargé. Voyons ce que ça donne.,[EN placeholder],texte fourni
+radio_03,phobos_depart,phobos,Kaal’varis,"À tous les Exilés : prenez un vaisseau et dégagez de cette station. Les Pacificateurs qui vous barrent la route, abattez-les.",[EN placeholder],texte fourni
+radio_04,assembly_intercept,assembly,Amara,"Kaal’varis, l'Assemblée vous a repérés. Des Horizon Scouts et des Guardian Dropships convergent vers vous.",[EN placeholder],texte fourni
+radio_05,assembly_intercept,assembly,Amara,Ils vont tenter de couper votre trajectoire. Ne les laissez pas refermer le passage.,[EN placeholder],texte fourni
+radio_06,cult_warning,cult,Kaal’varis,"Le Culte… Ils viennent finir le travail. Restez groupés. On s'est évadés ensemble, on sortira d'ici ensemble.",[EN placeholder],texte fourni
+radio_07,captive_identification,chains,Amara,Attendez ! Ces vaisseaux… c'est mon escadrille. Ils les ont capturés.,[EN placeholder],texte fourni
+radio_08,captive_identification,chains,Amara,"Kaal’varis, visez leurs chaînes. Libérez-les !",[EN placeholder],texte fourni
+radio_09,collective_assault,assault,Kaal’varis,"Escadrille d'Amara, si vous me recevez : attaquons ce monstre de front !",[EN placeholder],texte fourni
+radio_10,epilogue_meeting,epilogue,Amara,Kaal’varis. Je suis heureuse de vous voir. Nous vous sommes reconnaissants pour votre aide.,[EN placeholder],texte fourni
+radio_11,epilogue_meeting,epilogue,Amara,Rejoignez-nous sur Taygeta Prime. Vous y serez en sécurité.,[EN placeholder],texte fourni
+radio_12,epilogue_meeting,epilogue,Kaal’varis,Pas encore. Nous trouverons un refuge plus près de la Terre. Il reste des gens à libérer.,[EN placeholder],texte fourni
+radio_13,epilogue_meeting,epilogue,Kaal’varis,"Terriens, Pléiadiens… Les scientifiques du Culte nous ont transformés de force, puis réduits en esclavage.",[EN placeholder],proposition source à relire
+radio_14,epilogue_meeting,epilogue,Kaal’varis,Nous sommes les Exilés d'Ashar. Et nous reviendrons briser les chaînes des opprimés de la Terre.,[EN placeholder],texte fourni

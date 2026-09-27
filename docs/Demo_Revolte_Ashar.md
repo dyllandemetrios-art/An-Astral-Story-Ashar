@@ -1,3 +1,5 @@
+> **Décision Dyllan — champ/Pulse :** un seul pouvoir sur Ctrl/Y. Instant kill petites unités ; stun gros vaisseaux et boss, remplaçant leur ancienne immunité. Specs E5-06 et E3-08 : durée du stun et cas limites du tutoriel explicitement proposés pour prototype, à éprouver en jeu.
+
 > **Précision issue des tests E3-02 (Dyllan, consignée dans idees.md) :** objectif de survie, sans score présenté au joueur. Partie continue du tutoriel à l'épilogue, sans écran de fin intermédiaire. Dialogues entre combats, pause volontaire et Game Over conservés. Application : E3-09 et intégration P0-08/E4-05/E6-06.
 
 > **Clarification actuelle de Dyllan :** Dialogues ENTRE les combats, sans Ink. Entrée (UI/Submit, A manette) avance une réplique ; dernière validation puis combat. Vol, décor, musique et animations continus, aucune attaque ni nouvelle vague. Aucun timer de lecture ni validation par le tir. Tutoriel distinct : action demandée ou validation. Contrat : [E3-02](specs/E3-02.md).

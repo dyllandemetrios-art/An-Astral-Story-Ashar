@@ -264,7 +264,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le voId référence un clip 
 
 ### 7.1 Joueur
 
-**Révision démo** : champ magnétique du générateur pléiadien, chargement initial 45 s et neutralisation/destruction des Pacificateurs de la zone. Correspondance avec Pulse / ancienne impulsion et effets hors tutoriel à confirmer avant code, sans créer implicitement une seconde capacité. Bouclier indépendant du générateur, 5 s de protection puis cooldown visible de 20 s sans protection.
+**Révision démo** : champ magnétique du générateur pléiadien, chargement initial 45 s et neutralisation/destruction des Pacificateurs de la zone. Décision Dyllan : même capacité que Pulse (Ctrl/Y), instant kill des petites unités et stun des gros vaisseaux ET boss. Contrat E5-06 ; les anciennes immunités de boss et dégâts fixes sont remplacés. Bouclier indépendant du générateur, 5 s de protection puis cooldown visible de 20 s sans protection.
 
 | Fonction | Comportement | Valeurs de départ |
 | --- | --- | --- |
@@ -274,7 +274,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le voId référence un clip 
 | Dash | Déplacement rapide dans la direction de l'entrée, vers le haut sans entrée, avec une invulnérabilité courte. Traînée visuelle. **[GC] [Fiche]** | 2,8 u en 0,18 s ; invulnérable 0,28 s ; cooldown 1,5 s |
 | Graze | Zone circulaire distincte de la hitbox. Un projectile ennemi qui la traverse sans toucher la hitbox rapporte un bonus, **une seule fois par projectile**. Pas de graze pendant le dash. **[GC] + [Proposition]** | rayon 0,6 u ; +20 points ; −0,25 s sur le cooldown de l'impulsion. Coût faible. Le bonus d'impulsion relie le pilotage agressif au piratage : à retirer s'il déséquilibre. |
 | Bouclier éphémère | Capacité de base indépendante du générateur ; pare tous les impacts pendant la protection, halo argent. | Bouclier : 5 s de protection, puis 20 s de cooldown à compter de la fin de la protection. Pendant ces 20 s, aucune protection du bouclier. Les appuis pendant protection ou cooldown sont ignorés, sans prolongation ni mise en attente. Après recharge, nouvelle pression nécessaire ; maintien sans réactivation automatique. Valeurs réglables, UI de protection et recharge. |
-| Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | **cooldown 45 s** (révisé par Dyllan le 28/09/2026, remplace 12 s) ; rayon 3,4 u ; 300 dégâts aux tourelles et à la navette ; sans effet sur LEASH ni sur ses projectiles |
+| Impulsion de piratage | Onde circulaire autour du vaisseau, avec cooldown. Elle efface les projectiles `pulseErasable`, puis applique `pulseResponse` à chaque ennemi touché. **[GC] [Fiche]** | **cooldown 45 s** (révisé par Dyllan le 28/09/2026, remplace 12 s) ; rayon 3,4 u ; petites unités détruites instantanément ; gros vaisseaux et boss étourdis. Stun prototype 3 s réglable, à tester ; détails E5-06 |
 | Vies et respawn | Un impact = une vie perdue, perte du multi-shot, réapparition en bas au centre, invulnérabilité avec clignotement. **[Bestiaire §5]** | voir §7.9 |
 | Continue | Reprise sur place, vies remises à leur valeur de départ, score remis à 0 (convention arcade). **[Proposition]**, coût faible | — |
 | Game over | Sans continue restant : écran de game over, puis « Recommencer la mission » ou « Menu ». | — |
@@ -283,7 +283,7 @@ Un asset par mission : liste `{ voId, AudioClip }`. Le voId référence un clip 
 
 **Le mapping v3.1 définitif fourni par Dyllan remplace toutes les versions antérieures des contrôles.**
 Source unique des tableaux clavier/manette et du contrat d'implémentation : [E3-00 — Mapping v3.1](specs/E3-00.md).
-Ce préalable figure au backlog et doit être validé avant E3-01. Les paramètres du bouclier restent à définir avec le système de power-ups.
+Ce préalable figure au backlog et doit être validé avant E3-01. Le bouclier est spécifié dans docs/specs/E5-05.md : 5 s de protection puis 20 s de recharge. Le multi-shot est conservé séparément en E5-10.
 État : documentation mise à jour ; implémentation et validation Unity restent à effectuer dans E3-00.
 
 ### 7.3 Ennemis **[Bestiaire v2, vitesses converties au §4]**
@@ -358,6 +358,8 @@ Un seul niveau de difficulté. Les valeurs vivent dans `GameBalanceData_Default`
 | Invulnérabilité au respawn | 2 s |
 
 ### 7.10 Power-ups **[Fiche §5]**
+
+Suivi actuel : bouclier indépendant en E5-05 ; multi-shot et ramassages en E5-10, à spécifier. La séparation ne retire pas le multi-shot de la démo. L'ancien drop garanti sur la navette n'impose aucun ennemi ou drop au séquencier actuel.
 
 | Power-up | Priorité | Effet |
 | --- | --- | --- |
