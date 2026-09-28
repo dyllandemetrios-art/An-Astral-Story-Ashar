@@ -76,9 +76,9 @@ namespace Ashar.Menu
 
             UpdateLanguageLabel();
 
-            // OnEnable already applied the previous language to every label when this panel opened: a live toggle
-            // needs an explicit refresh instead of waiting for the panel to close and reopen.
-            var labels = GetComponentsInChildren<LocalizedText>(true);
+            // Sibling panels (the root menu behind this one) also show localized text; a live toggle needs every
+            // instance refreshed, not just this panel's own children, instead of waiting for panels to reopen.
+            var labels = FindObjectsByType<LocalizedText>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (LocalizedText label in labels)
             {
                 label.Refresh();
