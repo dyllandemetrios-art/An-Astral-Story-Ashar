@@ -71,6 +71,12 @@ namespace Ashar.Menu
         [SerializeField, Tooltip("Button selected by the EventSystem whenever the root panel opens (keyboard/gamepad focus).")]
         private GameObject _firstSelectedOnRoot;
 
+        [SerializeField, Tooltip("Button selected by the EventSystem whenever the Options panel opens.")]
+        private GameObject _firstSelectedInOptions;
+
+        [SerializeField, Tooltip("Button selected by the EventSystem whenever the abandon confirmation opens. Spec: Annuler selected by default.")]
+        private GameObject _firstSelectedInConfirm;
+
         [Header("Settings")]
         [SerializeField, Tooltip("Scene loaded by the abandon confirmation.")]
         private string _mainMenuSceneName = "MainMenu";
@@ -257,10 +263,30 @@ namespace Ashar.Menu
                 _confirmPanel.SetActive(panel == Panel.Confirm);
             }
 
-            if (panel == Panel.Root && _firstSelectedOnRoot != null && EventSystem.current != null)
+            GameObject firstSelected = panel switch
             {
-                EventSystem.current.SetSelectedGameObject(_firstSelectedOnRoot);
+                Panel.Root => _firstSelectedOnRoot,
+                Panel.Options => _firstSelectedInOptions,
+                Panel.Confirm => _firstSelectedInConfirm,
+                _ => null,
+            };
+
+            Select(firstSelected);
+        }
+
+        /// <summary>
+        /// Selects a button, clearing the current selection first: EventSystem.SetSelectedGameObject is a no-op when
+        /// the target is already the current selection, which would silently skip the highlight's color transition.
+        /// </summary>
+        private static void Select(GameObject target)
+        {
+            if (target == null || EventSystem.current == null)
+            {
+                return;
             }
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(target);
         }
 
         /// <summary>Switches the player's flight and combat scripts on or off together (mirrors DialogueController).</summary>

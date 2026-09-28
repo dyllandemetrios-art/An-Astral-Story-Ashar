@@ -29,6 +29,9 @@ namespace Ashar.Menu
         [SerializeField, Tooltip("Button selected by the EventSystem whenever the root panel opens (keyboard/gamepad focus).")]
         private GameObject _firstSelectedOnRoot;
 
+        [SerializeField, Tooltip("Button selected by the EventSystem whenever the Options panel opens.")]
+        private GameObject _firstSelectedInOptions;
+
         [Header("Settings")]
         [SerializeField, Tooltip("Scene loaded by Jouer. QA destination (TestBed) until a real mission scene chain exists (spec E3-06); never claim the final tutorial is wired up.")]
         private string _playSceneName = "TestBed";
@@ -39,6 +42,12 @@ namespace Ashar.Menu
         private void Awake()
         {
             PlayerPreferences.Load();
+        }
+
+        /// <summary>Selects the first root button so keyboard/gamepad navigation has a starting point without a mouse click.</summary>
+        private void Start()
+        {
+            Select(_firstSelectedOnRoot);
         }
 
         /// <summary>Starts a fresh run: loads the QA destination scene and starts its mission once loaded. Ignored while already loading.</summary>
@@ -66,6 +75,8 @@ namespace Ashar.Menu
             {
                 _optionsPanel.SetActive(true);
             }
+
+            Select(_firstSelectedInOptions);
         }
 
         /// <summary>Closes Options, back to the root panel.</summary>
@@ -81,10 +92,22 @@ namespace Ashar.Menu
                 _rootPanel.SetActive(true);
             }
 
-            if (_firstSelectedOnRoot != null && EventSystem.current != null)
+            Select(_firstSelectedOnRoot);
+        }
+
+        /// <summary>
+        /// Selects a button, clearing the current selection first: EventSystem.SetSelectedGameObject is a no-op when
+        /// the target is already the current selection, which would silently skip the highlight's color transition.
+        /// </summary>
+        private static void Select(GameObject target)
+        {
+            if (target == null || EventSystem.current == null)
             {
-                EventSystem.current.SetSelectedGameObject(_firstSelectedOnRoot);
+                return;
             }
+
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(target);
         }
 
         /// <summary>Quits the build. In the Editor this only logs, so Play Mode is never closed by testing Quitter.</summary>
