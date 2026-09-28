@@ -124,7 +124,7 @@ namespace Ashar.Menu
         private void HandleSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             SceneManager.sceneLoaded -= HandleSceneLoaded;
-            var runner = FindFirstObjectByType<MissionRunnerController>();
+            var runner = FindAnyObjectByType<MissionRunnerController>();
             if (runner != null)
             {
                 runner.StartMission();

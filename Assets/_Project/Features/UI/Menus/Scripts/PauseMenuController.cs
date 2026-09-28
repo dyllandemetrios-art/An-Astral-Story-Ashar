@@ -93,6 +93,16 @@ namespace Ashar.Menu
         /// <summary>True while any pause panel is shown.</summary>
         public bool IsPaused => _current != Panel.None;
 
+        /// <summary>
+        /// Hides every pause panel at scene start, regardless of what was left active in the editor: a panel's active
+        /// state in the saved scene is not a reliable source of truth (an author can leave it visible while working
+        /// on its layout), so the state machine's own None state is enforced here instead of assumed.
+        /// </summary>
+        private void Awake()
+        {
+            ShowPanel(Panel.None);
+        }
+
         /// <summary>Makes sure the actions used to open, navigate and close the menu are enabled.</summary>
         private void OnEnable()
         {
