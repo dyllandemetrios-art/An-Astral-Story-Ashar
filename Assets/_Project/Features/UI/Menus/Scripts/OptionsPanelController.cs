@@ -65,7 +65,7 @@ namespace Ashar.Menu
             PlayerPreferences.Save();
         }
 
-        /// <summary>Flips French/English, tells the dialogue controller, and updates the label.</summary>
+        /// <summary>Flips French/English, tells the dialogue controller, and refreshes every visible label.</summary>
         public void ToggleLanguage()
         {
             PlayerPreferences.Language = PlayerPreferences.Language == Language.French ? Language.English : Language.French;
@@ -75,6 +75,14 @@ namespace Ashar.Menu
             }
 
             UpdateLanguageLabel();
+
+            // OnEnable already applied the previous language to every label when this panel opened: a live toggle
+            // needs an explicit refresh instead of waiting for the panel to close and reopen.
+            var labels = GetComponentsInChildren<LocalizedText>(true);
+            foreach (LocalizedText label in labels)
+            {
+                label.Refresh();
+            }
         }
 
         /// <summary>Sets the music volume, clamped to [0, 1].</summary>
@@ -108,10 +116,11 @@ namespace Ashar.Menu
             Screen.fullScreen = fullscreen;
         }
 
-        /// <summary>Shows "EN" or "FR" for the current language.</summary>
+        /// <summary>Shows the language row's label together with "EN" or "FR" for the current language, e.g. "LANGUE : FR".</summary>
         private void UpdateLanguageLabel()
         {
-            _languageValueLabel.text = PlayerPreferences.Language == Language.English ? "EN" : "FR";
+            string code = PlayerPreferences.Language == Language.English ? "EN" : "FR";
+            _languageValueLabel.text = $"{Loc.Get("options.language")} : {code}";
         }
     }
 }
