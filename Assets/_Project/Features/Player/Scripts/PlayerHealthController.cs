@@ -38,6 +38,9 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Optional. While the ship is protected after reappearing, hits are ignored.")]
         private PlayerRespawnController _respawn;
 
+        [SerializeField, Tooltip("Optional. While the shield is active (spec E5-05), hits are ignored.")]
+        private PlayerShieldController _shield;
+
         [Header("Debug")]
         [SerializeField, Tooltip("Read-only: number of hits that counted since the scene started.")]
         private int _hitCount;
@@ -97,7 +100,7 @@ namespace Ashar.Player
                 return; // Power-ups have their own story.
             }
 
-            bool invulnerable = (_dash != null && _dash.IsInvulnerable) || (_respawn != null && _respawn.IsInvulnerable);
+            bool invulnerable = (_dash != null && _dash.IsInvulnerable) || (_respawn != null && _respawn.IsInvulnerable) || (_shield != null && _shield.IsActive);
             if (!ShouldRegisterHit(invulnerable))
             {
                 return; // The bullet passes through a dashing ship.

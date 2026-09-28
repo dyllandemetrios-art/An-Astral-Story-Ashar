@@ -44,6 +44,9 @@ namespace Ashar.Dialogue
         [SerializeField, Tooltip("Player's dash script, switched off while a dialogue plays.")]
         private PlayerDashController _dash;
 
+        [SerializeField, Tooltip("Optional. Player's shield script (spec E5-05), switched off while a dialogue plays so its timers freeze exactly like the dash's.")]
+        private PlayerShieldController _shield;
+
         [Header("Settings")]
         [SerializeField, Min(0f), Tooltip("Speed at which the ship travels to the cruise position, in world units per second.")]
         private float _cruiseApproachSpeed = 3f;
@@ -235,6 +238,11 @@ namespace Ashar.Dialogue
             if (_dash != null)
             {
                 _dash.enabled = enabledState;
+            }
+
+            if (_shield != null)
+            {
+                _shield.enabled = enabledState;
             }
         }
     }

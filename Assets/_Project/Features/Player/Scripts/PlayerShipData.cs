@@ -49,6 +49,13 @@ namespace Ashar.Player
         [SerializeField, Tooltip("Show the silver dot that marks the hitbox. Meant to become an option of the game (accessibility).")]
         private bool _showHitbox = true;
 
+        [Header("Shield")]
+        [SerializeField, Min(0f), Tooltip("Seconds of protection once the shield is activated (spec E5-05: 5).")]
+        private float _shieldProtectionTime = 5f;
+
+        [SerializeField, Min(0f), Tooltip("Seconds of recharge after the protection ends, before the shield can be activated again (spec E5-05: 20).")]
+        private float _shieldCooldown = 20f;
+
         [Header("Graze")]
         [SerializeField, Min(0.01f), Tooltip("Half the width of the graze zone, in world units (spec §7.1: 0.6). The zone is the hitbox capsule grown by this much all round; a bullet entering it without touching the hitbox is a near miss that earns points.")]
         private float _grazeRadius = 0.6f;
@@ -94,5 +101,11 @@ namespace Ashar.Player
 
         /// <summary>Bullet speed in world units per second.</summary>
         public float BulletSpeed => _bulletSpeed;
+
+        /// <summary>Seconds of protection once the shield is activated.</summary>
+        public float ShieldProtectionTime => _shieldProtectionTime;
+
+        /// <summary>Seconds of recharge after the protection ends, before the shield can be activated again.</summary>
+        public float ShieldCooldown => _shieldCooldown;
     }
 }

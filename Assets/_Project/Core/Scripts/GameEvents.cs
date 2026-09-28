@@ -24,6 +24,9 @@ namespace Ashar.Core
         /// <summary>Raised when the player ship starts a dash.</summary>
         public static event Action OnPlayerDashed;
 
+        /// <summary>Raised when the player ship successfully activates its shield (spec E5-05). Used by the tutorial (E3-08) to validate the action.</summary>
+        public static event Action OnPlayerShielded;
+
         /// <summary>Raised when an enemy bullet grazes the player ship. The value is the score points earned.</summary>
         public static event Action<int> OnPlayerGrazed;
 
@@ -103,6 +106,12 @@ namespace Ashar.Core
         public static void RaisePlayerDashed()
         {
             OnPlayerDashed?.Invoke();
+        }
+
+        /// <summary>Announces that the player ship has successfully activated its shield.</summary>
+        public static void RaisePlayerShielded()
+        {
+            OnPlayerShielded?.Invoke();
         }
     }
 }

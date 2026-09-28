@@ -78,7 +78,7 @@ namespace Ashar.Menu
 
             // Sibling panels (the root menu behind this one) also show localized text; a live toggle needs every
             // instance refreshed, not just this panel's own children, instead of waiting for panels to reopen.
-            var labels = FindObjectsByType<LocalizedText>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var labels = FindObjectsByType<LocalizedText>(FindObjectsInactive.Include);
             foreach (LocalizedText label in labels)
             {
                 label.Refresh();
