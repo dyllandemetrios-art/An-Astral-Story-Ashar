@@ -276,6 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7160404743536590260}
   - component: {fileID: 634351122706612274}
+  - component: {fileID: 1023148011303968497}
   m_Layer: 0
   m_Name: Halo
   m_TagString: Untagged
@@ -358,6 +359,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!114 &1023148011303968497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588804656061407494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9884a9b9511307d4a8d5f85cb3463c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.ShieldHaloAnimator
+  _renderer: {fileID: 634351122706612274}
+  _frames:
+  - {fileID: 21300000, guid: 42bad93980492a54790ab37dc6039234, type: 3}
+  - {fileID: 21300000, guid: 49be25172a4ef7449af7a1d80af01a7c, type: 3}
+  - {fileID: 21300000, guid: 09c349dbbc9030849b94eeebec6743dc, type: 3}
+  - {fileID: 21300000, guid: cea5a52ab46e3434c9dcaa8061691af3, type: 3}
+  - {fileID: 21300000, guid: 805991a311019f6498a68833000568c4, type: 3}
+  - {fileID: 21300000, guid: 02f9a116b813df243ab13cfbf935f8f3, type: 3}
+  _framesPerSecond: 10
 --- !u!1 &6195100340313331399
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@
 
 - **[E3-06] Remplacer « LIVES 3 » par des icônes de cœur façon Zelda (idée de Dyllan, 28/09/2026).** En validant E3-06, Dyllan a suggéré de remplacer le texte « LIVES 3 » du HUD de debug par des images de cœur (une par vie), si des sprites de ce type sont disponibles dans les assets du projet. Aucun sprite de cœur identifié à ce jour dans `Assets/ThirdParty/` ou `Assets/_Project/` ; à vérifier avec Dyllan (asset à fournir/acheter, ou dessiné maison) avant toute story qui toucherait `DebugHudController`. Rien codé.
 
-- **[E5-05] Animer le halo du bouclier avec toutes les images disponibles du pack (idée de Dyllan, 28/09/2026).** En validant E5-05, Dyllan a demandé d'utiliser toutes les images de bouclier du pack DyLESTorm pour former une animation (au lieu du sprite fixe `shield-1.png` actuel). Nécessite d'identifier la liste complète des frames dans le pack et un composant d'animation (Sprite Animator ou Animator Controller) sur le `Halo`. Rien codé : à prévoir dans une story dédiée de polish visuel.
+- **[E5-05] Animer le halo du bouclier avec toutes les images disponibles du pack (idée de Dyllan, 28/09/2026) — fait le jour même sur demande explicite de Dyllan.** D'abord noté ici comme hors périmètre, puis redemandé explicitement (« je le veux, c'est pas compliqué »). Implémenté directement sur la branche `story/E5-05-independent-shield` : `ShieldHaloAnimator` boucle les 6 sprites `Shield/shield-1.png` à `shield-6.png` du pack DyLESTorm pendant que le bouclier est actif. Entrée conservée ici pour la trace, plus une idée en attente.
 
 ## Traitement backlog par Codex — 27/09/2026
 

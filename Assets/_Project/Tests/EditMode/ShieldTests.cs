@@ -151,5 +151,42 @@ namespace Ashar.Tests.EditMode
 
             Assert.AreEqual("RECHARGE 13s", text);
         }
+
+        /// <summary>The halo loop starts on its first frame at t=0.</summary>
+        [Test]
+        public void HaloComputeFrameIndex_AtStart_IsFirstFrame()
+        {
+            Assert.AreEqual(0, ShieldHaloAnimator.ComputeFrameIndex(0f, 10f, 6));
+        }
+
+        /// <summary>A small step into the loop shows the matching mid-sequence frame.</summary>
+        [Test]
+        public void HaloComputeFrameIndex_PartWayThrough_ShowsMatchingFrame()
+        {
+            Assert.AreEqual(3, ShieldHaloAnimator.ComputeFrameIndex(0.35f, 10f, 6));
+        }
+
+        /// <summary>Past the last frame, the loop wraps back to the first instead of stopping (unlike a one-shot effect).</summary>
+        [Test]
+        public void HaloComputeFrameIndex_PastLastFrame_WrapsAround()
+        {
+            Assert.AreEqual(0, ShieldHaloAnimator.ComputeFrameIndex(0.6f, 10f, 6));
+            Assert.AreEqual(2, ShieldHaloAnimator.ComputeFrameIndex(0.8f, 10f, 6));
+        }
+
+        /// <summary>Many loops later, the frame shown still matches the elapsed time modulo the sequence length.</summary>
+        [Test]
+        public void HaloComputeFrameIndex_AfterManyLoops_StillMatchesModulo()
+        {
+            Assert.AreEqual(3, ShieldHaloAnimator.ComputeFrameIndex(12.3f, 10f, 6));
+        }
+
+        /// <summary>No frames or a non-positive frame rate means nothing to show.</summary>
+        [Test]
+        public void HaloComputeFrameIndex_NothingToShow_ReturnsMinusOne()
+        {
+            Assert.AreEqual(-1, ShieldHaloAnimator.ComputeFrameIndex(0f, 10f, 0));
+            Assert.AreEqual(-1, ShieldHaloAnimator.ComputeFrameIndex(0f, 0f, 6));
+        }
     }
 }
