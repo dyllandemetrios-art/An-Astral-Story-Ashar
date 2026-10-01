@@ -23,5 +23,11 @@ MonoBehaviour:
   _hitboxRadius: 0.27
   _hitboxHeight: 1.1
   _showHitbox: 1
+  _shieldProtectionTime: 5
+  _shieldCooldown: 20
   _grazeRadius: 0.6
   _grazeScore: 20
+  _pulseCooldown: 45
+  _pulseRadius: 23
+  _pulseStunDuration: 3
+  _pulseGrazeDiscount: 0.25

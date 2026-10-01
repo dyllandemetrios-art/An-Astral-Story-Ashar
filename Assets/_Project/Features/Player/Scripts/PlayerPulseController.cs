@@ -126,7 +126,8 @@ namespace Ashar.Player
 
             if (_effectPrefab != null)
             {
-                Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+                GameObject effect = Instantiate(_effectPrefab, transform.position, Quaternion.identity);
+                FitEffectToRadius(effect);
             }
 
             GameEvents.RaisePlayerPulsed();
@@ -173,6 +174,22 @@ namespace Ashar.Player
 
                 Destroy(bullet.gameObject);
             }
+        }
+
+        /// <summary>
+        /// Scales the effect so its visual diameter equals the real wave diameter, whatever PulseRadius is set to
+        /// (spec: the visual shows the real range). Uses the first sprite's size, so no radius is hard-coded here.
+        /// </summary>
+        private void FitEffectToRadius(GameObject effect)
+        {
+            SpriteRenderer sprite = effect.GetComponent<SpriteRenderer>();
+            if (sprite == null || sprite.sprite == null)
+            {
+                return;
+            }
+
+            float scale = 2f * _shipData.PulseRadius / sprite.sprite.bounds.size.x;
+            effect.transform.localScale = new Vector3(scale, scale, 1f);
         }
 
         /// <summary>An admissible graze shortens the current recharge, floored at zero; the initial charge is never touched.</summary>
