@@ -24,12 +24,22 @@ namespace Ashar.Enemies
         Static,
     }
 
+    /// <summary>How an enemy reacts to the player's Pulse (spec E5-06): destroyed outright, or stunned for a while.</summary>
+    public enum EnemyPulseResponse
+    {
+        /// <summary>Destroyed instantly, regardless of hit points left (small units).</summary>
+        Destroy,
+
+        /// <summary>Stunned for the ship data's Pulse stun duration instead of taking damage (heavy units and bosses).</summary>
+        Stun,
+    }
+
     /// <summary>
     /// Everything that defines one kind of enemy: its toughness, reward, look and way of moving.
     /// RESPONSIBILITIES: hold the numbers of an enemy type so that a new enemy is a new asset, not new code.
     /// HOW IT WORKS: this is a ScriptableObject asset (EnemyData_GuardDrone...). The wave system reads it to know what to
     /// create, and EnemyController reads it to know how to behave. The look is the prefab it points to.
-    /// PATTERN: data-driven design. Pulse response and power-up drops are added by the stories that use them.
+    /// PATTERN: data-driven design. Power-up drops are added by the stories that use them.
     /// </summary>
     [CreateAssetMenu(fileName = "EnemyData_New", menuName = "Ashar/Enemy Data")]
     public class EnemyData : ScriptableObject
@@ -68,6 +78,10 @@ namespace Ashar.Enemies
         [SerializeField, Tooltip("How the enemy fires. Leave empty for an enemy that never fires.")]
         private FirePatternData _firePattern;
 
+        [Header("Pulse response (spec E5-06)")]
+        [SerializeField, Tooltip("How this enemy reacts to the player's Pulse: Destroy (small units) or Stun (heavy units, bosses). Set explicitly per enemy, never guessed from its sprite size, name or hit points.")]
+        private EnemyPulseResponse _pulseResponse = EnemyPulseResponse.Destroy;
+
         /// <summary>Short unique name of the enemy.</summary>
         public string Id => _id;
 
@@ -91,6 +105,9 @@ namespace Ashar.Enemies
 
         /// <summary>How the enemy fires, or null if it never fires.</summary>
         public FirePatternData FirePattern => _firePattern;
+
+        /// <summary>How this enemy reacts to the player's Pulse.</summary>
+        public EnemyPulseResponse PulseResponse => _pulseResponse;
 
         /// <summary>Swing distance or circle radius, in world units.</summary>
         public float Amplitude => _amplitude;

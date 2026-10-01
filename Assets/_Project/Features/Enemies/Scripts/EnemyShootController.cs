@@ -124,7 +124,7 @@ namespace Ashar.Enemies
 
             float speedMultiplier = session != null ? session.BulletSpeedMultiplier : 1f;
             ProjectileController bullet = Instantiate(_pattern.BulletPrefab, origin, Quaternion.identity, _context.ProjectileParent);
-            bullet.Initialize(direction, BalanceMath.ScaledBulletSpeed(_pattern.BulletSpeed, speedMultiplier), 1f, _context.ProjectileBounds);
+            bullet.Initialize(direction, BalanceMath.ScaledBulletSpeed(_pattern.BulletSpeed, speedMultiplier), 1f, _context.ProjectileBounds, _pattern.PulseErasable);
             _firedCount++;
         }
 

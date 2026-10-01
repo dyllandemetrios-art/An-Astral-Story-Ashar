@@ -22,3 +22,4 @@ MonoBehaviour:
   _telegraphTime: 0
   _bulletSpeed: 3.5
   _bulletPrefab: {fileID: 8132285200368270687, guid: 8f75c35afc45c5a4aa6337719d7e1dd7, type: 3}
+  _pulseErasable: 1

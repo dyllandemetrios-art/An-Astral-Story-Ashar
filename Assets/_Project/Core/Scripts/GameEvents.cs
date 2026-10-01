@@ -27,6 +27,9 @@ namespace Ashar.Core
         /// <summary>Raised when the player ship successfully activates its shield (spec E5-05). Used by the tutorial (E3-08) to validate the action.</summary>
         public static event Action OnPlayerShielded;
 
+        /// <summary>Raised when the player ship successfully emits a Pulse (spec E5-06), even one that hits nothing. Used by the tutorial (E3-08) to validate the action.</summary>
+        public static event Action OnPlayerPulsed;
+
         /// <summary>Raised when an enemy bullet grazes the player ship. The value is the score points earned.</summary>
         public static event Action<int> OnPlayerGrazed;
 
@@ -112,6 +115,12 @@ namespace Ashar.Core
         public static void RaisePlayerShielded()
         {
             OnPlayerShielded?.Invoke();
+        }
+
+        /// <summary>Announces that the player ship has successfully emitted a Pulse.</summary>
+        public static void RaisePlayerPulsed()
+        {
+            OnPlayerPulsed?.Invoke();
         }
     }
 }

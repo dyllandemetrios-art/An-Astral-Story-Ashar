@@ -22,3 +22,4 @@ MonoBehaviour:
   _amplitude: 0
   _frequency: 0
   _firePattern: {fileID: 11400000, guid: a3f456e7e555c6c49ad3a8e6823bacc8, type: 2}
+  _pulseResponse: 1

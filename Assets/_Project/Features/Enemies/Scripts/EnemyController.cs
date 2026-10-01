@@ -45,6 +45,9 @@ namespace Ashar.Enemies
         [SerializeField, Tooltip("Read-only: kind of enemy (its data id).")]
         private string _dataId;
 
+        [SerializeField, Tooltip("Read-only: seconds left stunned by the player's Pulse (0 when not stunned).")]
+        private float _stunTimeLeft;
+
         private EnemyData _data;             // What this enemy is.
         private EnemySpawnContext _context;  // What it needs to know about the scene.
         private Vector2 _start;              // Where it appeared.
@@ -54,6 +57,7 @@ namespace Ashar.Enemies
         private bool _initialized;           // False until Initialize() has been called.
         private bool _dead;                  // True once dead, so it can die only once.
         private MaterialPropertyBlock _block; // Per-renderer shader values, so the shared material is left alone.
+        private EnemyShootController _shooter; // Cached at Initialize, disabled while stunned so its firing clock freezes too.
 
         /// <summary>Raised when the enemy is removed from the game, killed or not. The wave system uses it to count groups.</summary>
         public event Action<EnemyController> Removed;
@@ -63,6 +67,9 @@ namespace Ashar.Enemies
 
         /// <summary>The data this enemy was created from.</summary>
         public EnemyData Data => _data;
+
+        /// <summary>True while the player's Pulse is stunning this enemy: movement, firing and phase timers are suspended.</summary>
+        public bool IsStunned => _stunTimeLeft > 0f;
 
         /// <summary>Sets what kind of enemy this is. Must be called once, right after the enemy is created.</summary>
         public void Initialize(EnemyData data, EnemySpawnContext context)
@@ -78,10 +85,10 @@ namespace Ashar.Enemies
             _direction = EnemyMovement.ChooseDirection(data.Movement, _start, target, hasTarget);
             _time = 0f;
 
-            EnemyShootController shooter = GetComponent<EnemyShootController>();
-            if (shooter != null && data.FirePattern != null)
+            _shooter = GetComponent<EnemyShootController>();
+            if (_shooter != null && data.FirePattern != null)
             {
-                shooter.Initialize(data.FirePattern, context);
+                _shooter.Initialize(data.FirePattern, context);
             }
 
             _block = new MaterialPropertyBlock();
@@ -94,6 +101,23 @@ namespace Ashar.Enemies
         {
             if (!_initialized)
             {
+                return;
+            }
+
+            // Dialogue never zeroes Time.timeScale (spec E3-02), so a running stun is frozen explicitly here; pause
+            // already zeroes Time.deltaTime through Time.timeScale, freezing it for free.
+            bool dialoguePlaying = GameSession.Current != null && GameSession.Current.State == GameState.Dialogue;
+            _stunTimeLeft = TickStun(_stunTimeLeft, dialoguePlaying ? 0f : Time.deltaTime);
+            if (_shooter != null)
+            {
+                _shooter.enabled = !IsStunned;
+            }
+
+            if (IsStunned)
+            {
+                // Movement, its own clock and the life-bounds check are suspended; the hit flash is a visual and may
+                // still play (spec: a stunned target stays vulnerable and its animations may continue).
+                UpdateFlash();
                 return;
             }
 
@@ -149,6 +173,35 @@ namespace Ashar.Enemies
             {
                 Die();
             }
+        }
+
+        /// <summary>
+        /// Destroys the enemy instantly through the same death channel as a lethal hit (spec E5-06's Pulse instant
+        /// kill): FX, score and the Removed event, never a shortcut that skips them. Does nothing if already dead.
+        /// </summary>
+        public void Kill()
+        {
+            if (_dead)
+            {
+                return;
+            }
+
+            Die();
+        }
+
+        /// <summary>
+        /// Stuns the enemy for the given duration: movement, firing and its own timers are suspended (spec E5-06). A
+        /// stun already running is renewed to the longer of its time left and this duration, never added, so a
+        /// second Pulse cannot stack into an endless stun. Does nothing if already dead.
+        /// </summary>
+        public void Stun(float duration)
+        {
+            if (_dead)
+            {
+                return;
+            }
+
+            _stunTimeLeft = ComputeRenewedStun(_stunTimeLeft, duration);
         }
 
         /// <summary>Announces the death, shows the explosion and removes the enemy.</summary>
@@ -214,6 +267,25 @@ namespace Ashar.Enemies
             }
 
             return strength * (1f - elapsed / duration);
+        }
+
+        /// <summary>
+        /// Returns the stun time left after one tick, floored at zero. Static and free of Unity state so it can be
+        /// unit-tested.
+        /// </summary>
+        public static float TickStun(float stunTimeLeft, float deltaTime)
+        {
+            return Mathf.Max(0f, stunTimeLeft - deltaTime);
+        }
+
+        /// <summary>
+        /// Returns the stun time left after a new stun of the given duration: the longer of the two, never their sum
+        /// (spec E5-06: "un stun renouvelé prend le maximum du temps restant et de la nouvelle durée"). Static and
+        /// free of Unity state so it can be unit-tested.
+        /// </summary>
+        public static float ComputeRenewedStun(float currentTimeLeft, float newDuration)
+        {
+            return Mathf.Max(currentTimeLeft, newDuration);
         }
     }
 }

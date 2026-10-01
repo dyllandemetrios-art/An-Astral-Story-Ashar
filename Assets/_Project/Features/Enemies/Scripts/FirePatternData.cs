@@ -24,7 +24,7 @@ namespace Ashar.Enemies
     /// RESPONSIBILITIES: hold the numbers of a firing pattern so that a new pattern is a new asset, not new code.
     /// HOW IT WORKS: this is a ScriptableObject asset (FirePattern_...). An EnemyData points to one; EnemyShootController
     /// reads it and fires accordingly. Several enemies can share the same pattern asset.
-    /// PATTERN: data-driven design. Whether the player's pulse can erase these bullets is added by the story of the pulse.
+    /// PATTERN: data-driven design.
     /// </summary>
     [CreateAssetMenu(fileName = "FirePattern_New", menuName = "Ashar/Fire Pattern Data")]
     public class FirePatternData : ScriptableObject
@@ -62,6 +62,10 @@ namespace Ashar.Enemies
         [SerializeField, Tooltip("Bullet to fire. It must have a ProjectileController.")]
         private ProjectileController _bulletPrefab;
 
+        [Header("Pulse response (spec E5-06)")]
+        [SerializeField, Tooltip("Whether the player's Pulse erases this pattern's bullets when they are in range. Never applies to the player's own bullets.")]
+        private bool _pulseErasable;
+
         /// <summary>Which pattern to fire.</summary>
         public FirePatternType Type => _type;
 
@@ -91,5 +95,8 @@ namespace Ashar.Enemies
 
         /// <summary>Bullet to fire.</summary>
         public ProjectileController BulletPrefab => _bulletPrefab;
+
+        /// <summary>Whether the player's Pulse erases this pattern's bullets when they are in range.</summary>
+        public bool PulseErasable => _pulseErasable;
     }
 }

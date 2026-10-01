@@ -146,5 +146,27 @@ namespace Ashar.Tests.EditMode
             Assert.AreEqual(-1, FrameAnimationController.ComputeFrameIndex(0f, 20f, 0));
             Assert.AreEqual(-1, FrameAnimationController.ComputeFrameIndex(0f, 0f, 5));
         }
+
+        /// <summary>A stun simply counts down towards zero.</summary>
+        [Test]
+        public void TickStun_CountsDown()
+        {
+            Assert.AreEqual(1f, EnemyController.TickStun(3f, 2f), 0.0001f);
+        }
+
+        /// <summary>A stun never counts below zero, however large the step.</summary>
+        [Test]
+        public void TickStun_NeverGoesNegative()
+        {
+            Assert.AreEqual(0f, EnemyController.TickStun(1f, 5f), 0.0001f);
+        }
+
+        /// <summary>Stunning an enemy that already has more time left keeps the longer duration (spec E5-06: no stacking).</summary>
+        [Test]
+        public void ComputeRenewedStun_KeepsTheLongerDuration()
+        {
+            Assert.AreEqual(5f, EnemyController.ComputeRenewedStun(5f, 3f), 0.0001f);
+            Assert.AreEqual(3f, EnemyController.ComputeRenewedStun(1f, 3f), 0.0001f);
+        }
     }
 }

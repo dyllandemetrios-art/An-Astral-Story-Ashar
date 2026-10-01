@@ -400,6 +400,7 @@ GameObject:
   - component: {fileID: 4668080460523628301}
   - component: {fileID: 1805000040816047790}
   - component: {fileID: 1939548563911814631}
+  - component: {fileID: 5965224542976279244}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -758,6 +759,24 @@ MonoBehaviour:
   _halo: {fileID: 4588804656061407494}
   _state: 0
   _timeLeft: 0
+--- !u!114 &5965224542976279244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6195100340313331399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7e75ff43e17ac46967135f0a4ef400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Ashar.Runtime::Ashar.Player.PlayerPulseController
+  _shipData: {fileID: 11400000, guid: da1d39ddd1bf9974fbbbb8f6196c4626, type: 2}
+  _pulseAction: {fileID: -4683832889431710008, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  _effectPrefab: {fileID: 950391360544069477, guid: 019494118c780ef40820d12bf1999092, type: 3}
+  _state: 0
+  _timeLeft: 0
+  _isInitialCharge: 1
 --- !u!1 &6462150189907474345
 GameObject:
   m_ObjectHideFlags: 0

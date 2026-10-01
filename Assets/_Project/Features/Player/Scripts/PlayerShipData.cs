@@ -63,6 +63,19 @@ namespace Ashar.Player
         [SerializeField, Min(0), Tooltip("Score points earned by one graze (spec §7.1: 20). Each bullet counts only once.")]
         private int _grazeScore = 20;
 
+        [Header("Pulse")]
+        [SerializeField, Min(0f), Tooltip("Seconds before the Pulse is first ready, and seconds of recharge after each use (spec E5-06: 45, the same value for both).")]
+        private float _pulseCooldown = 45f;
+
+        [SerializeField, Min(0f), Tooltip("Radius of the Pulse wave around the ship, in world units (spec E5-06: 3.4).")]
+        private float _pulseRadius = 3.4f;
+
+        [SerializeField, Min(0f), Tooltip("Seconds a heavy unit or boss is stunned by the Pulse. Prototype value (spec E5-06), not validated by Dyllan yet.")]
+        private float _pulseStunDuration = 3f;
+
+        [SerializeField, Min(0f), Tooltip("Seconds subtracted from the Pulse recharge (never the initial charge) for each admissible graze, floored at zero (spec E5-06: 0.25).")]
+        private float _pulseGrazeDiscount = 0.25f;
+
         /// <summary>Ship speed in world units per second.</summary>
         public float MoveSpeed => _moveSpeed;
 
@@ -107,5 +120,17 @@ namespace Ashar.Player
 
         /// <summary>Seconds of recharge after the protection ends, before the shield can be activated again.</summary>
         public float ShieldCooldown => _shieldCooldown;
+
+        /// <summary>Seconds before the Pulse is first ready, and seconds of recharge after each use.</summary>
+        public float PulseCooldown => _pulseCooldown;
+
+        /// <summary>Radius of the Pulse wave around the ship, in world units.</summary>
+        public float PulseRadius => _pulseRadius;
+
+        /// <summary>Seconds a heavy unit or boss is stunned by the Pulse.</summary>
+        public float PulseStunDuration => _pulseStunDuration;
+
+        /// <summary>Seconds subtracted from the Pulse recharge for each admissible graze, floored at zero.</summary>
+        public float PulseGrazeDiscount => _pulseGrazeDiscount;
     }
 }

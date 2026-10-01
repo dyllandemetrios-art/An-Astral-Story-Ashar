@@ -22,6 +22,7 @@ namespace Ashar.Combat
         private Rect _lifeBounds;                // The projectile is destroyed when it leaves this rectangle.
         private bool _initialized;               // False until Initialize() has been called.
         private bool _hasBeenGrazed;             // True once counted as a graze or a hit: a projectile never counts twice.
+        private bool _pulseErasable;              // True when the player's Pulse (spec E5-06) may destroy this projectile in range.
 
         /// <summary>Damage this projectile deals on impact.</summary>
         public float Damage => _damage;
@@ -29,19 +30,27 @@ namespace Ashar.Combat
         /// <summary>True once this projectile has been counted as a graze or a hit.</summary>
         public bool HasBeenGrazed => _hasBeenGrazed;
 
+        /// <summary>True when the player's Pulse may destroy this projectile when it is in range.</summary>
+        public bool PulseErasable => _pulseErasable;
+
         /// <summary>Marks the projectile as counted, so it can never be counted a second time.</summary>
         public void MarkGrazed()
         {
             _hasBeenGrazed = true;
         }
 
-        /// <summary>Sets how the projectile flies. Must be called once, right after the projectile is created.</summary>
-        public void Initialize(Vector2 direction, float speed, float damage, Rect lifeBounds)
+        /// <summary>
+        /// Sets how the projectile flies. Must be called once, right after the projectile is created. pulseErasable
+        /// defaults to false: only an enemy pattern explicitly marked erasable (spec E5-06) passes true; the player's
+        /// own bullets never do.
+        /// </summary>
+        public void Initialize(Vector2 direction, float speed, float damage, Rect lifeBounds, bool pulseErasable = false)
         {
             _direction = direction.normalized;
             _speed = speed;
             _damage = damage;
             _lifeBounds = lifeBounds;
+            _pulseErasable = pulseErasable;
             _initialized = true;
 
             // The sprite art points up, so turning the object makes it face its flight direction.

@@ -61,6 +61,9 @@ namespace Ashar.Menu
         [SerializeField, Tooltip("Optional. Player's shield script (spec E5-05), switched off while paused from Gameplay so its timers freeze exactly like the dash's.")]
         private PlayerShieldController _shield;
 
+        [SerializeField, Tooltip("Optional. Player's Pulse script (spec E5-06), switched off while paused from Gameplay so its recharge freezes exactly like the shield's.")]
+        private PlayerPulseController _pulse;
+
         [Header("Panels")]
         [SerializeField, Tooltip("Reprendre / Options / Retour au menu.")]
         private GameObject _rootPanel;
@@ -323,6 +326,11 @@ namespace Ashar.Menu
             if (_shield != null)
             {
                 _shield.enabled = enabledState;
+            }
+
+            if (_pulse != null)
+            {
+                _pulse.enabled = enabledState;
             }
         }
     }
